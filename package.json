@@ -1,0 +1,33 @@
+{
+  "name": "friday-act-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.1.8",
+    "@heroicons/react": "^2.1.5",
+    "@nextui-org/react": "^2.4.6",
+    "@types/node": "22.5.0",
+    "@types/react": "18.3.4",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.20",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
+    "framer-motion": "^11.3.30",
+    "next": "13.4.2",
+    "next-auth": "^4.23.2",
+    "next-intl": "^3.17.6",
+    "postcss": "8.4.41",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwind-scrollbar": "^3.1.0",
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwindcss": "3.4.10",
+    "typescript": "5.5.4"
+  }
+}
