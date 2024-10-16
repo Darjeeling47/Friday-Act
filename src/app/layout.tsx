@@ -1,4 +1,5 @@
 // import css
+import Footer from '@/components/footer/Footer'
 import './globals.css'
 
 // import types
@@ -28,6 +29,7 @@ export default async function RootLayout({
     <html lang={"en"}>
       <body className={prompt.className}>
         {children}
+        <Footer />        
       </body>
     </html>
   )
