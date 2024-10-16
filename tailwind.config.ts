@@ -51,74 +51,13 @@ const config: Config = {
           d3: '#4F4F4F',
           d4: '#434343',
         },
+        vidva: '#8B2333',
         mgreen: '#10B981',
         mred: '#E83C59',
-        mindlink: '#FF6300',
-        dred: {
-          l: '#E83C59',
-          d: '#ED4662',
-        },
-        dpink: {
-          l: '#F472B6',
-          d: '#F47CBB',
-        },
-        dfuchsia: {
-          l: '#C355F7',
-          d: '#C961FB',
-        },
-        dpurple: {
-          l: '#7848FF',
-          d: '#7D4FFF',
-        },
-        dblue: {
-          l: '#2563EB',
-          d: '#3971EB',
-        },
-        dsky: {
-          l: '#7DD3FC',
-          d: '#8AD9FF',
-        },
-        dgreen: {
-          l: '#10B981',
-          d: '#19C089',
-        },
-        dlime: {
-          l: '#A3E635',
-          d: '#A5E142',
-        },
-        dyellow: {
-          l: '#FACC15',
-          d: '#F5CD2D',
-        },
-        dorange: {
-          l: '#FB923C',
-          d: '#FC9948',
-        },
-        dgray: {
-          l: '#8E8E8E',
-          d: '#969696',
-        },
-        dbrown: {
-          l: '#854D0E',
-          d: '#8C5516',
-        },
       },
     },
-    fontSize: {
-      smallest: '12px',
-      detail: '14px',
-      body: '16px',
-      subtitle: '18px',
-      title2: '24px',
-      title: '28px',
-      header: [
-        '32px',
-        {
-          fontWeight: '500',
-        },
-      ],
-    },
     container: {
+      center: true,
       padding: {
         DEFAULT: '1rem',
         sm: '2rem',
