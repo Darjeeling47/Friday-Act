@@ -9,11 +9,11 @@ import Footer from '@/components/footer/Footer'
 import type { Metadata } from 'next'
 
 // import fonts
-import { Prompt } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 // Font configurations
-const prompt = Prompt({
-  subsets: ['latin', 'thai'],
+const inter = Inter({
+  subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
 
@@ -24,16 +24,16 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang={"en"}>
-      <body className={prompt.className}>
+    <html lang={'en'}>
+      <body className={inter.className}>
         <NavBar />
-        {children}
-        <Footer />        
+        <div className='container mx-auto mt-14'>{children}</div>
+        <Footer />
       </body>
     </html>
   )
