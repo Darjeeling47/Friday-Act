@@ -44,8 +44,9 @@ const config: Config = {
         mgray: {
           1: '#242424',
           2: '#595959',
-          3: '#EAEAEA',
-          4: '#F9F9F9',
+          3: '#BEBEBE',
+          4: '#EAEAEA',
+          5: '#F9F9F9',
           d1: '#FEFEFE',
           d2: '#EAEAEA',
           d3: '#4F4F4F',
