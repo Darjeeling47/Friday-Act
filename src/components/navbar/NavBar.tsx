@@ -8,7 +8,6 @@ import Image from 'next/image'
 
 // import components
 import NavItem from './NavItem'
-import { Dropdown } from '@nextui-org/react'
 import DropdownItem from './DropdownItem'
 
 export default function NavBar() {
@@ -18,11 +17,11 @@ export default function NavBar() {
 
   // return
   return (
-    <nav className='h-14 w-full fixed bg-mgray-1'>
+    <nav className='h-14 w-full top-0 right-0 left-0 fixed bg-mgray-1'>
       {/* Mobile Nav */}
       <div className='lg:hidden flex flex-col'>
         {/* Mobile Nav Header */}
-        <div className='z-10 container mx-auto px-4 h-14 flex flex-row justify-between items-center'>
+        <div className='z-10 px-8 h-14 flex flex-row justify-between items-center'>
           <div className='flex flex-row justify-center items-center h-full'>
             <Image
               src='/logo/Logo_FA.png'
@@ -78,9 +77,6 @@ export default function NavBar() {
             className={`-z-10 collapse flex flex-col bg-mgray-1 transition-transform duration-300 ease-in-out ${
               isOpen ? 'translate-y-0' : '-translate-y-full'
             }`}>
-            <DropdownItem href='/'>Home</DropdownItem>
-            <DropdownItem href='/activities'>Activity</DropdownItem>
-            <DropdownItem href='/companies'>Company</DropdownItem>
           </div>
         )}
       </div>
