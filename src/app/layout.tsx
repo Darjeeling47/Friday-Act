@@ -1,6 +1,9 @@
 // import css
-import Footer from '@/components/footer/Footer'
 import './globals.css'
+
+// import components
+import NavBar from '@/components/navbar/NavBar'
+import Footer from '@/components/footer/Footer'
 
 // import types
 import type { Metadata } from 'next'
@@ -28,6 +31,7 @@ export default async function RootLayout({
   return (
     <html lang={"en"}>
       <body className={prompt.className}>
+        <NavBar />
         {children}
         <Footer />        
       </body>

@@ -6,7 +6,8 @@
 * {
   margin: 0;
   padding: 0;
-  color: black;
-  background: white;
-  box-sizing: border-box;
+}
+
+.body {
+  background-color: #FAFAFA;
 }
