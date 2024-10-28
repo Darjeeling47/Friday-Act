@@ -32,7 +32,7 @@ export default async function RootLayout({
     <html lang={'en'}>
       <body className={inter.className}>
         <NavBar />
-        <div className='container mx-auto mt-14'>{children}</div>
+        <div className='container mx-auto mt-24 mb-12'>{children}</div>
         <Footer />
       </body>
     </html>
