@@ -1,9 +1,10 @@
 "use client";
 
 import Tag from '@/components/basic/Tag';
+import Button from '@/components/basic/Button';
 import React, { useState } from 'react';
 
-export default function Page() {
+const Page = () => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -23,14 +24,24 @@ export default function Page() {
         </div>
 
         {/* Right: Event Details */}
-        <div className="flex-[1.2] p-6 flex flex-col justify-between">
+        <div className="flex-[1.1] p-6 flex flex-col justify-between">
           <div>
             <h2 className="text-3xl font-bold text-mgray-1 mb-4">
               Psychological Resilience for Success
             </h2>
-            <h2 className="flex justify-between">
-              <span> ธนาคารจิตอาสา </span>
-              <span className="text-green-500">20/100 seats</span></h2>
+            <h2 className="flex justify-between items-center">
+              <div className="flex items-center">
+                <span>
+                  <img
+                    src="/Logo/JBank.png"
+                    alt="Logo"
+                    className="rounded-lg w-8 h-8"
+                  />
+                </span>
+                <span className="ml-2">ธนาคารจิตอาสา</span>
+              </div>
+              <span className="text-green-500">20/100 seats</span>
+            </h2>
             <hr className="my-4 border-t border-gray-300" />
             {/* Tags */}
             <div className="mt-8 flex flex-wrap gap-2">
@@ -95,18 +106,21 @@ export default function Page() {
           </div>
           {/* Apply Button */}
           <div className="mt-8 text-center">
-            <button
-              className={`${
-                isClicked ? 'bg-mgray-2' : 'bg-vidva'
-              } hover:bg-[#751e2b] active:bg-mgray-3 text-white font-bold py-2 px-60 rounded w-full md:w-auto`}
-              onClick={handleClick}
-              style={{ maxWidth: '200px' }}
-            >
-              {isClicked ? 'Cancel Application' : 'Apply Activity'}
-            </button>
+          <Button
+            varient="primary"
+            onClick={handleClick}
+            className={`${
+            isClicked ? 'bg-gray-600 hover:bg-gray-500' : 'bg-vidva hover:bg-vidva/80'
+            } active:bg-gray-400 transition-transform duration-150 text-white font-bold rounded w-full`}
+          >
+            {isClicked ? 'Cancel Application' : 'Apply Activity'}
+        </Button>
+
           </div>
         </div>
       </div>
     </main>
   );
-}
+};
+
+export default Page;
