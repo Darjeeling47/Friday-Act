@@ -47,6 +47,8 @@ const config: Config = {
           3: '#BEBEBE',
           4: '#EAEAEA',
           5: '#F9F9F9',
+          6: '#5C5C5C',
+          7: '#2C2C2C',
           d1: '#FEFEFE',
           d2: '#EAEAEA',
           d3: '#4F4F4F',
@@ -67,6 +69,9 @@ const config: Config = {
         '2xl': '6rem',
       },
     },
+    boxShadow:{
+      '1': '0px 4px 15px 0px #DADADA',
+    }
   },
   plugins: [
     require('tailwind-scrollbar-hide'),
