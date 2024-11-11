@@ -75,6 +75,7 @@ const config: Config = {
   plugins: [
     require('tailwind-scrollbar-hide'),
     require('tailwind-scrollbar'),
+    require('@tailwindcss/line-clamp'),
     nextui(),
   ],
 }
