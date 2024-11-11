@@ -1,19 +1,33 @@
 "use client";
 
+// import
+// react
+import React, { useState } from 'react';
+// components
 import Tag from '@/components/basic/Tag';
 import Button from '@/components/basic/Button';
-import React, { useState } from 'react';
 
-const Page = () => {
+// Variables
+// Primary
+const initialSeats = 20;
+const maxSeats = 100;
+
+// Component
+const Page: React.FC = () => {
+  // Variables - Status
   const [isClicked, setIsClicked] = useState(false);
 
+  // handle
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
 
+  // return
   return (
     <main className="container mx-auto p-4">
+      {/* Content Wrapper */}
       <div className="flex flex-col md:flex-row items-start md:items-start gap-4 p-12">
+        
         {/* Left: Picture */}
         <div className="flex-[0.9] flex justify-center items-center">
           <img
@@ -25,24 +39,26 @@ const Page = () => {
 
         {/* Right: Event Details */}
         <div className="flex-[1.12] p-2 flex flex-col justify-start">
+          
+          {/* Event Title */}
           <div>
+            <div>
             <h2 className="text-3xl font-bold text-mgray-1 mb-4">
               Psychological Resilience for Success
             </h2>
             <h2 className="flex justify-between items-center">
               <div className="flex items-center">
-                <span>
-                  <img
-                    src="/Logo/JBank.png"
-                    alt="Logo"
-                    className="rounded-lg w-8 h-8"
-                  />
-                </span>
+                <img
+                  src="/Logo/JBank.png"
+                  alt="Logo"
+                  className="rounded-lg w-8 h-8"
+                />
                 <span className="ml-2">ธนาคารจิตอาสา</span>
               </div>
-              <span className="text-green-500">20/100 seats</span>
+              <span className="text-green-500">{`${initialSeats}/${maxSeats} seats`}</span>
             </h2>
             <hr className="my-4 border-t border-gray-300" />
+            
             {/* Tags */}
             <div className="mt-8 flex flex-wrap gap-2">
               <Tag text="Cyber Security" bgColor="bg-blue-100" textColor="text-blue-600" />
@@ -52,6 +68,7 @@ const Page = () => {
 
             {/* Event Information */}
             <div className="mt-4">
+              {/* Time */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <svg
@@ -66,6 +83,8 @@ const Page = () => {
                   <h3 className="text-l font-light text-mgray-d3 ml-2">29 Mar 2024 | 09:00 - 12:00</h3>
                 </div>
               </div>
+              
+              {/* Location */}
               <div className="flex items-center mt-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,11 +117,14 @@ const Page = () => {
                 <h3 className="text-l font-light text-mgray-d3 ml-24">Sorrayut Rattanaponjnard, PHD</h3>
               </div>
             </div>
+
+            {/* Event Description */}
             <div>
               <h3 className="text-m font-normal text-mgray-d3 ml-2 mt-4 mb-8">
-                Resilience หรือทักษะการฟื้นคืนกิจกรรมดีๆที่จัดโดยพี่ๆ จากธนาคารจิตอาสาที่จะมาช่วยเราสร้างเครื่องมือเพื่อเตีรยมรับมือกับภาวะวิกฤติของชีวิตที่อาจะเกิดขึ้นได้อย่างเข้าใจ มีสติ ไปจนถึงการมีความหวัง และมองเห็นโอกาสใหม่ๆของชีวิตในช่วงเวลาที่ยากลำบากที่ต้องเจอได้ ช่วยให้เรามีพลังใจมากขึ้น
+                Resilience หรือทักษะการฟื้นคืนกิจกรรมดีๆที่จัดโดยพี่ๆ จากธนาคารจิตอาสาที่จะมาช่วยเราสร้างเครื่องมือเพื่อเตีรยมรับมือกับภาวะวิกฤติของชีวิต...
               </h3>
             </div>
+          </div>
           </div>
           {/* Apply Button */}
           <div className="mt-8 text-center content-end">
