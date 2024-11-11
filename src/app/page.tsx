@@ -1,34 +1,44 @@
-// import react
+'use client'
+import Button from "@/components/basic/Button";
+import SearchBar from "@/components/basic/SearchBar";
+import { useState } from "react";
 import Image from 'next/image'
 
 export default function Home() {
+  const [search, setSearch] = useState<string>();
+  const mockFilters = [
+    {
+      category: 'Category 1',
+      options: ['Option 1', 'Option 2', 'Option 3'],
+    },
+    {
+      category: 'Category 2',
+      options: ['Option 1', 'Option 2', 'Option 3'],
+    },
+    {
+      category: 'Category 3',
+      options: ['Option 1', 'Option 2', 'Option 3'],
+    }
+  ]
   return (
-    <main className=''>
-      {/* Hero */}
-      <div className='flex flex-col md:flex-row justify-center items-center gap-8'>
-        <Image
-          src='/logo/Logo_FA_Full.png'
-          alt='Friday Activity Logo'
-          width={1000}
-          height={1000}
-          className='h-fit w-full md:w-1/2 px-6'
-        />
-        <div className='w-full md:w-1/2'>
-          <span>
-            <h1 className='text-lg font-medium text-mgray-1 text-nowrap'>
-              Friday Activity,
-            </h1>
-            <p className='text-mgray-2 text-balance'>
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s orem Ipsum is simply dummy text of the
-              printing and typesetting industry. Lorem Ipsu
-            </p>
-          </span>
-          <div>
-          </div>
-        </div>
+    <div>
+      <p>Hello</p>
+      <p>Hello</p>
+      <p>Hello</p>
+      <p>Hello</p>
+      <Button>Click me</Button>
+      <Button varient="secondary">Click me</Button>
+      <Button varient="outline">Click me</Button>
+      <Button varient="text">Click me</Button>
+      <Button varient="disabled">Click me</Button>
+      <div className="w-full flex flex-col py-5 gap-5">
+        <SearchBar onChange={setSearch} />
+        <SearchBar  onChange={setSearch}  filter={mockFilters} />
+        <SearchBar  onChange={setSearch}  wFull />
+        <SearchBar  onChange={setSearch}  filter={mockFilters} wFull/>
+        <p>{search}</p>
       </div>
-    </main>
-  )
+    </div>
+  );
+
 }
