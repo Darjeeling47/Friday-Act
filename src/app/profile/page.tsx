@@ -3,6 +3,18 @@ import Image from 'next/image'
 
 // import components
 import ActivityLog from '@/components/ActivityLog'
+import CompanyActivity from '@/components/basic/CompanyActivity'
+
+const sampleActivities = [
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
+  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" }
+];
 
 export default function Profile() {
   // return
@@ -64,7 +76,13 @@ export default function Profile() {
       </div>
 
       {/* Activities Log */}
-      <ActivityLog />
+      {/* <ActivityLog /> */}
+      <CompanyActivity
+          activities={sampleActivities}
+          year="2024"
+          semester="Semester 1"
+        />
+
     </main>
   )
 }
