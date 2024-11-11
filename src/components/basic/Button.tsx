@@ -4,14 +4,14 @@
 import Link from 'next/link'
 
 export default function Button({
-  varient = 'primary',
+  variant = 'primary',
   children,
   className,
   onClick,
   href,
   target,
 }: {
-  varient?: 'primary' | 'secondary' | 'outline' | 'text' | 'disabled'
+  variant?: 'primary' | 'secondary' | 'outline' | 'text' | 'disabled'
   children: React.ReactNode
   className?: string
   onClick?: Function
@@ -20,13 +20,13 @@ export default function Button({
 }) {
   // Styling variables
   let theme = 'text-mgray-4 bg-vidva hover:bg-vidva/80'
-  if (varient === 'secondary')
+  if (variant === 'secondary')
     theme = 'text-mgray-4 bg-mgray-2 hover:bg-mgray-2/80'
-  if (varient === 'outline')
+  if (variant === 'outline')
     theme =
       'text-mgray-2 border-2 border-mgray-2 hover:text-vidva hover:border-vidva shadow-none'
-  if (varient === 'text') theme = 'text-vidva hover:text-vidva/50 shadow-none'
-  if (varient === 'disabled')
+  if (variant === 'text') theme = 'text-vidva hover:text-vidva/50 shadow-none'
+  if (variant === 'disabled')
     theme = 'text-mgray-5 bg-mgray-3 cursor-not-allowed'
 
   // return
