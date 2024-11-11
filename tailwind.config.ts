@@ -47,6 +47,11 @@ const config: Config = {
           3: '#BEBEBE',
           4: '#EAEAEA',
           5: '#F9F9F9',
+          6: '#D9D9D9',
+          d1: '#FEFEFE',
+          d2: '#EAEAEA',
+          d3: '#4F4F4F',
+          d4: '#434343'
         },
         vidva: '#8B2333',
         mgreen: '#10B981',
@@ -71,6 +76,7 @@ const config: Config = {
   plugins: [
     require('tailwind-scrollbar-hide'),
     require('tailwind-scrollbar'),
+    require('@tailwindcss/line-clamp'),
     nextui(),
   ],
 }
