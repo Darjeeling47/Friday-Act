@@ -2,6 +2,7 @@
 import Button from "@/components/basic/Button";
 import SearchBar from "@/components/basic/SearchBar";
 import { useState } from "react";
+import Image from 'next/image'
 
 export default function Home() {
   const [search, setSearch] = useState<string>();
@@ -39,4 +40,5 @@ export default function Home() {
       </div>
     </div>
   );
+
 }
