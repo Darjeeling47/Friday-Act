@@ -43,7 +43,6 @@ export default function CreateSemester() {
 
   return (
     <main className='container'>
-    <h1>CreateSemester</h1>
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="w-full max-w-4xl p-8 bg-[#FAFAFA] rounded-lg shadow-md">
         <div className="flex items-center justify-center mb-6">

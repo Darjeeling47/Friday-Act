@@ -4,6 +4,7 @@ import { formatDate_Utc_to_EN } from "@/utils/utils";
 
 
 export default function Semesters() {
+  // Mock Data
   const mockData = {
     "success": true,
     "count": 3,
@@ -44,7 +45,6 @@ export default function Semesters() {
         },
       ]
     }
-
   const headers = [
     {"key" : "year", "title" : "Year"},
     {"key" : "semester", "title" : "Semester"},
@@ -54,29 +54,19 @@ export default function Semesters() {
     {"key" : "delete", "title" : ""},
   ]
 
-  const Header = {
-    title : {
-      title : "Semesters",
-    },
-    button : {
-      title : "New Semesters",
-    },
-  }
-
+  // handle for UTC to EN timestamp
   const data = mockData.semesters.map(semester => ({
     ...semester,
     start_date: formatDate_Utc_to_EN(semester.start_date),
     end_date: formatDate_Utc_to_EN(semester.end_date),
   }));
 
-
   // return
   return (
     <main className='container'>
-      <p>Semester</p>
       <TableHeader
-        title={Header.title}
-        button={Header.button}
+        headerTitle="Semesters"
+        buttonTitle="New Semesters"
       />
       <TableComponent
         headers={headers}

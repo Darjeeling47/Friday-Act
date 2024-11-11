@@ -1,14 +1,32 @@
+'use client'
 import Image from "next/image";
+import { useState } from "react";
 
-export default function TableComponent({ headers, data } : { headers : any[], data : any[]}) {
-  const logoEdit = '/logo/Logo_Edit.png'
-  const logoDelete = '/logo/Logo_Delete.png'
+export default function TableComponent({ 
+  headers, 
+  data, 
+  tableStyle, 
+  headerStyle, 
+  textStyle, 
+  iconStyle 
+  } : 
+  { 
+    headers : any[], 
+    data : any[], 
+    tableStyle?: string, 
+    headerStyle?: string, 
+    textStyle?: string, 
+    iconStyle?: string
+  }) {
+  const [logoEdit, setLogoEdit] = useState<string>('/logo/Logo_Edit.png')
+  const [logoDelete, setLogoDelete] = useState<string>('/logo/Logo_Delete.png')
+  
   return (
-    <table className="w-full border-collapse">
+    <table className={`w-full border-collapse ${tableStyle}`}>
       <thead>
         <tr>
           {headers.map((header, index) => (
-            <th key={index} className="border p-2 text-center border-l-0 border-r-0">{header.title}</th>
+            <th key={index} className={`border p-2 text-center border-l-0 border-r-0 font-semibold text-sm md:text-md ${headerStyle}`}>{header.title}</th>
           ))}
         </tr>
       </thead>
@@ -16,7 +34,7 @@ export default function TableComponent({ headers, data } : { headers : any[], da
         {data.map((data, index) => (
           <tr key={index} className="text-center">
             {headers.map((header, subIndex) => {
-              if(header.key == 'edit') return (<td className="border p-2 border-l-0 border-r-0">
+              if(header.key == 'edit') return (<td className={`border border-l-0 border-r-0 md: p-2 ${iconStyle}`}>
               <button>
                 <Image
                   src={logoEdit}
@@ -26,7 +44,7 @@ export default function TableComponent({ headers, data } : { headers : any[], da
                 />
               </button>
             </td>)
-              if(header.key == 'delete') return (<td className="border p-2  border-l-0 border-r-0">
+              if(header.key == 'delete') return (<td className={`border border-l-0 border-r-0 md: p-2 ${iconStyle}`}>
               <button >
                 <Image
                   src={logoDelete}
@@ -36,7 +54,7 @@ export default function TableComponent({ headers, data } : { headers : any[], da
                 />
               </button>
             </td>)
-              return(<td key={subIndex} className="border p-2 border-l-0 border-r-0">{data[header.key]}</td>)
+              return(<td key={subIndex} className={`border p-2 border-l-0 border-r-0 text-sm md:text-md ${textStyle}`}>{data[header.key]}</td>)
             })}
           </tr>
         ))}
