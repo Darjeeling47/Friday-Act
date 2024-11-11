@@ -1,6 +1,11 @@
+// import
+// react
 import React from "react";
+// components
 import CompanyActivity from "@/components/basic/CompanyActivity";
 
+// Variables
+// Primary
 const sampleActivities = [
   { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
   { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
@@ -12,12 +17,13 @@ const sampleActivities = [
   { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" }
 ];
 
+// Component
 const App: React.FC = () => {
+  // return
   return (
     <>
-      <div 
-        className="flex p-4 max-w-full mt-4 h-full items-stretch mb-8"
-      >
+      {/* Company Information Section */}
+      <div className="flex p-4 max-w-full h-full items-stretch mb-8">
         <div className="flex-1 flex flex-col justify-between mt-20">
           <div>
             <h1 className="text-4xl font-bold mb-4 text-mgray-2">Company Name</h1>
@@ -45,6 +51,7 @@ const App: React.FC = () => {
         <div className="w-80 h-80 bg-mgray-3 rounded mt-20"></div>
       </div>
       
+      {/* Company Activities Section */}
       <div className="max-w-full mb-8">
         <CompanyActivity
           activities={sampleActivities}
@@ -63,6 +70,7 @@ const App: React.FC = () => {
   );
 };
 
+// Icon Components
 const PhoneIcon: React.FC = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
