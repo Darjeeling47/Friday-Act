@@ -1,4 +1,7 @@
+// import react
 import Image from 'next/image'
+
+// import components
 import Tag from './basic/Tag'
 
 var mockData = {
@@ -30,7 +33,7 @@ export default function ActivityCard({
   }
 }) {
   return (
-    <div className="flex flex-row space-x-6 w-full">
+    <div className="flex flex-row space-x-6 w-full rounded-md hover:bg-mgray-3/20 p-3">
       <div className='h-fit w-48'>
         <Image src={activity.picture} alt="activity" width={500} height={500}/>
       </div>
