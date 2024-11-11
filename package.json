@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@headlessui/react": "^2.1.8",
     "@heroicons/react": "^2.1.5",
+    "@mui/icons-material": "^6.1.5",
     "@nextui-org/react": "^2.4.6",
     "@types/node": "22.5.0",
     "@types/react": "18.3.4",
@@ -19,7 +24,7 @@
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.3.30",
-    "next": "13.4.2",
+    "next": "^14.2.16",
     "next-auth": "^4.23.2",
     "next-intl": "^3.17.6",
     "postcss": "8.4.41",
@@ -29,5 +34,9 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.4.10",
     "typescript": "5.5.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8"
   }
 }
