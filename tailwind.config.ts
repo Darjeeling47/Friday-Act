@@ -67,6 +67,10 @@ const config: Config = {
         '2xl': '6rem',
       },
     },
+    boxShadow:{
+      '1': '0px 4px 15px 0px #DADADA',
+      '2': '10px 10px 30px 0px #E2E2E2, -10px -10px 30px 0px #F2F2F2',
+    }
   },
   plugins: [
     require('tailwind-scrollbar-hide'),
