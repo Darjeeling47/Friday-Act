@@ -34,5 +34,9 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.4.10",
     "typescript": "5.5.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8"
   }
 }
