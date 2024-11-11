@@ -33,9 +33,9 @@ export default function Home() {
       <Button varient="disabled">Click me</Button>
       <div className="w-full flex flex-col py-5 gap-5">
         <SearchBar onChange={setSearch} />
-        <SearchBar  onChange={setSearch}  filter={mockFilters} />
+        <SearchBar  onChange={setSearch} />
         <SearchBar  onChange={setSearch}  wFull />
-        <SearchBar  onChange={setSearch}  filter={mockFilters} wFull/>
+        <SearchBar  onChange={setSearch} wFull/>
         <p>{search}</p>
       </div>
     </div>
