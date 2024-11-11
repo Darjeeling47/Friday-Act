@@ -1,31 +1,42 @@
-export default function ActivitiesItem() {
-  const mockImgSrc = 'https://m.media-amazon.com/images/I/81RCKVLIhDL._AC_UF1000,1000_QL80_.jpg';
-  const mockTags: string[] = ['Cyber Security', 'Cloud', 'Web Development'];
+// import components
+import Tag from "../basic/Tag";
 
+// import util
+import { cn } from "@/utils/utils";
+
+// import interface
+import { ActivityItem, TagItem } from "@/interface/activities/activities";
+
+export default function ActivitiesItem({
+  item,
+}: {
+  item: ActivityItem;
+}) {
+  // Primary variables
+  const seatLeft = Math.max(0, item.max_participants - parseInt(item.currentParticipants));
+
+  // return
   return (
     <div className="flex w-full flex-row justify-start items-start gap-5 rounded-[30px] p-5 hover:bg-vidva/10 transition-transform duration-300">
       <img
-        src={mockImgSrc}
-        alt=""
+        src="https://th.bing.com/th/id/OIP.8Ev-Jhu_SC9hLoqtarMrTQHaJQ?rs=1&pid=ImgDetMain"
+        alt="Activity Image"
         className="h-80 w-64 rounded-3xl object-cover shadow-1"
       />
-      <div className="flex flex-col text-wrap items-start justify-start gap-3">
-        <h3 className="text-2xl font-normal text-mgray-1">Name of Activities</h3>
-        <p className="text-xl font-light text-mgray-2">Company Name</p>
-        <div className="flex flex-wrap gap-2 border-t-1 border-t-white pt-3">
-          {mockTags.sort().map((tag: string, index) => (
-            <span 
-              key={index}
-              className={`text-blue-800 bg-blue-200 px-3 py-1 rounded-full`}>
-            {tag}
-          </span>
+      <div className="flex flex-col items-start justify-start gap-3">
+        <h3 className="text-2xl font-normal text-mgray-1">{item.name}</h3>
+        <p className="text-xl font-light text-mgray-2">{item.company?.name}</p>
+        <div className="flex flex-wrap gap-2 border-t border-white pt-3">
+          {item.tags.sort().map((tag: TagItem) => (
+            <Tag key={tag.id} text={tag.name} color={tag.color} />
           ))}
         </div>
         <div className="line-clamp-3 text-lg font-light text-mgray-2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor explicabo, provident laboriosam rerum, debitis nobis sed aliquam minima porro qui, ipsa doloremque unde optio! Ducimus eveniet ad tempora pariatur quaerat.
-          Hic minus amet quas culpa iusto veritatis velit laborum quasi, consectetur enim mollitia assumenda facere, placeat, omnis expedita praesentium tempora illo cumque sunt totam. Perspiciatis deleniti debitis accusamus cumque impedit.
+          {item.description}
         </div>
-        <p className="text-xl font-light text-mgreen">40 Seat left</p>
+        <p className={cn("text-xl font-light", seatLeft > 0 ? "text-mgreen" : "text-mred")}>
+          {seatLeft} Seat{seatLeft !== 1 ? "s" : ""} left
+        </p>
       </div>
     </div>
   );
