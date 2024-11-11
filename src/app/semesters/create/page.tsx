@@ -46,7 +46,6 @@ export default function CreateSemester() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="w-full max-w-4xl p-8 bg-[#FAFAFA] rounded-lg shadow-md">
         <div className="flex items-center justify-center mb-6">
-          {/* <FaCalendarAlt className="text-red-700 text-3xl mr-2" /> */}
           <Image
             src={icon}
             alt="icon"
@@ -58,7 +57,6 @@ export default function CreateSemester() {
         </div>
         
         <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
-          {/* Year Input */}
           <label className={`${typeStyle}`}>Year</label>
           <input
             type="text"
@@ -68,7 +66,6 @@ export default function CreateSemester() {
             className={`${inputStyle}`}
           />
 
-          {/* Semester Input */}
           <label className={`${typeStyle}`}>Semester</label>
           <input
             type="text"
@@ -78,7 +75,6 @@ export default function CreateSemester() {
             className={`${inputStyle}`}
           />
 
-          {/* Start Date Input */}
           <label className={`${typeStyle}`}>Start Date</label>
           <input
             type="text"
@@ -88,7 +84,6 @@ export default function CreateSemester() {
             className={`${inputStyle}`}
           />
 
-          {/* End Date Input */}
           <label className={`${typeStyle}`}>End Date</label>
           <input
             type="text"
@@ -98,11 +93,9 @@ export default function CreateSemester() {
             className={`${inputStyle}`}
           />
 
-          {/* Save Button */}
           <button
             type="submit"
             className={`${isSaving ? 'bg-red-300' : 'bg-vidva'} ${submitStyle}`}
-            // className={`w-full py-2 text-white font-semibold rounded-lg ${isSaving ? 'bg-red-300' : 'bg-red-700'}`}
             disabled={isSaving}
           >
             {isSaving ? 'Saving...' : 'Save'}
