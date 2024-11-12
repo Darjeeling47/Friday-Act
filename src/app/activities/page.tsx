@@ -5,7 +5,7 @@ import ActivitiesCatalog from "@/components/activities/ActivitiesCatalog";
 import { getActivities } from "@/libs/activities/getActivities";
 
 // import interface
-import { ActivityItem } from "@/interface/activities/activities";
+import { ActivityItem } from "@/interface/activitiesInterface";
 
 export default async function Activities() {
   // Primary variables

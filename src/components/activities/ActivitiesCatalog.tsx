@@ -8,7 +8,7 @@ import ActivitiesItem from "@/components/activities/ActivitiesItem";
 import SearchBar from "@/components/basic/SearchBar";
 
 // import interface
-import { ActivityItem } from "@/interface/activities/activities";
+import { ActivityItem } from "@/interface/activitiesInterface";
 
 export default function ActivitiesCatalog({
   activities
