@@ -16,26 +16,26 @@ export default function AttendanceDetailTable({
   applydate
 }: AttendanceDetailTableProps) {
   return (
-    <div className='w-full h-auto'>
-        <div className='grid grid-cols-4 h-16 items-center text-xl border-b border-mgray-3'>
-            <div className='col-span-1 font-medium'>Company</div>
-            <div className='col-span-3 font-normal'>{company}</div>
+    <div className='w-full h-auto text-xl max-md:text-base'>
+        <div className='grid grid-cols-4 max-md:grid-cols-6 h-16 max-md:h-14 items-center border-b border-mgray-3'>
+            <div className='col-span-1 max-md:col-span-2 font-medium'>Company</div>
+            <div className='col-span-3 max-md:col-span-4 font-normal'>{company}</div>
         </div>
-        <div className='grid grid-cols-4 h-16 items-center text-xl border-b border-mgray-3'>
-            <div className='col-span-1 font-medium'>Date</div>
-            <div className='col-span-3 font-normal'>{date}</div>
+        <div className='grid grid-cols-4 max-md:grid-cols-6 h-16 max-md:h-14 items-center border-b border-mgray-3'>
+            <div className='col-span-1 max-md:col-span-2 font-medium'>Date</div>
+            <div className='col-span-3 max-md:col-span-4 font-normal'>{date}</div>
         </div>
-        <div className='grid grid-cols-4 h-16 items-center text-xl border-b border-mgray-3'>
-            <div className='col-span-1 font-medium'>Timestamp</div>
-            <div className='col-span-3 font-normal'>{timestamp}</div>
+        <div className='grid grid-cols-4 max-md:grid-cols-6 h-16 max-md:h-14 items-center border-b border-mgray-3'>
+            <div className='col-span-1 max-md:col-span-2 font-medium'>Timestamp</div>
+            <div className='col-span-3 max-md:col-span-4 font-normal'>{timestamp}</div>
         </div>
-        <div className='grid grid-cols-4 h-16 items-center text-xl border-b border-mgray-3'>
-            <div className='col-span-1 font-medium'>Status</div>
-            <div className='col-span-3 font-normal'>{status}</div>
+        <div className='grid grid-cols-4 max-md:grid-cols-6 h-16 max-md:h-14 items-center border-b border-mgray-3'>
+            <div className='col-span-1 max-md:col-span-2 font-medium'>Status</div>
+            <div className='col-span-3 max-md:col-span-4 font-normal'>{status}</div>
         </div>
-        <div className='grid grid-cols-4 h-16 items-center text-xl'>
-            <div className='col-span-1 font-medium'>Apply Date</div>
-            <div className='col-span-3 font-normal'>{applydate}</div>
+        <div className='grid grid-cols-4 max-md:grid-cols-6 h-16 max-md:h-14 items-center'>
+            <div className='col-span-1 max-md:col-span-2 font-medium'>Apply Date</div>
+            <div className='col-span-3 max-md:col-span-4 font-normal'>{applydate}</div>
         </div>
     </div>
   );
