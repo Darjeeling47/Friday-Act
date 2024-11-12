@@ -5,7 +5,8 @@ import Tag from "../basic/Tag";
 import { cn } from "@/utils/utils";
 
 // import interface
-import { ActivityItem, TagItem } from "@/interface/activitiesInterface";
+import { ActivityItem } from "@/interface/activitiesInterface";
+import { TagItem } from "@/interface/tagsInterface";
 
 export default function ActivitiesItem({
   item,

@@ -51,8 +51,8 @@ export interface ActivityItem {
   created_at: string;
   updated_at: string | null;
   currentParticipants: string;
-  isApplied: boolean,
-  semester: Semester
+  isApplied?: boolean,
+  semester: SemesterItem
   company: CompanyItem | null,
   tags: TagItem[]
 }
