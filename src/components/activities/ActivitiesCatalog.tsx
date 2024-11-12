@@ -8,26 +8,28 @@ import ActivitiesItem from "@/components/activities/ActivitiesItem";
 import SearchBar from "@/components/basic/SearchBar";
 
 // import interface
-import { ActivityItem } from "@/interface/activitiesInterface";
+import { ActivityItem, ActivitiesGroupByDateItem } from "@/interface/activitiesInterface";
 
 export default function ActivitiesCatalog({
-  activities
+  activitiesGroupByDate
 }: {
-  activities: ActivityItem[];
+  activitiesGroupByDate: ActivitiesGroupByDateItem[];
 }) {
   // Primary variables
   const [search, setSearch] = useState<string>("");
 
   // useMemo for memoize filtered activities based on search term
-  const filteredActivities = useMemo(() => {
-    return search === ""
-      ? activities
-      : activities.filter(
+  const filteredActivitiesGroupByDate = useMemo(() => {
+    if (search === "") return activitiesGroupByDate;
+    return activitiesGroupByDate.map(group => ({
+      ...group,
+      activities: group.activities.filter(
         (item) =>
           item.company?.name?.toLowerCase().includes(search.toLowerCase()) ||
           item.name.toLowerCase().includes(search.toLowerCase())
-      );
-  }, [search, activities]);
+      )
+    })).filter(group => group.activities.length > 0);
+  }, [search, activitiesGroupByDate]);
 
   // return
   return (
@@ -37,16 +39,18 @@ export default function ActivitiesCatalog({
         <SearchBar onChange={setSearch} />
       </div>
 
-      <div className="w-full py-8 flex flex-col justify-start items-start gap-8">
-        <h2 className="font-normal text-mgray-2 text-3xl">{new Date().toLocaleDateString()}</h2>
-        <div className="w-full grid justify-start grid-cols-1 lg:grid-cols-2 gap-8">
-          {filteredActivities.map((activity: ActivityItem) => (
-            <div key={activity.id} className="col-span-1 w-full overflow-hidden">
-              <ActivitiesItem item={activity} />
-            </div>
-          ))}
+      {filteredActivitiesGroupByDate.map((groupDate: ActivitiesGroupByDateItem, index) => (
+        <div key={index} className="w-full py-8 flex flex-col justify-start items-start gap-8 border-b-1 border-b-mgray-1">
+          <h2 className="font-normal text-mgray-2 text-3xl">{new Date(groupDate.date).toLocaleDateString()}</h2>
+          <div className="w-full grid justify-start grid-cols-1 lg:grid-cols-2 gap-8">
+            {groupDate.activities.map((activity: ActivityItem) => (
+              <div key={activity.id} className="col-span-1 w-full overflow-hidden">
+                <ActivitiesItem item={activity} />
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ))}
     </>
   );
 }

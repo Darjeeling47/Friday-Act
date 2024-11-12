@@ -5,17 +5,17 @@ import ActivitiesCatalog from "@/components/activities/ActivitiesCatalog";
 import { getActivities } from "@/libs/activities/getActivities";
 
 // import interface
-import { ActivityItem } from "@/interface/activitiesInterface";
+import { ActivitiesGroupByDate, ActivitiesGroupByDateItem } from "@/interface/activitiesInterface";
 
 export default async function Activities() {
   // Primary variables
-  const response = await getActivities();
-  const activities: ActivityItem[] = response.groupActivities;
+  const response: ActivitiesGroupByDate = await getActivities({ group: "date" });
+  const activities: ActivitiesGroupByDateItem[] = response.dates;
 
   // return
   return (
     <main className="py-28 w-full flex flex-col gap-8">
-      <ActivitiesCatalog activities={activities} />
+      <ActivitiesCatalog activitiesGroupByDate={activities} />
     </main>
   );
 }
