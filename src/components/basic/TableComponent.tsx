@@ -1,47 +1,51 @@
 'use client'
-import Image from "next/image";
-import { useState } from "react";
+import Image from 'next/image'
+import { useState } from 'react'
 
-export default function TableComponent({ 
-  headers, 
-  data, 
-  tableStyle, 
-  headerStyle, 
-  textStyle, 
+export default function TableComponent({
+  headers,
+  data,
+  tableStyle,
+  headerStyle,
+  textStyle,
   iconStyle,
-  defaultRowsPerPage = null
-}: { 
-  headers: { key: string, title: string }[], 
-  data: { [key: string]: any }[], 
-  tableStyle?: string, 
-  headerStyle?: string, 
-  textStyle?: string, 
-  iconStyle?: string,
+  defaultRowsPerPage = null,
+}: {
+  headers: { key: string; title: string }[]
+  data: { [key: string]: any }[]
+  tableStyle?: string
+  headerStyle?: string
+  textStyle?: string
+  iconStyle?: string
   defaultRowsPerPage?: number | null
 }) {
-  const [logoEdit] = useState<string>('/logo/Logo_Edit.png');
-  const [logoDelete] = useState<string>('/logo/Logo_Delete.png');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState<number | null>(defaultRowsPerPage);
-  const indexOfLastRow = rowsPerPage ? currentPage * rowsPerPage : data.length;
-  const indexOfFirstRow = rowsPerPage ? indexOfLastRow - rowsPerPage : 0;
-  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
-  const totalPages = rowsPerPage ? Math.ceil(data.length / rowsPerPage) : 1;
+  const [logoEdit] = useState<string>('/logo/Logo_Edit.png')
+  const [logoDelete] = useState<string>('/logo/Logo_Delete.png')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState<number | null>(
+    defaultRowsPerPage
+  )
+  const indexOfLastRow = rowsPerPage ? currentPage * rowsPerPage : data.length
+  const indexOfFirstRow = rowsPerPage ? indexOfLastRow - rowsPerPage : 0
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow)
+  const totalPages = rowsPerPage ? Math.ceil(data.length / rowsPerPage) : 1
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1)
+  }
   const handlePreviousPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
+    if (currentPage > 1) setCurrentPage(currentPage - 1)
+  }
 
   return (
-    <div className="w-full">
+    <div className='w-full'>
       <table className={`w-full border-collapse ${tableStyle}`}>
         <thead>
           <tr>
             {headers.map((header, index) => (
-              <th key={index} className={`border p-1 text-start border-l-0 border-r-0 font-semibold text-sm sm:p-2 md:text-md ${headerStyle}`}>
+              <th
+                key={index}
+                className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
             ))}
@@ -49,73 +53,76 @@ export default function TableComponent({
         </thead>
         <tbody>
           {currentData.map((rowData, index) => (
-            <tr key={index} className="text-center">
+            <tr key={index} className='text-center'>
               {headers.map((header, subIndex) => {
                 if (header.key === 'edit') {
                   return (
-                    <td key={`${index}-${subIndex}`} className={`border border-l-0 border-r-0 text-start items-start p-1 sm:p-2 ${iconStyle}`}>
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
                       <button>
                         <Image
                           src={logoEdit}
-                          alt="Edit"
+                          alt='Edit'
                           width={20}
                           height={20}
                         />
                       </button>
                     </td>
-                  );
+                  )
                 }
                 if (header.key === 'delete') {
                   return (
-                    <td key={`${index}-${subIndex}`} className={`border border-l-0 border-r-0 text-start items-start p-1 sm:p-2 ${iconStyle}`}>
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
                       <button>
                         <Image
                           src={logoDelete}
-                          alt="Delete"
+                          alt='Delete'
                           width={20}
                           height={20}
                         />
                       </button>
                     </td>
-                  );
+                  )
                 }
                 return (
-                  <td key={`${index}-${subIndex}`} className={`border p-1 text-start border-l-0 border-r-0 text-sm sm:p-2 md:text-md ${textStyle}`}>
+                  <td
+                    key={`${index}-${subIndex}`}
+                    className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
                     {rowData[header.key]}
                   </td>
-                );
+                )
               })}
             </tr>
           ))}
         </tbody>
       </table>
       {rowsPerPage && totalPages > 1 && (
-        <div className="flex justify-center mt-4 space-x-2">
+        <div className='mt-4 flex justify-center space-x-2'>
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className="border rounded px-2 py-1 disabled:opacity-50"
-          >
+            className='rounded border px-2 py-1 disabled:opacity-50'>
             &lt;
           </button>
           {[...Array(totalPages)].map((_, pageIndex) => (
             <button
               key={pageIndex}
               onClick={() => setCurrentPage(pageIndex + 1)}
-              className={`border rounded px-2 py-1 ${currentPage === pageIndex + 1 ? 'bg-gray-300' : ''}`}
-            >
+              className={`rounded border px-2 py-1 ${currentPage === pageIndex + 1 ? 'bg-gray-300' : ''}`}>
               {pageIndex + 1}
             </button>
           ))}
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className="border rounded px-2 py-1 disabled:opacity-50"
-          >
+            className='rounded border px-2 py-1 disabled:opacity-50'>
             &gt;
           </button>
         </div>
       )}
     </div>
-  );
+  )
 }
