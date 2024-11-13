@@ -15,7 +15,7 @@ export default function TableHeader ({
   }
   ) {
   return (
-    <div className={`flex flex-col items-center  mb-6 sm:flex-col justify-center space-y-4 md:flex-row justify-between ${style}`}>
+    <div className={`flex flex-row items-center justify-between mb-4 ${style}`}>
       <p className={`text-2xl font-semibold ${headerStyle}`}>{headerTitle}</p>
       <Button className={`flex items-center justify-center ${buttonStyle}`}>
         {buttonTitle}
