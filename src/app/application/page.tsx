@@ -16,6 +16,7 @@ export default function Application() {
     {"key" : "date", "title" : "Date"},
     {"key" : "applydate", "title" : "Apply Date"},
     {"key" : "status", "title" : "Status"},
+    {"key" : "edit", "title" : ""},
   ]
   const tablemock = {
     "data": [

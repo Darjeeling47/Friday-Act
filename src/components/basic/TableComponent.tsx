@@ -34,7 +34,7 @@ export default function TableComponent({
         {data.map((data, index) => (
           <tr key={index} className="text-center">
             {headers.map((header, subIndex) => {
-              if(header.key == 'edit') return (<td className={`border border-l-0 border-r-0 md: p-2 ${iconStyle}`}>
+              if(header.key == 'edit') return (<td className={`border border-l-0 border-r-0 md:p-2 ${iconStyle}`}>
               <button>
                 <Image
                   src={logoEdit}
@@ -44,7 +44,7 @@ export default function TableComponent({
                 />
               </button>
             </td>)
-              if(header.key == 'delete') return (<td className={`border border-l-0 border-r-0 md: p-2 ${iconStyle}`}>
+              if(header.key == 'delete') return (<td className={`border border-l-0 border-r-0 md:p-2 ${iconStyle}`}>
               <button >
                 <Image
                   src={logoDelete}
