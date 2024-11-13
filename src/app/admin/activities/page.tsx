@@ -26,7 +26,7 @@ export default function AdminActivities() {
       try {
         const response = await fetch(`${HTTP}/api/v1/activities`, {
           headers: {
-            'Authorization': `Bearer eyJpdiI6IpF9mK1SWITbN1bJeiIsInZhbHVlIjoipedeXHUwMDE2vTlcdEyfhsdKNtxS5lx1MDAxYdhcdTAwMTZcdTAwMDKVoyukf7dcdTAwMWNcdTAwMDH/63Ji4Y99V7FyXGJM+lFjeE6PrH05sLhcdTAwMWVJgqylbiHdr8q1L3uGo/f71mB0vVx1MDAxMJpOXHUwMDFiXCKAOdOqXHUwMDE0xYpcdTAwMWWKiSdcdTAwMTFcdTAwMTWLTTHeZpFkZUL2uVx1MDAxNyG5XHUwMDAwnTNcIsf27CfkOoyRglx1MDAxZVxyo1eBm1x1MDAwM6X00DVcZqzW30jwoJxocFxuprasM+d6oWPt5m+fW5+20WtUQPzuf1x1MDAxNo9fpXlSKFBMSiZDXHUwMDAyvk3P+rZ7K52oiPxcZj7/7Vx1MDAxYl2/e2Sz0N5cdObnXHUwMDA2XHUwMDEytnydeCqYXHUwMDEyzFx1MDAwNvhbn1x1MDAwNEPiPWxCNr/2RvIslYdcdTAwMDRti/pcdTAwMDN+MD44PZaIXHUwMDAxXG5b8sXC8Vx1MDAxYctcdTAwMTVYXHUwMDA0qW44XHUwMDA31dO6cO7wlrqKr1Rf7spWioRcdTAwMTDvYvOw9/JUQ3y5XFzCiK9zqZXo1rghSnZcdTAwMTWOuaRcdTAwMWXTlbwl0krhXfCGqcg3fiGaYFx1MDAxYVx1MDAxMr3SlvTkfcc4hnzHc417Tlx1MDAwM0jM4C5vXHUwMDEzRcjws27KXHUwMDFiwlx1MDAwM97OuFx1MDAxOaGBXHUwMDFlP1xmxP871n779tF4xFx1MDAxN8dcdTAwMDRKO/Fn7K4sk33PX9jmiNPQXHUwMDAymNY77txXZOhQXHUwMDFhhFx1MDAxNfJk91x1MDAxMPF1WFx1MDAxZeo2jtHd8eeOkVGs0cXQWlXMM8JcdTAwMWO7vG2iTGbBntfliYV3OzH3MH2hhldRIiwidGFnIjoitlr+XHUwMDBl9Vx1MDAwYlx1MDAxN1xcTkP8yKDFXFy+In0=`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         })
         const data = await response.json().then(data => data.activities)
