@@ -1,4 +1,5 @@
 'use client'
+import { formatDate_Utc_to_EN } from '@/utils/utils'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -10,6 +11,8 @@ export default function TableComponent({
   textStyle,
   iconStyle,
   defaultRowsPerPage = null,
+  onClickEdit,
+  onClickDelete,
 }: {
   headers: { key: string; title: string }[]
   data: { [key: string]: any }[]
@@ -18,6 +21,8 @@ export default function TableComponent({
   textStyle?: string
   iconStyle?: string
   defaultRowsPerPage?: number | null
+  onClickEdit?: Function
+  onClickDelete?: Function
 }) {
   const [logoEdit] = useState<string>('/logo/Logo_Edit.png')
   const [logoDelete] = useState<string>('/logo/Logo_Delete.png')
@@ -60,7 +65,15 @@ export default function TableComponent({
                     <td
                       key={`${index}-${subIndex}`}
                       className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
-                      <button>
+                      <button
+                        onClick={() => {
+                          if (onClickEdit) {
+                            onClickEdit(
+                              currentData[index].id,
+                              currentData[index]
+                            )
+                          }
+                        }}>
                         <Image
                           src={logoEdit}
                           alt='Edit'
@@ -76,7 +89,8 @@ export default function TableComponent({
                     <td
                       key={`${index}-${subIndex}`}
                       className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
-                      <button>
+                      <button
+                        onClick={() => console.log(currentData[index].id)}>
                         <Image
                           src={logoDelete}
                           alt='Delete'
@@ -84,6 +98,15 @@ export default function TableComponent({
                           height={20}
                         />
                       </button>
+                    </td>
+                  )
+                }
+                if (header.key === 'start_date' || header.key === 'end_date') {
+                  return (
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      {formatDate_Utc_to_EN(rowData[header.key])}
                     </td>
                   )
                 }

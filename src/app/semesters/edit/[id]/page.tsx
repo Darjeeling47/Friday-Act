@@ -1,12 +1,16 @@
 'use client'
-import createSemester from '@/libs/semesters/createSemester'
-import Image from 'next/image'
-import React, { useState } from 'react'
 
-export default function CreateSemester() {
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+
+export default function EditSemester() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   // Primary variables for form fields
-  const [year, setYear] = useState<string>('')
-  const [semester, setSemester] = useState<string>('')
+  const [year, setYear] = useState<number>(0)
+  const [semester, setSemester] = useState<number>(0)
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [icon, setIcon] = useState<string>('/logo/Logo_Calendar.png')
@@ -15,7 +19,7 @@ export default function CreateSemester() {
   const [headerStyle, setHeaderStyle] = useState(
     'text-2xl font-semibold text-mgray-1'
   )
-  const [imgStyle, setImgStyle] = useState('')
+  const [imgStyle, setImgStyle] = useState('ml-4 mr-4')
   const [typeStyle, setTypeStyle] = useState(
     'block text-sm font-medium text-mgray-2'
   )
@@ -29,24 +33,37 @@ export default function CreateSemester() {
   // Status variables
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
-  // handleSave function to handle form submission
-  const handleSave = async () => {
-    setIsSaving(true)
-    let data = {
-      year: parseInt(year),
-      semester: parseInt(semester),
-      startDate: new Date(startDate).toISOString(),
-      endDate: new Date(endDate).toISOString(),
+  // Fetch data from query parameters and set initial state
+  useEffect(() => {
+    const year = searchParams.get('year')
+    const semester = searchParams.get('semester')
+    const startDate = searchParams.get('startDate')
+    const endDate = searchParams.get('endDate')
+
+    if (year && semester && startDate && endDate) {
+      setYear(parseInt(year))
+      setSemester(parseInt(semester))
+      setStartDate(startDate)
+      setEndDate(endDate)
     }
-    // await createSemester(data.year, data.semester, data.startDate, data.endDate)
-    setIsSaving(false)
+  }, [searchParams])
+
+  // handleSave function to handle form submission
+  const handleSave = () => {
+    setIsSaving(true)
+    console.log('Saving semester:', { year, semester, startDate, endDate })
+    // Simulate an update operation
+    setTimeout(() => {
+      setIsSaving(false)
+      router.push('/semesters')
+    }, 1000)
   }
 
   return (
     <main className='container'>
-      <div className='flex h-[70vh] flex-col items-center justify-center'>
+      <div className='flex min-h-screen flex-col items-center justify-center'>
         <div className='shadow-md w-full max-w-4xl rounded-lg bg-[#FAFAFA] p-8'>
-          <div className='mb-6 mt-6 flex flex-wrap items-center justify-center space-x-4 space-y-4'>
+          <div className='mb-6 flex items-center justify-center'>
             <Image
               src={icon}
               alt='icon'
@@ -54,7 +71,7 @@ export default function CreateSemester() {
               height={40}
               className={`${imgStyle}`}
             />
-            <h2 className={`${headerStyle}`}>Create Semester</h2>
+            <h2 className={`${headerStyle}`}>Edit Semester</h2>
           </div>
 
           <form
@@ -66,7 +83,7 @@ export default function CreateSemester() {
             <input
               type='text'
               value={year}
-              onChange={(e) => setYear(e.target.value)}
+              onChange={(e) => setYear(parseInt(e.target.value))}
               placeholder='Please Enter'
               className={`${inputStyle}`}
             />
@@ -75,7 +92,7 @@ export default function CreateSemester() {
             <input
               type='text'
               value={semester}
-              onChange={(e) => setSemester(e.target.value)}
+              onChange={(e) => setSemester(parseInt(e.target.value))}
               placeholder='Please Enter'
               className={`${inputStyle}`}
             />
