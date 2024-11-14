@@ -68,10 +68,7 @@ export default function TableComponent({
                       <button
                         onClick={() => {
                           if (onClickEdit) {
-                            onClickEdit(
-                              currentData[index].id,
-                              currentData[index]
-                            )
+                            onClickEdit(currentData[index])
                           }
                         }}>
                         <Image
@@ -90,7 +87,11 @@ export default function TableComponent({
                       key={`${index}-${subIndex}`}
                       className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
                       <button
-                        onClick={() => console.log(currentData[index].id)}>
+                        onClick={() => {
+                          if (onClickDelete) {
+                            onClickDelete(currentData[index])
+                          }
+                        }}>
                         <Image
                           src={logoDelete}
                           alt='Delete'

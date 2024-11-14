@@ -3,12 +3,14 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import updateSemester from '@/libs/semesters/updateSemester'
 
 export default function EditSemester() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   // Primary variables for form fields
+  const [id, setId] = useState<number>(0)
   const [year, setYear] = useState<number>(0)
   const [semester, setSemester] = useState<number>(0)
   const [startDate, setStartDate] = useState<string>('')
@@ -35,12 +37,14 @@ export default function EditSemester() {
 
   // Fetch data from query parameters and set initial state
   useEffect(() => {
+    const id = searchParams.get('id')
     const year = searchParams.get('year')
     const semester = searchParams.get('semester')
     const startDate = searchParams.get('startDate')
     const endDate = searchParams.get('endDate')
 
-    if (year && semester && startDate && endDate) {
+    if (id && year && semester && startDate && endDate) {
+      setId(parseInt(id))
       setYear(parseInt(year))
       setSemester(parseInt(semester))
       setStartDate(startDate)
@@ -49,14 +53,24 @@ export default function EditSemester() {
   }, [searchParams])
 
   // handleSave function to handle form submission
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true)
-    console.log('Saving semester:', { year, semester, startDate, endDate })
-    // Simulate an update operation
-    setTimeout(() => {
-      setIsSaving(false)
-      router.push('/semesters')
-    }, 1000)
+    let data = {
+      id: id,
+      year: year,
+      semester: semester,
+      startDate: new Date(startDate).toISOString(),
+      endDate: new Date(endDate).toISOString(),
+    }
+    await updateSemester(
+      data.id,
+      data.year,
+      data.semester,
+      data.startDate,
+      data.endDate
+    )
+    setIsSaving(false)
+    router.back()
   }
 
   return (

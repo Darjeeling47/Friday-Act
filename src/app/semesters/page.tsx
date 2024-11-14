@@ -3,96 +3,13 @@
 import TableComponent from '@/components/basic/TableComponent'
 import TableHeader from '@/components/basic/TableHeader'
 import getSemesters from '@/libs/semesters/getSemesters'
-import updateSemester from '@/libs/semesters/updateSemester'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-
-interface Semester {
-  year: number
-  semester: number
-  start_date: string
-  end_date: string
-}
-
-// Mock Data
-var mockData = {
-  success: true,
-  count: 3,
-  pagination: {
-    current: 1,
-    last: 1,
-    next: null,
-    prev: null,
-    limit: 25,
-  },
-  semesters: [
-    {
-      id: 1,
-      year: 2025,
-      semester: 1,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-    {
-      id: 2,
-      year: 2025,
-      semester: 1,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-    {
-      id: 3,
-      year: 2025,
-      semester: 2,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-    {
-      id: 4,
-      year: 2025,
-      semester: 1,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-    {
-      id: 5,
-      year: 2025,
-      semester: 1,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-    {
-      id: 6,
-      year: 2025,
-      semester: 4,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-    {
-      id: 7,
-      year: 2025,
-      semester: 1,
-      start_date: '2025-02-15T00:00:00.000Z',
-      end_date: '2025-07-30T00:00:00.000Z',
-      created_at: '2024-10-23T17:19:54.052Z',
-      updated_at: null,
-    },
-  ],
-}
+import { useRouter, useSearchParams } from 'next/navigation'
+import deleteSemester from '@/libs/semesters/deleteSemester'
 
 export default function Semesters() {
+  const router = useRouter()
+
   // Primary variable
   const [data, setData] = useState<Semester[]>([])
   const [loading, setLoading] = useState(true)
@@ -110,8 +27,7 @@ export default function Semesters() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const data = await getSemesters()
-        const data = mockData
+        const data = await getSemesters()
         const semesters = data.semesters
         setData(semesters)
       } catch (error: unknown) {
@@ -130,10 +46,16 @@ export default function Semesters() {
   if (loading) return <div className='text-xl font-semibold'>Loading...</div>
   if (error) return <div className='text-xl font-semibold'>Error: {error}</div>
 
-  const router = useRouter()
+  // Function for create semester
+  const onClickCreate = () => {
+    router.push(`semesters/create`)
+  }
 
-  const onClickEdit = async (uid: number, data: Semester) => {
+  // Function for edit semester
+  const onClickEdit = (data: Semester) => {
+    let uid = data.id
     const query = new URLSearchParams({
+      id: data.id.toString(),
       year: data.year.toString(),
       semester: data.semester.toString(),
       startDate: data.start_date,
@@ -142,10 +64,16 @@ export default function Semesters() {
     router.push(`semesters/edit/${uid}?${query}`)
   }
 
+  // Function for delete semester
+  const onClickDelete = async (data: Semester) => {
+    await deleteSemester(data.id)
+  }
+
   // return
   return (
     <main className='container'>
       <TableHeader
+        onClick={onClickCreate}
         headerTitle='Semesters'
         buttonTitle='New Semesters'
         headerStyle='text-xl md:text-2xl'
@@ -156,6 +84,7 @@ export default function Semesters() {
         data={data}
         defaultRowsPerPage={5}
         onClickEdit={onClickEdit}
+        onClickDelete={onClickDelete}
       />
     </main>
   )

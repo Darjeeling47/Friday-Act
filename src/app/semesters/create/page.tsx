@@ -2,8 +2,10 @@
 import createSemester from '@/libs/semesters/createSemester'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function CreateSemester() {
+  const router = useRouter()
   // Primary variables for form fields
   const [year, setYear] = useState<string>('')
   const [semester, setSemester] = useState<string>('')
@@ -38,8 +40,9 @@ export default function CreateSemester() {
       startDate: new Date(startDate).toISOString(),
       endDate: new Date(endDate).toISOString(),
     }
-    // await createSemester(data.year, data.semester, data.startDate, data.endDate)
+    await createSemester(data.year, data.semester, data.startDate, data.endDate)
     setIsSaving(false)
+    router.back()
   }
 
   return (
