@@ -38,7 +38,7 @@ export default function TableComponent({
   }
 
   return (
-    <div className='w-full'>
+    <div className='flex w-full overflow-x-auto'>
       <table className={`w-full border-collapse ${tableStyle}`}>
         <thead>
           <tr>
@@ -75,7 +75,7 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`border border-l-0 border-r-0 md:p-2 ${iconStyle}`}>
+                      className={`border border-l-0 border-r-0 px-1 max-md:w-28 max-md:h-auto ${iconStyle}`}>
                       <button>
                         <Image
                           src={logoDelete}

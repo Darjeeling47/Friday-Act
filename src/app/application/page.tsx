@@ -80,7 +80,7 @@ export default function Application() {
           ]}
         />
       </div>
-      {/* <div className="flex w-full"> */}
+      {/* <div className="flex w-full overflow-x-auto"> */}
         <TableComponent headers={headers} data={data} textStyle="max-md:text-xs" headerStyle="max-md:text-xs" />
       {/* </div> */}
     </main>
