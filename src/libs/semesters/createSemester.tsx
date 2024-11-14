@@ -6,7 +6,7 @@ export default async function createSemester(
 ) {
   try {
     const response = await fetch(
-      `${process.env.PUBLIC_BACKEND_URL}/api/v1/semesters`,
+      `${process.env.PUBLIC_BACKEND_URL}api/v1/semesters`,
       {
         method: 'POST',
         headers: {
