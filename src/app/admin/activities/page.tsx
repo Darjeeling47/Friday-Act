@@ -49,7 +49,8 @@ export default function AdminActivities() {
     <div className="flex flex-col container mx-auto">
       <TableHeader 
         headerTitle={"Activities"} 
-        buttonTitle={"New Activity"} 
+        buttonTitle={"New Activity"}
+        href={"/admin/activities/create"}
       />
       <div className="flex justify-end p-2">
         <SearchBar onChange={handleSearch} />
