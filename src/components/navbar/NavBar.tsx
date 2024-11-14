@@ -66,11 +66,11 @@ export default function NavBar() {
               className='text-mgray-3 text-md font-normal text-center h-full px-4 py-3'>
               Login
             </a>
-            <a
+            {/* <a
               href='/register'
               className='text-mgray-3 text-md font-normal text-center h-full px-4 py-3'>
               Register
-            </a>
+            </a> */}
           </div>
         ) : (
           <div
@@ -114,12 +114,12 @@ export default function NavBar() {
               h-full px-3 flex justify-center items-center'>
               Login
             </a>
-            <a
+            {/* <a
               href='/login'
               className='text-mgray-3 text-md font-normal text-center hover:text-mgray-4
               h-full px-3 flex justify-center items-center'>
               Register
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
