@@ -45,7 +45,7 @@ export default function TableComponent({
             {headers.map((header, index) => (
               <th
                 key={index}
-                className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
+                className={`md:text-md border border-l-0 border-r-0 p-1 text-start max-md:text-center text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
             ))}
@@ -59,7 +59,7 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
+                      className={`border border-l-0 border-r-0 px-1 max-md:w-28 max-md:h-auto ${iconStyle}`}>
                       <button>
                         <Image
                           src={logoEdit}
@@ -75,7 +75,7 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
+                      className={`border border-l-0 border-r-0 md:p-2 ${iconStyle}`}>
                       <button>
                         <Image
                           src={logoDelete}
