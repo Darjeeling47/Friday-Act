@@ -39,13 +39,14 @@ export default function TableComponent({
 
   return (
     <div className='flex w-full overflow-x-auto'>
-      <table className={`w-full border-collapse ${tableStyle}`}>
+      <table className={`w-full table-fixed border-collapse ${tableStyle}`}>
         <thead>
           <tr>
             {headers.map((header, index) => (
               <th
                 key={index}
-                className={`md:text-md border border-l-0 border-r-0 p-1 text-start max-md:text-center text-sm font-semibold sm:p-2 ${headerStyle}`}>
+                style={{ width: header.key === 'edit' || header.key === 'delete' ? '30px' : '100px' }}
+                className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
             ))}
