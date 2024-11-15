@@ -3,30 +3,35 @@ import Button from './Button'
 export default function TableHeader({
   headerTitle,
   buttonTitle,
-  onClick,
   style,
   headerStyle,
   buttonStyle,
+  disableButton,
+  onClick,
+  href,
 }: {
   headerTitle: string
-  buttonTitle: string
-  onClick?: Function
   style?: string
   headerStyle?: string
   buttonStyle?: string
-}) {
+  onClick?: () => void
+  href?: string
+} & (
+  | { disableButton: true; buttonTitle?: never }
+  | { disableButton?: false; buttonTitle: string }
+)) {
   return (
-    <div className={`mb-4 flex flex-row items-center justify-between ${style}`}>
+    <div
+      className={`flex max-md:flex-col ${disableButton ? 'justify-start' : 'items-center justify-center justify-between'} ${style}`}>
       <p className={`text-2xl font-semibold ${headerStyle}`}>{headerTitle}</p>
-      <Button
-        onClick={() => {
-          if (onClick) {
-            onClick()
-          }
-        }}
-        className={`max-md:my-4 ${buttonStyle}`}>
-        {buttonTitle}
-      </Button>
+      {!disableButton && (
+        <Button
+          className={`max-md:mt-4 ${buttonStyle}`}
+          onClick={onClick}
+          href={href}>
+          {buttonTitle}
+        </Button>
+      )}
     </div>
   )
 }

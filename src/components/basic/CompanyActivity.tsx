@@ -17,10 +17,11 @@ const ActivityList: React.FC<ActivityListProps> = ({ activities, year, semester 
     <div
       className="activity-list"
       style={{
-        border: '2px solid #eee',
+        border: '2px solid #eee', // Thicker outer border
+        borderRadius: '16px', // Rounded corners for main container
         padding: '20px',
         maxWidth: '4000px',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
       }}
     >
       <div
@@ -101,7 +102,7 @@ const ActivityList: React.FC<ActivityListProps> = ({ activities, year, semester 
               style={{
                 width: '48px',
                 height: '48px',
-                borderRadius: '50%',
+                borderRadius: '50%', // Circular avatar
                 backgroundColor: '#eee',
                 marginRight: '20px'
               }}
