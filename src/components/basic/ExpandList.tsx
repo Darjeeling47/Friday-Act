@@ -15,8 +15,8 @@ export default function ExpandList({
 }) {
   // Return
   return (
-    <div className='mt-6 flex flex-col border-t border-t-mgray-6 sm:hidden'>
-      <p className='pl-7 py-2 text-base font-medium text-mgray-2 border-b border-b-mgray-6'>{title}</p>
+    <div className='flex flex-col border-t border-t-mgray-6 sm:hidden'>
+      <p className='pl-7 py-2 text-[15px] font-medium text-mgray-2 border-b border-b-mgray-6'>{title}</p>
       {data.map((data, _) => (
         <ExpandCard 
           key={listKey}
