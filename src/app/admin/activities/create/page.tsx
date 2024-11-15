@@ -6,6 +6,8 @@ import { useRef, useState } from 'react'
 // import components
 import Button from '@/components/basic/Button'
 
+const HTTP = 'http://143.198.87.246'
+
 export default function CreateActivity() {
   // Variables
   // Primary
@@ -36,36 +38,80 @@ export default function CreateActivity() {
     }
   }
 
-  // Handle for submitting form  
+  // Handle for submitting form
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData)
-    console.log(data)
+    const submit = async () => {
+      try {
+        const response = await fetch(`${HTTP}/api/v1/activities`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${process.env.NEXT_USER_TOKEN}`,
+          },
+          body: JSON.stringify(data),
+        })
+
+        if (response.ok) {
+          console.log('Success')
+        } else {
+          console.log('Creating form failed with response: ' + response)
+        }
+    
+      } catch (e) {
+        console.log(e)
+      }
+ 
+      submit()
+    }
   }
 
   // Return
   return (
-    <main className='container px-48 py-8'>
-      <div className='flex flex-col gap-y-5 mt-12'>
-        <div className='flex justify-center gap-x-4 items-center'>
+    <main className='rounded-3xl shadow-2 sm:shadow-none bg-mgray-5 sm:bg-transparent sm:px-48 sm:py-8'>
+      <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-12'>
+        <div className='flex items-center justify-center gap-x-4'>
           <Image
             src='/logo/Logo_Create.png'
             alt='Create Activity'
             width={40}
             height={40}
           />
-          <h1 className='font-bold text-4xl'>Create Activity</h1>
+          <h1 className='text-2xl font-semibold sm:text-4xl'>
+            Create Activity
+          </h1>
         </div>
-        <form className='flex flex-col gap-y-5 mx-24 px-16' onSubmit={handleSubmitForm}>
+        <form
+          className='flex flex-col gap-y-5 px-4 sm:mx-24 sm:px-16'
+          onSubmit={handleSubmitForm}>
           <div className='flex flex-col'>
-            <label htmlFor='name' className='text-lg text-mgray-2'>Name</label>
-            <input type='text' id='name' name='name' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='name' className='text-base text-mgray-2'>
+              Name
+            </label>
+            <input
+              type='text'
+              id='name'
+              name='name'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
-          <div className='flex gap-x-5 items-center'>
-            <label htmlFor='posterimage' className='text-lg text-mgray-2'>Poster Image</label>
-            <input type='file' id='posterimage' name='posterimage' className='hidden' ref={fileInputRef} onChange={handleUploadedFile}/>
-            <Button className='flex rounded-xl gap-x-2 px-5 py-3 bg-vidva text-white' onClick={handleFileInput}>
+          <div className='flex items-center gap-x-5'>
+            <label htmlFor='posterimage' className='text-base text-mgray-2'>
+              Poster Image
+            </label>
+            <input
+              type='file'
+              id='posterimage'
+              name='posterimage'
+              className='hidden'
+              ref={fileInputRef}
+              onChange={handleUploadedFile}
+            />
+            <Button
+              className='flex gap-x-2 rounded-xl bg-vidva px-5 py-3 text-white'
+              onClick={handleFileInput}>
               <p>Upload file</p>
               <Image
                 src='/logo/Logo_CloudUpload.png'
@@ -74,44 +120,112 @@ export default function CreateActivity() {
                 height={20}
               />
             </Button>
-            { fileName && <p>{fileName}</p> }
+            {fileName && <p>{fileName}</p>}
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='company' className='text-lg text-mgray-2'>Company </label>
-            <input type='text' id='company' name='company' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='company' className='text-base text-mgray-2'>
+              Company{' '}
+            </label>
+            <input
+              type='text'
+              id='company'
+              name='company'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='description' className='text-lg text-mgray-2'>Description</label>
-            <textarea id='description' name='description' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 min-h-32 bg-transparent resize-none' placeholder='Please Enter'/>
+            <label htmlFor='description' className='text-base text-mgray-2'>
+              Description
+            </label>
+            <textarea
+              id='description'
+              name='description'
+              className='min-h-32 resize-none rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='start' className='text-lg text-mgray-2'>Start Time</label>
-            <input type='text' id='start' name='start' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='start' className='text-base text-mgray-2'>
+              Start Time
+            </label>
+            <input
+              type='text'
+              id='start'
+              name='start'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='end' className='text-lg text-mgray-2'>End Time</label>
-            <input type='text' id='end' name='end' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='end' className='text-base text-mgray-2'>
+              End Time
+            </label>
+            <input
+              type='text'
+              id='end'
+              name='end'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='participants' className='text-lg text-mgray-2'>Max Participants</label>
-            <input type='text' id='participants' name='participants' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='participants' className='text-base text-mgray-2'>
+              Max Participants
+            </label>
+            <input
+              type='text'
+              id='participants'
+              name='participants'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='tags' className='text-lg text-mgray-2'>Tags</label>
-            <input type='text' id='tags' name='tags' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='tags' className='text-base text-mgray-2'>
+              Tags
+            </label>
+            <input
+              type='text'
+              id='tags'
+              name='tags'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='location' className='text-lg text-mgray-2'>Location</label>
-            <input type='text' id='location' name='location' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='location' className='text-base text-mgray-2'>
+              Location
+            </label>
+            <input
+              type='text'
+              id='location'
+              name='location'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='speakers' className='text-lg text-mgray-2'>Speakers</label>
-            <input type='text' id='speakers' name='speakers' className='rounded-xl border-1 border-mgray-6 placeholder-mgray-3 p-2 bg-transparent' placeholder='Please Enter'/>
+            <label htmlFor='speakers' className='text-base text-mgray-2'>
+              Speakers
+            </label>
+            <input
+              type='text'
+              id='speakers'
+              name='speakers'
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              placeholder='Please Enter'
+            />
           </div>
-          <button type='submit' className='hidden' ref={buttonRef}/>
-          <Button className={`my-4 py-3 rounded-xl`} onClick={handleSaveButtonClick}>Save</Button>     
-      </form>
+          <button type='submit' className='hidden' ref={buttonRef} />
+          <Button
+            className={`my-4 rounded-xl py-3`}
+            onClick={handleSaveButtonClick}>
+            Save
+          </Button>
+        </form>
       </div>
     </main>
   )
-  }
+}
+
