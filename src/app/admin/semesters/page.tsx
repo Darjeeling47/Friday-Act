@@ -1,15 +1,15 @@
 'use client'
 
 import TableComponent from '@/components/basic/TableComponent'
-import TableHeader from '@/components/basic/TableHeader'
+import TableHeader from '@/components/table/TableHeader'
 import getSemesters from '@/libs/semesters/getSemesters'
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import deleteSemester from '@/libs/semesters/deleteSemester'
-import ExpandList from '@/components/basic/ExpandList'
 import Button from '@/components/basic/Button'
 import { formatDate_Utc_to_EN } from '@/utils/utils'
 import SearchBar from '@/components/basic/SearchBar'
+import ExpandList from '@/components/table/ExpandList'
 
 export default function Semesters() {
   const router = useRouter()
