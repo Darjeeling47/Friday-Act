@@ -73,6 +73,23 @@ const config: Config = {
       '2': '10px 10px 30px 0px #E2E2E2, -10px -10px 30px 0px #F2F2F2',
       'none': 'none',
     }
+    },
+    fontSize: {
+      'large-title': 'clamp(1.75rem, 5vw + 0.5rem, 3rem)',       // Large Title
+        'title-1': 'clamp(1.5rem, 4.5vw + 0.5rem, 2.5rem)',         // Title 1
+        'title-2': 'clamp(1.375rem, 4vw + 0.25rem, 2.25rem)',       // Title 2
+        'title-3': 'clamp(1.25rem, 3.5vw + 0.25rem, 1.75rem)',         // Title 3
+        'headline': 'clamp(1.125rem, 3vw + 0.25rem, 1.75rem)',      // Headline
+        'body': 'clamp(1rem, 2.2vw + 0.25rem, 1.375rem)',      // Body
+        'callout': 'clamp(0.875rem, 2vw + 0.2rem, 1.25rem)',        // Callout
+        'subheadline': 'clamp(0.8125rem, 1.8vw + 0.2rem, 1.125rem)', // Subheadline
+        'footnote': 'clamp(0.75rem, 1.6vw + 0.15rem, 1rem)',        // Footnote
+        'caption': 'clamp(0.6875rem, 1.5vw + 0.15rem, 0.875rem)',   // Caption
+    },
+    aspectRatio: {
+      '2/3': '2 / 3',
+      '4/3': '4 / 3',
+    },
   },
   plugins: [
     require('tailwind-scrollbar-hide'),
