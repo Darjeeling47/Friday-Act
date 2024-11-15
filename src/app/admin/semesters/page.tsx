@@ -1,6 +1,6 @@
 'use client'
 
-import TableComponent from '@/components/basic/TableComponent'
+import TableComponent from '@/components/table/TableComponent'
 import TableHeader from '@/components/table/TableHeader'
 import getSemesters from '@/libs/semesters/getSemesters'
 import { Suspense, useEffect, useState } from 'react'
