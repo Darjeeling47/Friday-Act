@@ -75,7 +75,7 @@ export default function EditSemester() {
 
   return (
     <main className='container'>
-      <div className='flex min-h-screen flex-col items-center justify-center'>
+      <div className='flex h-[50vh] flex-col items-center justify-center'>
         <div className='shadow-md w-full max-w-4xl rounded-lg bg-[#FAFAFA] p-8'>
           <div className='mb-6 flex items-center justify-center'>
             <Image

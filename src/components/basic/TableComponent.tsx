@@ -10,6 +10,7 @@ export default function TableComponent({
   headerStyle,
   textStyle,
   iconStyle,
+  spaceText,
   defaultRowsPerPage = null,
   onClickEdit,
   onClickDelete,
@@ -20,6 +21,8 @@ export default function TableComponent({
   headerStyle?: string
   textStyle?: string
   iconStyle?: string
+  spaceText?: string
+  spaceTool?: string
   defaultRowsPerPage?: number | null
   onClickEdit?: Function
   onClickDelete?: Function
@@ -54,7 +57,7 @@ export default function TableComponent({
                   width:
                     header.key === 'edit' || header.key === 'delete'
                       ? '30px'
-                      : '100px',
+                      : `${spaceText}`,
                 }}
                 className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
@@ -77,12 +80,7 @@ export default function TableComponent({
                             onClickEdit(currentData[index])
                           }
                         }}>
-                        <Image
-                          src={logoEdit}
-                          alt='Edit'
-                          width={20}
-                          height={20}
-                        />
+                        <i className={`bi bi-pencil-square ${iconStyle}`}></i>
                       </button>
                     </td>
                   )
@@ -98,12 +96,7 @@ export default function TableComponent({
                             onClickDelete(currentData[index])
                           }
                         }}>
-                        <Image
-                          src={logoDelete}
-                          alt='Delete'
-                          width={20}
-                          height={20}
-                        />
+                        <i className={`bi bi-trash3 ${iconStyle}`}></i>
                       </button>
                     </td>
                   )

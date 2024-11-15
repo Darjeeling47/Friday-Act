@@ -47,7 +47,7 @@ export default function CreateSemester() {
 
   return (
     <main className='container'>
-      <div className='flex h-[70vh] flex-col items-center justify-center'>
+      <div className='flex h-[50vh] flex-col items-center justify-center'>
         <div className='shadow-md w-full max-w-4xl rounded-lg bg-[#FAFAFA] p-8'>
           <div className='mb-6 mt-6 flex flex-wrap items-center justify-center space-x-4 space-y-4'>
             <Image

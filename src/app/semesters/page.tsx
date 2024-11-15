@@ -3,9 +3,13 @@
 import TableComponent from '@/components/basic/TableComponent'
 import TableHeader from '@/components/basic/TableHeader'
 import getSemesters from '@/libs/semesters/getSemesters'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import deleteSemester from '@/libs/semesters/deleteSemester'
+import ExpandList from '@/components/basic/ExpandList'
+import Button from '@/components/basic/Button'
+import { formatDate_Utc_to_EN } from '@/utils/utils'
+import SearchBar from '@/components/basic/SearchBar'
 
 export default function Semesters() {
   const router = useRouter()
@@ -14,6 +18,7 @@ export default function Semesters() {
   const [data, setData] = useState<Semester[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [searchValue, setSearchValue] = useState('')
   const headers = [
     { key: 'year', title: 'Year' },
     { key: 'semester', title: 'Semester' },
@@ -69,23 +74,95 @@ export default function Semesters() {
     await deleteSemester(data.id)
   }
 
+  // handle for search
+  const handleSearch = (value: string) => {
+    // TODO: handle search logic
+    setSearchValue(value)
+    console.log('Search Value:', value)
+  }
+
   // return
   return (
-    <main className='container'>
-      <TableHeader
-        onClick={onClickCreate}
-        headerTitle='Semesters'
-        buttonTitle='New Semesters'
-        headerStyle='text-xl md:text-2xl'
-        buttonStyle='text-sm md:text-xl'
-      />
-      <TableComponent
-        headers={headers}
-        data={data}
-        defaultRowsPerPage={5}
-        onClickEdit={onClickEdit}
-        onClickDelete={onClickDelete}
-      />
-    </main>
+    <Suspense fallback={<div>Loading...</div>}>
+      <main className='container flex flex-col gap-5'>
+        <div className='flex flex-col gap-5'>
+          <TableHeader
+            onClick={onClickCreate}
+            headerTitle='Semesters'
+            buttonTitle='New Semesters'
+            headerStyle='text-xl md:text-2xl'
+            buttonStyle='text-sm md:text-xl'
+          />
+          <div className='hidden sm:flex'>
+            <TableComponent
+              headers={headers}
+              data={data}
+              defaultRowsPerPage={5}
+              onClickEdit={onClickEdit}
+              onClickDelete={onClickDelete}
+              iconStyle='w-20'
+              spaceText='80px'
+            />
+          </div>
+        </div>
+        <div className='flex justify-end p-2 sm:hidden'>
+          <SearchBar
+            onChange={handleSearch}
+            filter={[
+              { category: 'Category 1', options: ['Option 1', 'Option 2'] },
+              { category: 'Category 2', options: ['Option 3', 'Option 4'] },
+            ]}
+          />
+        </div>
+        <ExpandList
+          title='Year'
+          data={data}
+          children={(data: Semester) => (
+            <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
+              <div className='grid grid-cols-2'>
+                <div>
+                  <p className='text-[12px]'>Semester</p>
+                  <p className='text-[10px]'>{data.semester}</p>
+                </div>
+              </div>
+              <div className='grid grid-cols-2'>
+                <div>
+                  <p className='text-[12px]'>Start time</p>
+                  <p className='text-[10px]'>
+                    {formatDate_Utc_to_EN(data.start_date)}
+                  </p>
+                </div>
+                <div>
+                  <p className='text-[12px]'>End time</p>
+                  <p className='text-[10px]'>
+                    {formatDate_Utc_to_EN(data.end_date)}
+                  </p>
+                </div>
+              </div>
+              <div className='flex justify-end space-x-2'>
+                <Button
+                  className='rounded-xl bg-[#D9D9D9] px-10 py-2 text-center text-[10px] text-white'
+                  onClick={() => {
+                    if (onClickEdit) {
+                      onClickEdit(data)
+                    }
+                  }}>
+                  Edit
+                </Button>
+                <Button
+                  className='rounded-xl bg-vidva px-10 py-2 text-center text-[10px] text-white'
+                  onClick={() => {
+                    if (onClickDelete) {
+                      onClickDelete(data)
+                    }
+                  }}>
+                  Delete
+                </Button>
+              </div>
+            </div>
+          )}
+          listKey={'year'}></ExpandList>
+      </main>
+    </Suspense>
   )
 }
