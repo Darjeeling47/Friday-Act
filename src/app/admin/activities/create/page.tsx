@@ -45,27 +45,35 @@ export default function CreateActivity() {
     const data = Object.fromEntries(formData)
     const submit = async () => {
       try {
+        const formData = new FormData()
+        Object.keys(data).forEach(key => {
+          formData.append(key, data[key])
+        })
+
+        if (fileInputRef.current && fileInputRef.current.files) {
+          formData.append('poster', fileInputRef.current.files[0])
+        }
+
         const response = await fetch(`${HTTP}/api/v1/activities`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${process.env.NEXT_USER_TOKEN}`,
+          'Authorization': `Bearer ${process.env.NEXT_USER_TOKEN}`,
           },
-          body: JSON.stringify(data),
+          body: formData,
         })
 
         if (response.ok) {
           console.log('Success')
         } else {
-          console.log('Creating form failed with response: ' + response)
+          console.log('Creating activity failed with response: ' + response)
         }
-    
-      } catch (e) {
+      
+        } catch (e) {
         console.log(e)
       }
- 
+    }
       submit()
     }
-  }
 
   // Return
   return (
@@ -98,13 +106,13 @@ export default function CreateActivity() {
             />
           </div>
           <div className='flex items-center gap-x-5'>
-            <label htmlFor='posterimage' className='text-base text-mgray-2'>
+            <label htmlFor='poster' className='text-base text-mgray-2'>
               Poster Image
             </label>
             <input
               type='file'
-              id='posterimage'
-              name='posterimage'
+              id='poster'
+              name='poster'
               className='hidden'
               ref={fileInputRef}
               onChange={handleUploadedFile}
@@ -123,13 +131,13 @@ export default function CreateActivity() {
             {fileName && <p>{fileName}</p>}
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='company' className='text-base text-mgray-2'>
+            <label htmlFor='companyId' className='text-base text-mgray-2'>
               Company{' '}
             </label>
             <input
               type='text'
-              id='company'
-              name='company'
+              id='companyId'
+              name='companyId'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
               placeholder='Please Enter'
             />
@@ -146,25 +154,25 @@ export default function CreateActivity() {
             />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='start' className='text-base text-mgray-2'>
+            <label htmlFor='startTime' className='text-base text-mgray-2'>
               Start Time
             </label>
             <input
               type='text'
-              id='start'
-              name='start'
+              id='startTime'
+              name='startTime'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='end' className='text-base text-mgray-2'>
+            <label htmlFor='endTime' className='text-base text-mgray-2'>
               End Time
             </label>
             <input
               type='text'
-              id='end'
-              name='end'
+              id='endTime'
+              name='endTime'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
               placeholder='Please Enter'
             />
@@ -175,8 +183,8 @@ export default function CreateActivity() {
             </label>
             <input
               type='text'
-              id='participants'
-              name='participants'
+              id='maxParticipants'
+              name='maxParticipants'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
               placeholder='Please Enter'
             />
@@ -206,13 +214,13 @@ export default function CreateActivity() {
             />
           </div>
           <div className='flex flex-col'>
-            <label htmlFor='speakers' className='text-base text-mgray-2'>
+            <label htmlFor='speaker' className='text-base text-mgray-2'>
               Speakers
             </label>
             <input
               type='text'
-              id='speakers'
-              name='speakers'
+              id='speaker'
+              name='speaker'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
               placeholder='Please Enter'
             />
