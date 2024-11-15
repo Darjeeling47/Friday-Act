@@ -24,7 +24,7 @@ const App: React.FC = () => {
     <>
       {/* Company Information Section */}
       <div className="flex p-4 max-w-full h-full items-stretch mb-8">
-        <div className="flex-1 flex flex-col justify-between mt-20">
+        <div className="flex-1 flex flex-col justify-between mt-8 w-0.9">
           <div>
             <h1 className="text-4xl font-bold mb-4 text-mgray-2">Company Name</h1>
             <p className="text-base max-w-md text-mgray-2">
@@ -48,11 +48,11 @@ const App: React.FC = () => {
             <a href="#" className="text-sm text-blue-600">Link for the company</a>
           </div>
         </div>
-        <div className="w-80 h-80 bg-mgray-3 rounded mt-20"></div>
+        <div className="w-72 h-80 bg-mgray-3 rounded mt-20"></div>
       </div>
       
       {/* Company Activities Section */}
-      <div className="max-w-full mb-8">
+      <div className="max-w-full mb-8 mt-4">
         <CompanyActivity
           activities={sampleActivities}
           year="2024"
@@ -83,7 +83,7 @@ const PhoneIcon: React.FC = () => (
 const MailIcon: React.FC = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      d="M2 4a2 2 0 012-2h16a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2.5 2v.01L12 13l7.5-6.99V6H4.5z"
+      d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16zm-16 2v10h16V8l-8 5-8-5z"
       fill="currentColor"
     />
   </svg>
