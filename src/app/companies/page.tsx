@@ -28,21 +28,17 @@ const CompaniesPage: React.FC = () => {
   };
 
   return (
-    <main className="container mx-auto p-6">
+    <main className="mx-auto p-6 container">
       {/* Header with Title and SearchBar */}
-      <div className="flex items-center justify-between mb-8 mt-4 w-full">
-        <h1 className="text-4xl font-bold">Companies</h1>
+      <div className="flex justify-between items-center mt-4 mb-8 w-full">
+        <h1 className="font-bold text-4xl">Companies</h1>
         <SearchBar
           onChange={handleSearchChange} // เรียกใช้งาน handleSearchChange
-          filter={[
-            { category: "Category 1", options: ["Option 1", "Option 2"] },
-            { category: "Category 2", options: ["Option 3", "Option 4"] },
-          ]}
         />
       </div>
 
       {/* Company Cards */}
-      <div className="grid grid-cols-2 gap-8">
+      <div className="gap-8 grid grid-cols-2">
         {filteredCompanies.length > 0 ? (
           filteredCompanies.map((company) => (
             <CompanyCard
@@ -53,7 +49,7 @@ const CompaniesPage: React.FC = () => {
             />
           ))
         ) : (
-          <p className="text-center col-span-2">No companies found.</p>
+          <p className="col-span-2 text-center">No companies found.</p>
         )}
       </div>
     </main>

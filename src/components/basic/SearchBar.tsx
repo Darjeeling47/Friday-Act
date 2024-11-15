@@ -9,9 +9,6 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 // import util
 import { cn } from '@/utils/utils';
 
-// import icon
-import { FilterIcon } from '@/assets/icon/filterIcon';
-
 export default function SearchBar({
   onChange,
   wFull,
@@ -24,7 +21,6 @@ export default function SearchBar({
   className?: string
 }) {
   // Primary variables
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>(value || '');
 
   // Handle for searching items
