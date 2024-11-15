@@ -1,15 +1,19 @@
-export async function getImageAsBase64(url: string): Promise<string> {
+import { ActivityItem } from "@/interface/activitiesInterface";
+
+export async function getImageAsBase64(url: string): Promise<string | undefined> {
   try {
-    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}${url}`);
+    const imgUrl = url.slice(1);
+    const imgSrc = `${process.env.PUBLIC_BACKEND_URL}${imgUrl}`;
+    const response = await fetch(imgSrc);
     if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.statusText}`);
+      return undefined;
     }
 
     const blob = await response.blob();
     return await convertBlobToBase64(blob);
   } catch (error) {
     console.error("Error fetching image:", error);
-    throw error;
+    return undefined;
   }
 }
 

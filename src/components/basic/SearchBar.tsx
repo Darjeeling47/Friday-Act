@@ -16,26 +16,45 @@ export default function SearchBar({
   onChange,
   wFull,
   value,
+  className
 }: {
   onChange: Function;
   wFull?: boolean;
   value?: string;
+  className?: string
 }) {
   // Primary variables
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>(value || '');
+
+  // Handle for searching items
+  const searchHandle = () => {
+    onChange(searchValue);
+  }
+
+  // Handle when user press enter key
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      searchHandle();
+    }
+  };
 
   // return
   return (
-    <div className={cn("flex flex-row items-center gap-2", wFull ? 'w-full' : 'w-80')}>
-      <div className="w-full flex flex-row items-center justify-between rounded-3xl bg-neutral-50 px-4 py-1 shadow-2">
+    <div className={cn("flex flex-row items-center gap-2", wFull ? 'w-full' : 'w-80', className)}>
+      <div className="flex flex-row justify-between items-center bg-neutral-50 shadow-2 px-4 py-1 rounded-3xl w-full">
         <input
           type="text"
           placeholder="Search"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full border-none bg-neutral-50 text-lg font-light text-mgray-1 outline-none placeholder:font-light placeholder:text-lg placeholder:text-mgray-2"
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="bg-neutral-50 border-none w-full font-light placeholder:font-light text-body text-mgray-1 placeholder:text-lg placeholder:text-mgray-2 outline-none"
         />
-        <button className='px-1 h-full'>
+        <button
+          className='px-1 h-full'
+          onClick={searchHandle}
+        >
           <MagnifyingGlassIcon stroke="#525252" className="w-4" />
         </button>
       </div>

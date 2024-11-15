@@ -25,7 +25,7 @@ export interface ActivitiesGroupBySemester {
 }
 
 export interface ActivitiesGroupByDateItem {
-  date: Date;
+  date: string;
   activities: ActivityItem[];
   semester: SemesterItem
 }

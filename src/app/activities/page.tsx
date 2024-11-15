@@ -14,7 +14,7 @@ export default async function Activities() {
 
   // return
   return (
-    <main className="py-28 w-full flex flex-col gap-8">
+    <main className="flex flex-col gap-8 py-10 sm:py-28 w-full">
       <ActivitiesCatalog activitiesGroupByDate={activities} />
     </main>
   );

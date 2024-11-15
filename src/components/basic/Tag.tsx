@@ -11,9 +11,9 @@ export default function Tag({
 }) {
   // return
   return (
-    <span
+    <div
       className={cn(
-        "px-2 py-1 rounded-full bg-opacity-20",
+        "px-2 py-1 rounded-full text-footnote",
         !color && "border border-mgray-1"
       )}
       style={{
@@ -22,6 +22,6 @@ export default function Tag({
       }}
     >
       {text}
-    </span>
+    </div>
   );
 };
