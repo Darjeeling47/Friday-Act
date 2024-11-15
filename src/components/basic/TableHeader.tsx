@@ -1,4 +1,4 @@
-import Button from "./Button";
+import Button from './Button'
 
 export default function TableHeader ({ 
     headerTitle,
@@ -19,11 +19,11 @@ export default function TableHeader ({
   }
   ) {
   return (
-    <div className={`flex flex-col items-center  mb-6 sm:flex-col justify-center space-y-4 md:flex-row justify-between ${style}`}>
+    <div className={`flex max-md:flex-col items-center justify-center justify-between ${style}`}>
       <p className={`text-2xl font-semibold ${headerStyle}`}>{headerTitle}</p>
-      <Button className={`flex items-center justify-center ${buttonStyle}`} onClick={onClick} href={href}>
-        {buttonTitle}
-      </Button>
+        <Button className={`max-md:mt-4 ${buttonStyle}`} onClick={onClick} href={href}>
+          {buttonTitle}
+        </Button>
     </div>
-  );
-};
+  )
+}
