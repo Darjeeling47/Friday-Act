@@ -9,7 +9,7 @@ interface CompanyCardProps {
 
 const CompanyCard: React.FC<CompanyCardProps> = ({ id, name, description }) => {
   return (
-    <div className="gap-4 p-4 w-120 border rounded-lg hover:shadow-lg transition-shadow">
+    <div className="gap-4 p-4 w-120 hover:shadow-lg transition-shadow">
       {/* รูปหรือ placeholder */}
       <div className="w-20 h-20 bg-mgray-6 rounded-lg mb-4"></div>
 
