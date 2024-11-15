@@ -1,7 +1,15 @@
 import React from 'react';
 import { cn } from '@/utils/utils';
 
-const Tag = ({ text = "", color = 'bg-blue-200' }) => {
+// Tag component
+export default function Tag({
+  text,
+  color
+}: {
+  text: string,
+  color?: string
+}) {
+  // return
   return (
     <div
       className={cn(
@@ -17,5 +25,3 @@ const Tag = ({ text = "", color = 'bg-blue-200' }) => {
     </div>
   );
 };
-
-export default Tag;
