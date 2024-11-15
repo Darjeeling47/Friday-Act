@@ -10,6 +10,7 @@ import { useParams } from 'next/navigation';
 import TableHeader from '@/components/basic/TableHeader';
 import TableComponent from '@/components/basic/TableComponent';
 import ExpandList from '@/components/basic/ExpandList';
+import SearchBar from '@/components/basic/SearchBar';
 
 // Mock Participants Data
 // Schema: {
@@ -84,11 +85,17 @@ export default function ActivitityDetail () {
     }
   };
 
+  // handle search bar
+  const handleSearchBar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    // TODO: Implement search bar logic
+  }
+
   // return
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto p-4 flex flex-col gap-y-5 sm:gap-y-0">
       {/* Content Wrapper */}
-      <div className="flex flex-col md:flex-row gap-4 py-10">
+      <div className="flex flex-col md:flex-row gap-4 mb-10 md:mb-[100px]">
         
         {/* Left: Picture */}
         <div className="flex-[0.9] flex justify-center items-center">
@@ -228,7 +235,14 @@ export default function ActivitityDetail () {
       
       { /* Participants Table */ }
       <div>
-        <TableHeader headerTitle={'Participants'} disableButton />
+        <div className='flex flex-col sm:flex-row gap-y-5 justify-center sm:justify-between'>
+          <TableHeader 
+            headerTitle={'Participants'}
+            headerStyle='py-[13px] sm:py-0'
+            disableButton
+            />
+          <SearchBar onChange={handleSearchBar} />
+        </div>
         <TableComponent 
           tableStyle='mt-6 hidden sm:table'
           headers={[
@@ -243,47 +257,47 @@ export default function ActivitityDetail () {
           ]}
           headerStyle='text-center text-mgray-2'
           textStyle='text-center text-mgray-2'
-          data={mockData} />
-          <ExpandList 
-            title={'Name'} 
-            children={(data) => (
-              <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
-                <div className='flex flex-col'>
-                <p className='text-[12px]'>Student ID</p>
-                <p className='text-[10px]'>{data.studentId}</p>
-              </div>
-              <div className='grid grid-cols-2'>
-                <div>
-                  <p className='text-[12px]'>Faculty</p>
-                  <p className='text-[10px]'>{data.faculty}</p>
-                </div>
-              <div>
-                <p className='text-[12px]'>Department</p>
-                <p className='text-[10px]'>{data.department}</p>
-              </div>
-            </div>
-            <div className='grid grid-cols-2'>
-              <div>
-                <p className='text-[12px]'>Major</p>
-                <p className='text-[10px]'>{data.program}</p>
-              </div>
-              <div>
-                <p className='text-[12px]'>Admission Year</p>
-                <p className='text-[10px]'>{data.admissionYear}</p>
-              </div>                  
-            </div>
-            <Button
-                className='bg-vidva text-white text-center rounded-xl px-3 py-1 text-[10px]'
-                href={`/admin/activities/${data.studentId}`}
-            >
-              More Details
-            </Button>
-          </div>
-            )}
-            listKey={'thaiName'}
-            data={mockData} 
-          />
+          data={mockData} />    
       </div>
+      <ExpandList 
+        title={'Name'} 
+        children={(data) => (
+          <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
+            <div className='flex flex-col'>
+            <p className='text-[12px]'>Student ID</p>
+            <p className='text-[10px]'>{data.studentId}</p>
+          </div>
+          <div className='grid grid-cols-2'>
+            <div>
+              <p className='text-[12px]'>Faculty</p>
+              <p className='text-[10px]'>{data.faculty}</p>
+            </div>
+          <div>
+            <p className='text-[12px]'>Department</p>
+            <p className='text-[10px]'>{data.department}</p>
+          </div>
+        </div>
+        <div className='grid grid-cols-2'>
+          <div>
+            <p className='text-[12px]'>Major</p>
+            <p className='text-[10px]'>{data.program}</p>
+          </div>
+          <div>
+            <p className='text-[12px]'>Admission Year</p>
+            <p className='text-[10px]'>{data.admissionYear}</p>
+          </div>                  
+        </div>
+        <Button
+            className='bg-vidva text-white text-center rounded-xl px-3 py-1 text-[10px]'
+            href={`/admin/activities/${data.studentId}`}
+        >
+          More Details
+        </Button>
+        </div>
+          )}
+          listKey={'thaiName'}
+          data={mockData} 
+        />
     </main>
   );
 };
