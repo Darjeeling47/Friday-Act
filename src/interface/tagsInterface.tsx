@@ -7,6 +7,11 @@ export interface Tags{
     tags: TagItem[]
 }
 
+export interface Tag{
+  success: boolean,
+  tag: TagItem
+}
+
 export interface TagItem {
   id: number,
   name: string,
