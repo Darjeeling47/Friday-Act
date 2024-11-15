@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 // import components
-import Tag from './basic/Tag'
+import Tag from '@/components/basic/Tag'
 
 var mockData = {
   id: '1',

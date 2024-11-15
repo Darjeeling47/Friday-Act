@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 // import components
 import Button from '@/components/basic/Button'
-import ActivityCard from '@/components/ActivityCard'
+import ActivityCard from '@/components/activity/ActivityCard'
 
 export default function Home() {
   return (

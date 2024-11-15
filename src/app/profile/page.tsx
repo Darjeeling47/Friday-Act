@@ -2,7 +2,7 @@
 import Image from 'next/image'
 
 // import components
-import ActivityLog from '@/components/ActivityLog'
+import ActivityLog from '@/components/activity/ActivityLog'
 import CompanyActivity from '@/components/activity/CompanyActivity'
 
 const sampleActivities = [
