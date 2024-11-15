@@ -1,19 +1,18 @@
-"use client"
+'use client'
 
-import TableComponent from "@/components/basic/TableComponent";
-import TableHeader from "@/components/basic/TableHeader";
-import getSemesters from "@/libs/semesters/getSemesters";
-import { formatDate_Utc_to_EN } from "@/utils/utils";
-import { error } from "console";
-import { useEffect, useState } from "react";
+import TableComponent from '@/components/table/TableComponent'
+import TableHeader from '@/components/table/TableHeader'
+import getSemesters from '@/libs/semesters/getSemesters'
+import { formatDate_Utc_to_EN } from '@/utils/utils'
+import { error } from 'console'
+import { useEffect, useState } from 'react'
 
 interface Semester {
-  year: number;
-  semester: number;
-  start_date: string;
-  end_date: string;
+  year: number
+  semester: number
+  start_date: string
+  end_date: string
 }
-
 
 export default function Semesters() {
   // Primary variable
@@ -62,16 +61,12 @@ export default function Semesters() {
   return (
     <main className='container'>
       <TableHeader
-        headerTitle="Semesters"
-        buttonTitle="New Semesters"
-        headerStyle="text-xl md:text-2xl"
-        buttonStyle="text-sm md:text-xl"
+        headerTitle='Semesters'
+        buttonTitle='New Semesters'
+        headerStyle='text-xl md:text-2xl'
+        buttonStyle='text-sm md:text-xl'
       />
-      <TableComponent
-        headers={headers}
-        data={data}
-        defaultRowsPerPage={10}
-      />
+      <TableComponent headers={headers} data={data} defaultRowsPerPage={10} />
     </main>
   )
 }

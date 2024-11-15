@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 // import components
 import ActivityLog from '@/components/ActivityLog'
-import CompanyActivity from '@/components/basic/CompanyActivity'
+import CompanyActivity from '@/components/activity/CompanyActivity'
 
 const sampleActivities = [
   { name: 'Activity Name', company: 'Company Name', date: '08 OCT 2024' },
