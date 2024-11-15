@@ -33,13 +33,13 @@ export default function ActivityCard({
   }
 }) {
   return (
-    <div className="flex flex-row space-x-6 w-full rounded-md hover:bg-mgray-3/20 p-3">
-      <div className='h-fit w-48'>
+    <div className="flex flex-row space-x-6 hover:bg-mgray-3/20 p-3 rounded-md w-full">
+      <div className='w-48 h-fit'>
         <Image src={activity.picture} alt="activity" width={500} height={500}/>
       </div>
       <div className='flex flex-col justify-between gap-12 w-2/3 h-full'>
         <div className='flex flex-col gap-1'>
-          <h3 className='text-xl text-mgray-1 font-medium'>{activity.name}</h3>
+          <h3 className='font-medium text-mgray-1 text-xl'>{activity.name}</h3>
           <p className='text-md text-mgray-2'>{activity.company}</p>
           <hr className='my-2' />
           <div className='flex flex-row gap-2 overflow-auto'>
@@ -47,13 +47,13 @@ export default function ActivityCard({
               <Tag key={i} text={tag}></Tag>
             ))}
           </div>
-          <p className='line-clamp-3 text-mgray-2 '>{activity.description}</p>
+          <p className='line-clamp-3 text-mgray-2'>{activity.description}</p>
         </div>
         {
           activity.capacity - activity.reserved > 0 ? (
-            <p className='text-emerald-500 text-right'>{`${activity.capacity - activity.reserved} Seats Left`}</p>
+            <p className='text-right text-emerald-500'>{`${activity.capacity - activity.reserved} Seats Left`}</p>
           ) : (
-            <p className='text-rose-600 text-right'>Full</p>
+            <p className='text-right text-rose-600'>Full</p>
           )}
       </div>
     </div>

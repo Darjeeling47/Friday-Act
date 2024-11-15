@@ -7,7 +7,7 @@ export default function Tag({
   color
 }: {
   text: string,
-  color: string
+  color?: string
 }) {
   // return
   return (
