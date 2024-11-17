@@ -1,4 +1,4 @@
-export default async function getTags({
+export default async function deleteTag({
   id
 }: {
   id: string
