@@ -43,66 +43,69 @@ export default function CreateSemester() {
 
   return (
     <main className='container'>
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="w-full max-w-4xl p-8 bg-[#FAFAFA] rounded-lg shadow-md">
-        <div className="flex items-center justify-center mb-6">
-          <Image
-            src={icon}
-            alt="icon"
-            width={40}
-            height={40}
-            className={`${imgStyle}`}
-          />
-          <h2 className={`${headerStyle}`}>Edit Semester</h2>
+      <div className='flex h-[50vh] min-h-screen flex-col items-center justify-center'>
+        <div className='shadow-md w-full max-w-4xl rounded-lg bg-[#FAFAFA] p-8'>
+          <div className='mb-6 flex items-center justify-center'>
+            <Image
+              src={icon}
+              alt='icon'
+              width={40}
+              height={40}
+              className={`${imgStyle}`}
+            />
+            <h2 className={`${headerStyle}`}>Edit Semester</h2>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault()
+              handleSave()
+            }}>
+            <label className={`${typeStyle}`}>Year</label>
+            <input
+              type='text'
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              placeholder='Please Enter'
+              className={`${inputStyle}`}
+            />
+
+            <label className={`${typeStyle}`}>Semester</label>
+            <input
+              type='text'
+              value={semester}
+              onChange={(e) => setSemester(e.target.value)}
+              placeholder='Please Enter'
+              className={`${inputStyle}`}
+            />
+
+            <label className={`${typeStyle}`}>Start Date</label>
+            <input
+              type='text'
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              placeholder='Please Enter'
+              className={`${inputStyle}`}
+            />
+
+            <label className={`${typeStyle}`}>End Date</label>
+            <input
+              type='text'
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              placeholder='Please Enter'
+              className={`${inputStyle}`}
+            />
+
+            <button
+              type='submit'
+              className={`${isSaving ? 'bg-red-300' : 'bg-vidva'} ${submitStyle}`}
+              disabled={isSaving}>
+              {isSaving ? 'Saving...' : 'Save'}
+            </button>
+          </form>
         </div>
-        
-        <form onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
-          <label className={`${typeStyle}`}>Year</label>
-          <input
-            type="text"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            placeholder="Please Enter"
-            className={`${inputStyle}`}
-          />
-
-          <label className={`${typeStyle}`}>Semester</label>
-          <input
-            type="text"
-            value={semester}
-            onChange={(e) => setSemester(e.target.value)}
-            placeholder="Please Enter"
-            className={`${inputStyle}`}
-          />
-
-          <label className={`${typeStyle}`}>Start Date</label>
-          <input
-            type="text"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            placeholder="Please Enter"
-            className={`${inputStyle}`}
-          />
-
-          <label className={`${typeStyle}`}>End Date</label>
-          <input
-            type="text"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            placeholder="Please Enter"
-            className={`${inputStyle}`}
-          />
-
-          <button
-            type="submit"
-            className={`${isSaving ? 'bg-red-300' : 'bg-vidva'} ${submitStyle}`}
-            disabled={isSaving}
-          >
-            {isSaving ? 'Saving...' : 'Save'}
-          </button>
-        </form>
       </div>
-    </div>
     </main>
-  );
+  )
 }
