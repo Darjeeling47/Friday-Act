@@ -1,5 +1,6 @@
 // import components
 import ActivitiesCatalog from "@/components/activities/ActivitiesCatalog";
+import Cookies from "js-cookie";
 
 // import lib
 import { getActivities } from "@/libs/activities/getActivities";
@@ -8,8 +9,11 @@ import { getActivities } from "@/libs/activities/getActivities";
 import { ActivitiesGroupByDate, ActivitiesGroupByDateItem } from "@/interface/activitiesInterface";
 
 export default async function Activities() {
+  // Get the token using js-cookie
+  const token = Cookies.get('access_token')
+
   // Primary variables
-  const response: ActivitiesGroupByDate = await getActivities({ group: "date" });
+  const response: ActivitiesGroupByDate = await getActivities({ token: token as string,group: "date" });
   const activities: ActivitiesGroupByDateItem[] = response.dates;
 
   // return

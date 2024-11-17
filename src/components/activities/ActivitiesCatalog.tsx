@@ -55,7 +55,7 @@ export default function ActivitiesCatalog({
       <div className="justify-between gap-10 grid grid-cols-1 sm:grid-cols-2 w-full">
         <h1 className="col-span-1 font-bold text-center text-mgray-1 text-title-1 sm:text-left">Activities</h1>
         <div className="flex justify-end items-center col-span-1">
-          <SearchBar onChange={setSearch} className="mt-1 w-full sm:w-80"/>
+          <SearchBar onChange={setSearch} className="mt-1 w-full sm:w-80" />
         </div>
       </div>
 

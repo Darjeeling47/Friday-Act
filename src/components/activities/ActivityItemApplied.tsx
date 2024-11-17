@@ -2,7 +2,6 @@
 //import react
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 // import components
 import Tag from '../basic/Tag'
@@ -22,12 +21,6 @@ export default function ActivityItemApplied({
   // Primary variables
   const availableSeats = activity.max_participants - parseInt(activity.currentParticipants);
   const [imgSrc, setImgSrc] = useState<string | undefined>(undefined);
-  const router = useRouter();
-
-  // Function for go to activity page
-  const gotoActivityPage = () => {
-    router.push(`/activities/${activity.id}`);
-  }
 
   // useEffect for get image as base64
   useEffect(() => {
@@ -40,10 +33,7 @@ export default function ActivityItemApplied({
 
   // return
   return (
-    <button 
-    className="flex flex-row justify-start items-start gap-5 hover:bg-vidva/10 p-5 rounded-[30px] w-full h-full transition-transform duration-300"
-    onClick={gotoActivityPage}
-    >
+    <div className="flex flex-row justify-start items-start gap-5 hover:bg-vidva/10 p-5 rounded-[30px] w-full h-full transition-transform duration-300">
       <div className="flex justify-center items-center bg-white shadow-1 rounded-3xl h-44 sm:h-56 md:h-64 lg:h-72 aspect-2/3">
         {imgSrc ? (
           <Image
@@ -84,6 +74,6 @@ export default function ActivityItemApplied({
           )
         }
       </div>
-    </button>
+    </div>
   )
 }

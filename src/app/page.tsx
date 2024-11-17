@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Button from '@/components/basic/Button'
 import ActivityCard from '@/components/activity/ActivityCard'
 import { useEffect } from 'react'
-import getActivities from '@/libs/activities/getActivities'
+import { getActivities } from '@/libs/activities/getActivities'
 import Cookies from 'js-cookie'
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
     // Fetch data
     const a = async () => {
       try {
-        const response = await getActivities(token as string)
+        const response = await getActivities({ token: token as string })
         console.log(response)
       } catch (e) {
         console.log(e)
