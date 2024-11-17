@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     // Exchange code for token
     const tokenData = await exchangeCodeForToken(code)
     const token = tokenData.access_token
-    console.log(token)
+    // console.log(token)
 
     if (!token) {
       throw new Error('Token not found')
