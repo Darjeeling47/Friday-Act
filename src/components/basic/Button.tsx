@@ -32,7 +32,7 @@ export default function Button({
   // return
   if (href) {
     return (
-      <Link href={href}>
+      <Link href={href} legacyBehavior>
         <a
           target={target}
           className={`px-4 py-2 rounded-md shadow ${theme} ${className}`}>

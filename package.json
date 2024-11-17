@@ -25,6 +25,7 @@
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.3.30",
+    "js-cookie": "^3.0.5",
     "next": "^14.2.16",
     "next-auth": "^4.23.2",
     "next-intl": "^3.17.6",
@@ -37,6 +38,7 @@
     "typescript": "5.5.4"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8"
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import CompanyCard from "@/components/basic/CompanyCard";
+import CompanyCard from "@/components/activity/CompanyCard";
 import SearchBar from "@/components/basic/SearchBar";
 
 const CompaniesPage: React.FC = () => {
