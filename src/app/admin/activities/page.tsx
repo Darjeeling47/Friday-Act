@@ -73,40 +73,44 @@ export default function AdminActivities() {
     }[]
   >([])
 
-  // Use effect for fetching data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${HTTP}/api/v1/activities`, {
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
-          },
-        })
-        const data = await response.json().then((data) => data.activities)
-        setData(data)
-        console.log(data)
-      } catch (e) {
-        console.log(e)
-      }
+  // Function for fetching data
+  const fetchData = async (queryString?: string) => {
+    if (!queryString) {
+      queryString = ''
     }
+    try {
+      const response = await fetch(`${HTTP}/api/v1/activities${queryString}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
+        },
+      })
+      const data = await response.json().then((data) => data.activities)
+      setData(data)
+      console.log(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  // Use effect for fetching data first time
+  useEffect(() => {
     fetchData()
   }, [])
 
   // handle search bar
   const handleSearch = (value: string) => {
-    console.log(value)
-    // TODO: handle search logic
+    fetchData(`?search=${value}`)
   }
 
   // Return
   return (
-    <div className='sm:-mx-24 mt-20 sm:mt-36 px-2 flex flex-col gap-y-5 sm:gap-y-7'>
-      <div className='flex justify-between w-full'>
+    <div className='mt-20 flex flex-col gap-y-5 px-2 sm:-mx-24 sm:mt-36 sm:gap-y-7'>
+      <div className='flex w-full justify-between'>
         <p className='text-2xl font-semibold'>Activities</p>
-          <Button href='/admin/activities/create'>New Activity</Button>
+        <Button href='/admin/activities/create'>New Activity</Button>
       </div>
       <div className='flex justify-end p-2'>
-        <SearchBar onChange={handleSearch} />
+        <SearchBar onSubmit={handleSearch} />
       </div>
       <div className='hidden sm:flex'>
         <TableComponent
@@ -124,11 +128,11 @@ export default function AdminActivities() {
         />
       </div>
       {/* Mobile Collapsible */}
-     <ExpandList 
+      <ExpandList
         title='Name'
         data={mockData}
         children={(data) => (
-          <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
+          <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
             <div className='flex flex-col'>
               <p className='text-[12px]'>Company</p>
               <p className='text-[10px]'>{data.company}</p>
@@ -154,15 +158,13 @@ export default function AdminActivities() {
               </div>
             </div>
             <Button
-              className='bg-vidva text-white text-center rounded-xl px-3 py-1 text-[10px]'
-              href={`/admin/activities/${data.id}`}
-            >
+              className='rounded-xl bg-vidva px-3 py-1 text-center text-[10px] text-white'
+              href={`/admin/activities/${data.id}`}>
               More Details
             </Button>
           </div>
-        )} 
-        listKey={'name'}> 
-        </ExpandList>
+        )}
+        listKey={'name'}></ExpandList>
     </div>
   )
 }
