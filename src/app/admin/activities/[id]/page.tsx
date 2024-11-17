@@ -12,6 +12,8 @@ import TableHeader from '@/components/table/TableHeader'
 import TableComponent from '@/components/table/TableComponent'
 import ExpandList from '@/components/table/ExpandList'
 import SearchBar from '@/components/basic/SearchBar'
+// util
+import Cookies from 'js-cookie'
 
 // Mock Participants Data
 // Schema: {
@@ -55,6 +57,22 @@ const mockData = [
   },
 ]
 
+// Type for Activity Detail
+type ActivityDetailProps = {
+  id: string
+  name: string
+  description: string
+  date: string
+  start_time: string
+  end_time: string
+  poster_url: string
+  location: string
+  tags: any[]
+  speaker: string
+  current_participants: number
+  max_participants: number
+}
+
 // Variables
 // Primary
 const initialSeats = 20
@@ -63,9 +81,10 @@ const HTTP = 'http://143.198.87.246'
 
 // Component
 export default function ActivityDetail() {
-  // Variables - Status
+  // Variables - Primary
+  const token = Cookies.get('token')
   const { id } = useParams<{ id: string }>()
-  const [activity, setActivity] = useState<any>(null)
+  const [activity, setActivity] = useState<ActivityDetailProps>()
   const [participants, setParticipants] = useState<any[]>([])
 
   // Function for fetching activity details
@@ -74,12 +93,12 @@ export default function ActivityDetail() {
       const response = await fetch(`${HTTP}/api/v1/activities/${id}`, {
         headers: {
           // TODO: change authorization method
-          Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         },
       })
 
       if (response.ok) {
-        const data = await response.json()
+        const data = await response.json().then((data) => data.activity)
         setActivity(data)
       } else {
         console.log('Failed to fetch activity details with error: ' + response)
@@ -99,7 +118,7 @@ export default function ActivityDetail() {
         `${HTTP}/api/v1/activities/${id}/participants${queryString}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
@@ -118,6 +137,7 @@ export default function ActivityDetail() {
   // useEffect for fetching activity details
   useEffect(() => {
     fetchActivityDetail()
+    console.log(activity)
     fetchParticipants()
   }, [])
 
@@ -127,7 +147,7 @@ export default function ActivityDetail() {
       const response = await fetch(`${HTTP}/api/v1/activities/${id}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         },
       })
 

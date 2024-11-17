@@ -1,11 +1,14 @@
 'use client'
+// import react
+import { useEffect, useState } from 'react'
 // import components
 import Button from '@/components/basic/Button'
 import ExpandList from '@/components/table/ExpandList'
 import SearchBar from '@/components/basic/SearchBar'
 import TableComponent from '@/components/table/TableComponent'
 import TableHeader from '@/components/table/TableHeader'
-import { useEffect, useState } from 'react'
+// import util
+import Cookies from 'js-cookie'
 
 // HTTP Constant
 const HTTP = 'http://143.198.87.246'
@@ -60,6 +63,8 @@ const mockData = [
 
 export default function AdminActivities() {
   // Variables - Primary
+  // Token
+  const token = Cookies.get('token')
   // Data
   const [data, setData] = useState<
     {
@@ -81,7 +86,7 @@ export default function AdminActivities() {
     try {
       const response = await fetch(`${HTTP}/api/v1/activities${queryString}`, {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       const data = await response.json().then((data) => data.activities)
