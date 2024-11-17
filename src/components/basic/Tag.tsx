@@ -1,5 +1,5 @@
-import React from 'react';
-import { cn } from '@/utils/utils';
+// import util
+import { cn } from "@/utils/utils";
 
 // Tag component
 export default function Tag({

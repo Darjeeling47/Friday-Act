@@ -1,27 +1,16 @@
-export async function getActivities({
-  token,
-  group,
-  limit,
-  pagination,
-}: {
-  token: string
-  group?: string
-  limit?: number
-  pagination?: number
+export async function getActivity({
+  id
+}:{
+  id:string
 }) {
-  let query = "?"
-  if (group) { 
-    query = query + "group=" + group 
-  }
   try {
     const response = await fetch(
-      `${process.env.PUBLIC_BACKEND_URL}api/v1/activities/${query}`,
+      `${process.env.PUBLIC_BACKEND_URL}api/v1/activities/${id}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${process.env.USER_TOKEN}`,
         },
-        cache: "no-cache",
       }
     )
 
