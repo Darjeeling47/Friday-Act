@@ -1,76 +1,75 @@
-import React from "react";
+import React from 'react'
 
 interface Activity {
-  name: string;
-  company: string;
-  date: string;
+  name: string
+  company: string
+  date: string
 }
 
 interface ActivityListProps {
-  activities: Activity[];
-  year: string;
-  semester: string;
+  activities: Activity[]
+  year: string
+  semester: string
 }
 
-const ActivityList: React.FC<ActivityListProps> = ({ activities, year, semester }) => {
+const ActivityList: React.FC<ActivityListProps> = ({
+  activities,
+  year,
+  semester,
+}) => {
   return (
     <div
-      className="activity-list"
+      className='activity-list'
       style={{
-        border: '2px solid #eee',
+        border: '2px solid #eee', // Thicker outer border
+        borderRadius: '16px', // Rounded corners for main container
         padding: '20px',
         maxWidth: '4000px',
-        backgroundColor: 'white'
-      }}
-    >
+        backgroundColor: 'white',
+      }}>
       <div
-        className="activity-header"
+        className='activity-header'
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '12px'
-        }}
-      >
+          marginBottom: '12px',
+        }}>
         <div>
           <div
-            className="activity-year"
+            className='activity-year'
             style={{
               fontSize: '24px',
               fontWeight: 'bold',
-              marginLeft: '4px'
-            }}
-          >
+              marginLeft: '4px',
+            }}>
             {year}
           </div>
           <div
-            className="activity-semester"
+            className='activity-semester'
             style={{
               fontSize: '14px',
               color: '#595959',
               marginLeft: '4px',
-            }}
-          >
+            }}>
             {semester}
           </div>
         </div>
         <div
-          className="activity-count"
+          className='activity-count'
           style={{
             fontSize: '20px',
             fontWeight: 'bold',
             textAlign: 'right',
-            marginRight: '20px'
-          }}
-        >
+            marginRight: '20px',
+          }}>
           {activities.length}
           <div
-            className="activity-count-label"
+            className='activity-count-label'
             style={{
               fontSize: '14px',
               fontWeight: 'normal',
-            }}
-          >
+            }}>
             Activities
           </div>
         </div>
@@ -79,7 +78,7 @@ const ActivityList: React.FC<ActivityListProps> = ({ activities, year, semester 
       {activities.map((activity, index) => (
         <div
           key={index}
-          className="activity-item"
+          className='activity-item'
           style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -87,60 +86,54 @@ const ActivityList: React.FC<ActivityListProps> = ({ activities, year, semester 
             marginTop: '10px',
             marginLeft: '4px',
             padding: '10px',
-          }}
-        >
+          }}>
           <div
-            className="activity-details"
+            className='activity-details'
             style={{
               display: 'flex',
-              alignItems: 'center'
-            }}
-          >
+              alignItems: 'center',
+            }}>
             <div
-              className="activity-avatar"
+              className='activity-avatar'
               style={{
                 width: '48px',
                 height: '48px',
-                borderRadius: '50%',
+                borderRadius: '50%', // Circular avatar
                 backgroundColor: '#eee',
-                marginRight: '20px'
-              }}
-            ></div>
+                marginRight: '20px',
+              }}></div>
             <div>
               <div
-                className="activity-name"
+                className='activity-name'
                 style={{
-                  fontWeight: 'bold'
-                }}
-              >
+                  fontWeight: 'bold',
+                }}>
                 {activity.name}
               </div>
               <div
-                className="activity-company"
+                className='activity-company'
                 style={{
                   color: '#595959',
                   fontWeight: 'normal',
                   fontSize: 'small',
-                  marginTop: '2px'
-                }}
-              >
+                  marginTop: '2px',
+                }}>
                 {activity.company}
               </div>
             </div>
           </div>
           <div
-            className="activity-date"
+            className='activity-date'
             style={{
               color: '#BEBEBE',
-              marginRight: '4px'
-            }}
-          >
+              marginRight: '4px',
+            }}>
             {activity.date}
           </div>
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default ActivityList;
+export default ActivityList

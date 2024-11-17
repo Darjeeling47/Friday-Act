@@ -1,10 +1,10 @@
 'use client'
 // import components
 import Button from '@/components/basic/Button'
-import ExpandList from '@/components/basic/ExpandList'
+import ExpandList from '@/components/table/ExpandList'
 import SearchBar from '@/components/basic/SearchBar'
-import TableComponent from '@/components/basic/TableComponent'
-import TableHeader from '@/components/basic/TableHeader'
+import TableComponent from '@/components/table/TableComponent'
+import TableHeader from '@/components/table/TableHeader'
 import { useEffect, useState } from 'react'
 
 // HTTP Constant

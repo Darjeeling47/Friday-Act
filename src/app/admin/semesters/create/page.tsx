@@ -1,26 +1,16 @@
 'use client'
-
-import Image from 'next/image';
-// Import react
-import React, { useState } from 'react';
-
-// Import components (if any)
-
-// Import util (if any)
-
-// Import icon
-// import { FaCalendarAlt } from 'react-icons/fa';
-
-// API (if any)
-
-// require (if any)
+import createSemester from '@/libs/semesters/createSemester'
+import Image from 'next/image'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function CreateSemester() {
+  const router = useRouter()
   // Primary variables for form fields
-  const [year, setYear] = useState<string>('');
-  const [semester, setSemester] = useState<string>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  const [year, setYear] = useState<string>('')
+  const [semester, setSemester] = useState<string>('')
+  const [startDate, setStartDate] = useState<string>('')
+  const [endDate, setEndDate] = useState<string>('')
   const [icon, setIcon] = useState<string>('/logo/Logo_Calendar.png')
 
   // Styling variables
@@ -42,15 +32,22 @@ export default function CreateSemester() {
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
   // handleSave function to handle form submission
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true)
-    console.log('Saving semester:', { year, semester, startDate, endDate })
+    let data = {
+      year: parseInt(year),
+      semester: parseInt(semester),
+      startDate: new Date(startDate).toISOString(),
+      endDate: new Date(endDate).toISOString(),
+    }
+    await createSemester(data.year, data.semester, data.startDate, data.endDate)
     setIsSaving(false)
+    router.back()
   }
 
   return (
     <main className='container'>
-      <div className='flex h-[70vh] flex-col items-center justify-center'>
+      <div className='flex h-[50vh] flex-col items-center justify-center'>
         <div className='shadow-md w-full max-w-4xl rounded-lg bg-[#FAFAFA] p-8'>
           <div className='mb-6 mt-6 flex flex-wrap items-center justify-center space-x-4 space-y-4'>
             <Image
@@ -88,7 +85,7 @@ export default function CreateSemester() {
 
             <label className={`${typeStyle}`}>Start Date</label>
             <input
-              type='text'
+              type='date'
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               placeholder='Please Enter'
@@ -97,7 +94,7 @@ export default function CreateSemester() {
 
             <label className={`${typeStyle}`}>End Date</label>
             <input
-              type='text'
+              type='date'
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
               placeholder='Please Enter'

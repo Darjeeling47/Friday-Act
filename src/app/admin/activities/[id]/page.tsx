@@ -1,16 +1,16 @@
-"use client";
+'use client'
 
 // import
 // react
-import React from 'react';
+import React from 'react'
 // components
-import Tag from '@/components/basic/Tag';
-import Button from '@/components/basic/Button';
-import { useParams } from 'next/navigation';
-import TableHeader from '@/components/basic/TableHeader';
-import TableComponent from '@/components/basic/TableComponent';
-import ExpandList from '@/components/basic/ExpandList';
-import SearchBar from '@/components/basic/SearchBar';
+import Tag from '@/components/basic/Tag'
+import Button from '@/components/basic/Button'
+import { useParams } from 'next/navigation'
+import TableHeader from '@/components/table/TableHeader'
+import TableComponent from '@/components/table/TableComponent'
+import ExpandList from '@/components/table/ExpandList'
+import SearchBar from '@/components/basic/SearchBar'
 
 // Mock Participants Data
 // Schema: {
@@ -51,19 +51,19 @@ const mockData = [
     program: 'วิศวกรรมซอฟต์แวร์',
     admissionYear: '2563',
     status: 'Pending',
-  }
+  },
 ]
 
 // Variables
 // Primary
-const initialSeats = 20;
-const maxSeats = 100;
-const HTTP = 'http://143.198.87.246';
+const initialSeats = 20
+const maxSeats = 100
+const HTTP = 'http://143.198.87.246'
 
 // Component
-export default function ActivitityDetail () {
+export default function ActivitityDetail() {
   // Variables - Status
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>()
 
   // handle click delete
   const handleClickDelete = async () => {
@@ -71,7 +71,7 @@ export default function ActivitityDetail () {
       const response = await fetch(`${HTTP}/api/v1/activities/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${process.env.NEXT_USER_TOKEN}`,
+          Authorization: `Bearer ${process.env.NEXT_USER_TOKEN}`,
         },
       })
 
@@ -80,10 +80,10 @@ export default function ActivitityDetail () {
       } else {
         console.log('Deletion failed with response: ' + response)
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
-  };
+  }
 
   // handle search bar
   const handleSearchBar = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,16 +93,15 @@ export default function ActivitityDetail () {
 
   // return
   return (
-    <main className="container mx-auto p-4 flex flex-col gap-y-5 sm:gap-y-0">
+    <main className='container mx-auto flex flex-col gap-y-5 p-4 sm:gap-y-0'>
       {/* Content Wrapper */}
-      <div className="flex flex-col md:flex-row gap-4 mb-10 md:mb-[100px]">
-        
+      <div className='mb-10 flex flex-col gap-4 md:mb-[100px] md:flex-row'>
         {/* Left: Picture */}
-        <div className="flex-[0.9] flex justify-center items-center">
+        <div className='flex flex-[0.9] items-center justify-center'>
           <img
-            src="/Poster/Psychological.png"
-            alt="Psychological Resilience for Success"
-            className="rounded-xl max-w-md w-full"
+            src='/Poster/Psychological.png'
+            alt='Psychological Resilience for Success'
+            className='w-full max-w-md rounded-xl'
           />
         </div>
 
@@ -114,16 +113,16 @@ export default function ActivitityDetail () {
             <h2 className="text-lg sm:text-3xl font-bold text-mgray-1 mb-4">
               Psychological Resilience for Success
             </h2>
-            <h2 className="flex justify-between items-center">
-              <div className="flex items-center">
+            <h2 className='flex items-center justify-between'>
+              <div className='flex items-center'>
                 <img
-                  src="/logo/JBank.png"
-                  alt="Logo"
-                  className="rounded-lg w-8 h-8"
+                  src='/logo/JBank.png'
+                  alt='Logo'
+                  className='h-8 w-8 rounded-lg'
                 />
-                <span className="ml-2">ธนาคารจิตอาสา</span>
+                <span className='ml-2'>ธนาคารจิตอาสา</span>
               </div>
-              <span className="text-green-500 hidden sm:block">{`${initialSeats}/${maxSeats} seats`}</span>
+              <span className='hidden text-green-500 sm:block'>{`${initialSeats}/${maxSeats} seats`}</span>
             </h2>
             <hr className="my-4 border-t border-gray-300 hidden sm:block" />
             
@@ -148,10 +147,22 @@ export default function ActivitityDetail () {
                 </svg>         
                 <h3 className='text-base sm:text-lg font-normal text-mgray-d3 ml-2 text-nowrap'>Tags :</h3>
               </div>
-              <div className='flex flex-col gap-y-2 w-full ml-2'>
-                <Tag text="Cyber Security" bgColor="bg-blue-100" textColor="text-blue-600" />
-                <Tag text="Cloud" bgColor="bg-orange-100" textColor="text-orange-600" />
-                <Tag text="Web Development" bgColor="bg-green-100" textColor="text-green-600" />
+              <div className='ml-2 flex w-full flex-col gap-y-2'>
+                <Tag
+                  text='Cyber Security'
+                  bgColor='bg-blue-100'
+                  textColor='text-blue-600'
+                />
+                <Tag
+                  text='Cloud'
+                  bgColor='bg-orange-100'
+                  textColor='text-orange-600'
+                />
+                <Tag
+                  text='Web Development'
+                  bgColor='bg-green-100'
+                  textColor='text-green-600'
+                />
               </div>
             </div>
 
@@ -186,7 +197,7 @@ export default function ActivitityDetail () {
                   <h3 className="text-sm sm:text-l font-light text-mgray-d3 ml-2">29 Mar 2024 | 09:00 - 12:00</h3>
                 </div>
               </div>
-              
+
               {/* Location */}
               <div className="flex items-center mt-2">
                 <svg
@@ -229,97 +240,92 @@ export default function ActivitityDetail () {
             </div>
           </div>
           {/* Apply Button */}
-          <div className="flex gap-x-5 mt-8 text-center content-end">
-            <Button
-              href={`${id}/edit`}
-              className='rounded w-full'
-            >
-            Edit
+          <div className='mt-8 flex content-end gap-x-5 text-center'>
+            <Button href={`${id}/edit`} className='w-full rounded'>
+              Edit
             </Button>
             {/* Desktop: Variant Outline */}
             <Button
               onClick={handleClickDelete}
               variant='outline'
-              className='rounded w-full hidden sm:block'
-            >
+              className='hidden w-full rounded sm:block'>
               Delete
             </Button>
             <Button
               onClick={handleClickDelete}
               variant='text'
-              className='rounded w-full sm:hidden'
-            >
-            Delete
+              className='w-full rounded sm:hidden'>
+              Delete
             </Button>
           </div>
         </div>
       </div>
-      
-      { /* Participants Table */ }
+
+      {/* Participants Table */}
       <div>
-        <div className='flex flex-col sm:flex-row gap-y-5 justify-center sm:justify-between'>
-          <TableHeader 
+        <div className='flex flex-col justify-center gap-y-5 sm:flex-row sm:justify-between'>
+          <TableHeader
             headerTitle={'Participants'}
             headerStyle='py-[13px] sm:py-0'
             disableButton
-            />
+          />
           <SearchBar onChange={handleSearchBar} />
         </div>
-        <TableComponent 
+        <TableComponent
           tableStyle='mt-6 hidden sm:table'
           headers={[
-            { title: 'Student name', key: 'thaiName'}, 
-            { title: 'Student ID', key: 'studentId'},
-            { title: 'Faculty', key: 'faculty'},
-            { title: 'Department', key: 'department'},
-            { title: 'Major', key: 'program'},
-            { title: 'Admission year', key: 'admissionYear'},
-            { title: 'Status', key: 'status'}, 
-            { title: '', key: 'edit'},
+            { title: 'Student name', key: 'thaiName' },
+            { title: 'Student ID', key: 'studentId' },
+            { title: 'Faculty', key: 'faculty' },
+            { title: 'Department', key: 'department' },
+            { title: 'Major', key: 'program' },
+            { title: 'Admission year', key: 'admissionYear' },
+            { title: 'Status', key: 'status' },
+            { title: '', key: 'edit' },
           ]}
           headerStyle='text-center text-mgray-2'
           textStyle='text-center text-mgray-2'
-          data={mockData} />    
-      </div>
-      <ExpandList 
-        title={'Name'} 
-        children={(data) => (
-          <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
-            <div className='flex flex-col'>
-            <p className='text-[12px]'>Student ID</p>
-            <p className='text-[10px]'>{data.studentId}</p>
-          </div>
-          <div className='grid grid-cols-2'>
-            <div>
-              <p className='text-[12px]'>Faculty</p>
-              <p className='text-[10px]'>{data.faculty}</p>
-            </div>
-          <div>
-            <p className='text-[12px]'>Department</p>
-            <p className='text-[10px]'>{data.department}</p>
-          </div>
-        </div>
-        <div className='grid grid-cols-2'>
-          <div>
-            <p className='text-[12px]'>Major</p>
-            <p className='text-[10px]'>{data.program}</p>
-          </div>
-          <div>
-            <p className='text-[12px]'>Admission Year</p>
-            <p className='text-[10px]'>{data.admissionYear}</p>
-          </div>                  
-        </div>
-        <Button
-            className='bg-vidva text-white text-center rounded-xl px-3 py-1 text-[10px]'
-            href={`/admin/activities/${data.studentId}`}
-        >
-          More Details
-        </Button>
-        </div>
-          )}
-          listKey={'thaiName'}
-          data={mockData} 
+          data={mockData}
         />
+      </div>
+      <ExpandList
+        title={'Name'}
+        children={(data) => (
+          <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
+            <div className='flex flex-col'>
+              <p className='text-[12px]'>Student ID</p>
+              <p className='text-[10px]'>{data.studentId}</p>
+            </div>
+            <div className='grid grid-cols-2'>
+              <div>
+                <p className='text-[12px]'>Faculty</p>
+                <p className='text-[10px]'>{data.faculty}</p>
+              </div>
+              <div>
+                <p className='text-[12px]'>Department</p>
+                <p className='text-[10px]'>{data.department}</p>
+              </div>
+            </div>
+            <div className='grid grid-cols-2'>
+              <div>
+                <p className='text-[12px]'>Major</p>
+                <p className='text-[10px]'>{data.program}</p>
+              </div>
+              <div>
+                <p className='text-[12px]'>Admission Year</p>
+                <p className='text-[10px]'>{data.admissionYear}</p>
+              </div>
+            </div>
+            <Button
+              className='rounded-xl bg-vidva px-3 py-1 text-center text-[10px] text-white'
+              href={`/admin/activities/${data.studentId}`}>
+              More Details
+            </Button>
+          </div>
+        )}
+        listKey={'thaiName'}
+        data={mockData}
+      />
     </main>
-  );
-};
+  )
+}

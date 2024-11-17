@@ -1,4 +1,5 @@
 'use client'
+import { formatDate_Utc_to_EN } from '@/utils/utils'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -9,7 +10,10 @@ export default function TableComponent({
   headerStyle,
   textStyle,
   iconStyle,
+  spaceText,
   defaultRowsPerPage = null,
+  onClickEdit,
+  onClickDelete,
 }: {
   headers: { key: string; title: string }[]
   data: { [key: string]: any }[]
@@ -17,7 +21,11 @@ export default function TableComponent({
   headerStyle?: string
   textStyle?: string
   iconStyle?: string
+  spaceText?: string
+  spaceTool?: string
   defaultRowsPerPage?: number | null
+  onClickEdit?: Function
+  onClickDelete?: Function
 }) {
   const [logoEdit] = useState<string>('/logo/Logo_Edit.png')
   const [logoDelete] = useState<string>('/logo/Logo_Delete.png')
@@ -45,7 +53,12 @@ export default function TableComponent({
             {headers.map((header, index) => (
               <th
                 key={index}
-                style={{ width: header.key === 'edit' || header.key === 'delete' ? '30px' : '100px' }}
+                style={{
+                  width:
+                    header.key === 'edit' || header.key === 'delete'
+                      ? '30px'
+                      : `${spaceText}`,
+                }}
                 className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
@@ -60,14 +73,14 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`border border-l-0 border-r-0 px-1 max-md:w-28 max-md:h-auto ${iconStyle}`}>
-                      <button>
-                        <Image
-                          src={logoEdit}
-                          alt='Edit'
-                          width={20}
-                          height={20}
-                        />
+                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
+                      <button
+                        onClick={() => {
+                          if (onClickEdit) {
+                            onClickEdit(currentData[index])
+                          }
+                        }}>
+                        <i className={`bi bi-pencil-square ${iconStyle}`}></i>
                       </button>
                     </td>
                   )
@@ -76,15 +89,24 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`border border-l-0 border-r-0 px-1 max-md:w-28 max-md:h-auto ${iconStyle}`}>
-                      <button>
-                        <Image
-                          src={logoDelete}
-                          alt='Delete'
-                          width={20}
-                          height={20}
-                        />
+                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
+                      <button
+                        onClick={() => {
+                          if (onClickDelete) {
+                            onClickDelete(currentData[index])
+                          }
+                        }}>
+                        <i className={`bi bi-trash3 ${iconStyle}`}></i>
                       </button>
+                    </td>
+                  )
+                }
+                if (header.key === 'start_date' || header.key === 'end_date') {
+                  return (
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      {formatDate_Utc_to_EN(rowData[header.key])}
                     </td>
                   )
                 }

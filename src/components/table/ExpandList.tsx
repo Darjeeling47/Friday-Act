@@ -1,6 +1,6 @@
 // import components
-import Button from "./Button"
-import ExpandCard from "./ExpandCard"
+import Button from '../basic/Button'
+import ExpandCard from './ExpandCard'
 
 export default function ExpandList({
   title,
@@ -16,11 +16,13 @@ export default function ExpandList({
   // Return
   return (
     <div className='flex flex-col border-t border-t-mgray-6 sm:hidden'>
-      <p className='pl-7 py-2 text-[15px] font-medium text-mgray-2 border-b border-b-mgray-6'>{title}</p>
+      <p className='border-b border-b-mgray-6 py-2 pl-7 text-[15px] font-medium text-mgray-2'>
+        {title}
+      </p>
       {data.map((data, _) => (
-        <ExpandCard 
+        <ExpandCard
           key={listKey}
-          title={data[listKey]} 
+          title={data[listKey]}
           children={children(data)}
         />
       ))}

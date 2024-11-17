@@ -26,7 +26,7 @@ const Page: React.FC = () => {
   return (
     <main className="container mx-auto p-4">
       {/* Content Wrapper */}
-      <div className="flex flex-col md:flex-row items-start md:items-start gap-4 p-12">
+      <div className="flex flex-col md:flex-row items-start md:items-start gap-4 p-8">
         
         {/* Left: Picture */}
         <div className="flex-[0.9] flex justify-center items-center">
@@ -127,12 +127,14 @@ const Page: React.FC = () => {
           </div>
           </div>
           {/* Apply Button */}
-          <div className="mt-8 text-center content-end">
+          <div className="mt-28 text-center content-end">
             <Button
               onClick={handleClick}
               className={`${
-                isClicked ? 'bg-gray-600 hover:bg-gray-500' : 'bg-vidva hover:bg-vidva/80'
-              } active:bg-gray-400 transition-transform duration-150 text-white font-bold rounded w-full`}
+                isClicked
+                  ? 'bg-gray-500 hover:bg-gray-600 active:bg-gray-700'
+                  : 'bg-vidva hover:bg-vidva/80'
+              } transition-transform duration-150 text-white font-bold rounded w-full`}
             >
               {isClicked ? 'Cancel Application' : 'Apply Activity'}
             </Button>
