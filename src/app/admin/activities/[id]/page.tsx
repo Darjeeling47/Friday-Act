@@ -86,68 +86,68 @@ export default function ActivitityDetail() {
   }
 
   // handle search bar
-  const handleSearchBar = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value)
+  const handleSearchBar = (value: string) => {
+    console.log(value)
     // TODO: Implement search bar logic
   }
 
   // return
   return (
-    <main className='container mx-auto flex flex-col gap-y-5 p-4 sm:gap-y-0'>
+    <main className='flex flex-col gap-y-5 sm:gap-y-0 mx-auto p-4 container'>
       {/* Content Wrapper */}
-      <div className='mb-10 flex flex-col gap-4 md:mb-[100px] md:flex-row'>
+      <div className='flex md:flex-row flex-col gap-4 mb-10 md:mb-[100px]'>
         {/* Left: Picture */}
-        <div className='flex flex-[0.9] items-center justify-center'>
+        <div className='flex flex-[0.9] justify-center items-center'>
           <img
             src='/Poster/Psychological.png'
             alt='Psychological Resilience for Success'
-            className='w-full max-w-md rounded-xl'
+            className='rounded-xl w-full max-w-md'
           />
         </div>
 
         {/* Right: Event Details */}
-        <div className="flex-[1.12] p-2 flex flex-col justify-between min-h-full">
+        <div className="flex flex-col flex-[1.12] justify-between p-2 min-h-full">
           
           {/* Event Title */}
             <div>
-            <h2 className="text-lg sm:text-3xl font-bold text-mgray-1 mb-4">
+            <h2 className="mb-4 font-bold text-lg text-mgray-1 sm:text-3xl">
               Psychological Resilience for Success
             </h2>
-            <h2 className='flex items-center justify-between'>
+            <h2 className='flex justify-between items-center'>
               <div className='flex items-center'>
                 <img
                   src='/logo/JBank.png'
                   alt='Logo'
-                  className='h-8 w-8 rounded-lg'
+                  className='rounded-lg w-8 h-8'
                 />
                 <span className='ml-2'>ธนาคารจิตอาสา</span>
               </div>
-              <span className='hidden text-green-500 sm:block'>{`${initialSeats}/${maxSeats} seats`}</span>
+              <span className='sm:block hidden text-green-500'>{`${initialSeats}/${maxSeats} seats`}</span>
             </h2>
-            <hr className="my-4 border-t border-gray-300 hidden sm:block" />
+            <hr className="sm:block border-gray-300 hidden my-4 border-t" />
             
             {/* Tags */}
             {/* Desktop */}
-            <div className="mt-8 hidden sm:flex flex-col sm:flex-row flex-wrap gap-2 sm:text-base">
+            <div className="sm:flex sm:flex-row flex-col flex-wrap gap-2 hidden mt-8 sm:text-base">
               <Tag text="Cyber Security" bgColor="bg-blue-100" textColor="text-blue-600" />
               <Tag text="Cloud" bgColor="bg-orange-100" textColor="text-orange-600" />
               <Tag text="Web Development" bgColor="bg-green-100" textColor="text-green-600" />
             </div>
             {/* Mobile */}
-            <div className='flex gap-2 mt-8 sm:hidden'>
+            <div className='flex gap-2 sm:hidden mt-8'>
               <div className='flex items-start'>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
-                  className="h-6 w-6 text-gray-600" 
+                  className="w-6 h-6 text-gray-600" 
                   viewBox="0 0 16 16"
                   fill="currentColor"
                 >
                   <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
                   <path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043z"/>
                 </svg>         
-                <h3 className='text-base sm:text-lg font-normal text-mgray-d3 ml-2 text-nowrap'>Tags :</h3>
+                <h3 className='ml-2 font-normal text-base text-mgray-d3 text-nowrap sm:text-lg'>Tags :</h3>
               </div>
-              <div className='ml-2 flex w-full flex-col gap-y-2'>
+              <div className='flex flex-col gap-y-2 ml-2 w-full'>
                 <Tag
                   text='Cyber Security'
                   bgColor='bg-blue-100'
@@ -167,17 +167,17 @@ export default function ActivitityDetail() {
             </div>
 
             {/* Participation Mobile */}
-            <div className='flex items-center mt-2 sm:hidden'>
+            <div className='flex items-center sm:hidden mt-2'>
               <svg
                 xmlns="http://www.w3.org/2000/svg" 
                 fill="currentColor" 
-                className="h-6 w-6 text-gray-600" 
+                className="w-6 h-6 text-gray-600" 
                 viewBox="0 0 16 16"
               >
                 <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
               </svg> 
-              <h3 className='text-base sm:text-lg font-normal text-mgray-d3 ml-2'>Participation :</h3>
-              <span className='text-green-500 ml-2'>{`${initialSeats}/${maxSeats} seats`}</span>
+              <h3 className='ml-2 font-normal text-base text-mgray-d3 sm:text-lg'>Participation :</h3>
+              <span className='ml-2 text-green-500'>{`${initialSeats}/${maxSeats} seats`}</span>
             </div>
 
             {/* Event Information */}
@@ -187,14 +187,14 @@ export default function ActivitityDetail() {
                 <div className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-gray-600"
+                    className="w-6 h-6 text-gray-600"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
                     <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zm0 20c-4.963 0-9-4.037-9-9s4.037-9 9-9 9 4.037 9 9-4.037 9-9 9zm-.5-13h-1v6l5.25 3.15.75-1.23-4.5-2.67V8z"/>
                   </svg>
-                  <h3 className="text-base sm:text-lg font-normal text-mgray-d3 ml-2 text-nowrap">Time :</h3>
-                  <h3 className="text-sm sm:text-l font-light text-mgray-d3 ml-2">29 Mar 2024 | 09:00 - 12:00</h3>
+                  <h3 className="ml-2 font-normal text-base text-mgray-d3 text-nowrap sm:text-lg">Time :</h3>
+                  <h3 className="ml-2 font-light text-mgray-d3 text-sm sm:text-l">29 Mar 2024 | 09:00 - 12:00</h3>
                 </div>
               </div>
 
@@ -202,14 +202,14 @@ export default function ActivitityDetail() {
               <div className="flex items-center mt-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-600"
+                  className="w-6 h-6 text-gray-600"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
                   <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5c-1.379 0-2.5-1.121-2.5-2.5s1.121-2.5 2.5-2.5 2.5 1.121 2.5 2.5-1.121 2.5-2.5 2.5z"/>
                 </svg>
-                <h3 className="text-base sm:text-lg font-normal text-mgray-d3 ml-2 text-nowrap">Location :</h3>
-                <h3 className="text-sm sm:text-l font-light text-mgray-d3 ml-2">อาคารจุฬาพัฒน์ 4 ชั้น 3 (หลังMBK)</h3>
+                <h3 className="ml-2 font-normal text-base text-mgray-d3 text-nowrap sm:text-lg">Location :</h3>
+                <h3 className="ml-2 font-light text-mgray-d3 text-sm sm:text-l">อาคารจุฬาพัฒน์ 4 ชั้น 3 (หลังMBK)</h3>
               </div>
             </div>
 
@@ -218,43 +218,43 @@ export default function ActivitityDetail() {
               <div className="flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-600"
+                  className="w-6 h-6 text-gray-600"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
                   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                 </svg>
-                <h3 className="text-base sm:text-lg font-normal text-mgray-d3 ml-2">Speakers : </h3>
-                <h3 className="text-sm sm:text-l font-light text-mgray-d3 ml-2">Wiset Bumrungwong</h3>
+                <h3 className="ml-2 font-normal text-base text-mgray-d3 sm:text-lg">Speakers : </h3>
+                <h3 className="ml-2 font-light text-mgray-d3 text-sm sm:text-l">Wiset Bumrungwong</h3>
               </div>
               <div className="flex items-center ml-8">
-                <h3 className="text-sm sm:text-l font-light text-mgray-d3 ml-24">Sorrayut Rattanaponjnard, PHD</h3>
+                <h3 className="ml-24 font-light text-mgray-d3 text-sm sm:text-l">Sorrayut Rattanaponjnard, PHD</h3>
               </div>
             </div>
 
             {/* Event Description */}
             <div>
-              <h3 className="text-m font-normal text-mgray-d3 ml-2 mt-4 mb-8">
+              <h3 className="mt-4 mb-8 ml-2 font-normal text-m text-mgray-d3">
                 Resilience หรือทักษะการฟื้นคืนกิจกรรมดีๆที่จัดโดยพี่ๆ จากธนาคารจิตอาสาที่จะมาช่วยเราสร้างเครื่องมือเพื่อเตีรยมรับมือกับภาวะวิกฤติของชีวิต...
               </h3>
             </div>
           </div>
           {/* Apply Button */}
-          <div className='mt-8 flex content-end gap-x-5 text-center'>
-            <Button href={`${id}/edit`} className='w-full rounded'>
+          <div className='flex content-end gap-x-5 mt-8 text-center'>
+            <Button href={`${id}/edit`} className='rounded w-full'>
               Edit
             </Button>
             {/* Desktop: Variant Outline */}
             <Button
               onClick={handleClickDelete}
               variant='outline'
-              className='hidden w-full rounded sm:block'>
+              className='sm:block hidden rounded w-full'>
               Delete
             </Button>
             <Button
               onClick={handleClickDelete}
               variant='text'
-              className='w-full rounded sm:hidden'>
+              className='sm:hidden rounded w-full'>
               Delete
             </Button>
           </div>
@@ -263,7 +263,7 @@ export default function ActivitityDetail() {
 
       {/* Participants Table */}
       <div>
-        <div className='flex flex-col justify-center gap-y-5 sm:flex-row sm:justify-between'>
+        <div className='flex sm:flex-row flex-col justify-center sm:justify-between gap-y-5'>
           <TableHeader
             headerTitle={'Participants'}
             headerStyle='py-[13px] sm:py-0'
@@ -291,7 +291,7 @@ export default function ActivitityDetail() {
       <ExpandList
         title={'Name'}
         children={(data) => (
-          <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
+          <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
             <div className='flex flex-col'>
               <p className='text-[12px]'>Student ID</p>
               <p className='text-[10px]'>{data.studentId}</p>
@@ -317,7 +317,7 @@ export default function ActivitityDetail() {
               </div>
             </div>
             <Button
-              className='rounded-xl bg-vidva px-3 py-1 text-center text-[10px] text-white'
+              className='bg-vidva px-3 py-1 rounded-xl text-[10px] text-center text-white'
               href={`/admin/activities/${data.studentId}`}>
               More Details
             </Button>

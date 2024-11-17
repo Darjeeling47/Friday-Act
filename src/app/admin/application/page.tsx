@@ -69,7 +69,7 @@ export default function Application() {
   )
 
   return (
-    <main className='flex flex-col gap-[30px] py-16 max-md:items-center max-md:py-10'>
+    <main className='flex flex-col max-md:items-center gap-[30px] py-16 max-md:py-10'>
       <TableHeader
         headerTitle='Application'
         buttonTitle='Scan Attendance Qr'
@@ -80,10 +80,6 @@ export default function Application() {
       <div className='flex justify-end max-md:justify-center'>
         <SearchBar
           onChange={handleSearchChange}
-          filter={[
-            { category: 'Category 1', options: ['Option 1', 'Option 2'] },
-            { category: 'Category 2', options: ['Option 3', 'Option 4'] },
-          ]}
         />
       </div>
       {/* <div className="flex w-full overflow-x-auto"> */}
