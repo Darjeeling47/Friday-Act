@@ -6,77 +6,28 @@ import Button from '@/components/basic/Button'
 import ExpandList from '@/components/table/ExpandList'
 import SearchBar from '@/components/basic/SearchBar'
 import TableComponent from '@/components/table/TableComponent'
-import TableHeader from '@/components/table/TableHeader'
 // import util
 import Cookies from 'js-cookie'
 
+type Activity = {
+  id: number
+  name: string
+  company: string
+  start_time: string
+  end_time: string
+  currentParticipants: number
+  max_participants: number
+}
+
 // HTTP Constant
 const HTTP = 'http://143.198.87.246'
-
-const mockData = [
-  {
-    id: 1,
-    name: 'Activity 1',
-    company: 'Company 1',
-    start_time: '12:00',
-    end_time: '13:00',
-    currentParticipants: 5,
-    max_participants: 10,
-  },
-  {
-    id: 2,
-    name: 'Activity 2',
-    company: 'Company 2',
-    start_time: '14:00',
-    end_time: '15:00',
-    currentParticipants: 7,
-    max_participants: 10,
-  },
-  {
-    id: 3,
-    name: 'Activity 3',
-    company: 'Company 3',
-    start_time: '16:00',
-    end_time: '17:00',
-    currentParticipants: 8,
-    max_participants: 10,
-  },
-  {
-    id: 4,
-    name: 'Activity 4',
-    company: 'Company 4',
-    start_time: '18:00',
-    end_time: '19:00',
-    currentParticipants: 9,
-    max_participants: 10,
-  },
-  {
-    id: 5,
-    name: 'Activity 5',
-    company: 'Company 5',
-    start_time: '20:00',
-    end_time: '21:00',
-    currentParticipants: 10,
-    max_participants: 10,
-  },
-]
 
 export default function AdminActivities() {
   // Variables - Primary
   // Token
   const token = Cookies.get('token')
   // Data
-  const [data, setData] = useState<
-    {
-      id: number
-      name: string
-      company: string
-      start_time: string
-      end_time: string
-      currentParticipants: number
-      max_participants: number
-    }[]
-  >([])
+  const [data, setData] = useState<Activity[]>([])
 
   // Function for fetching data
   const fetchData = async (queryString?: string) => {
@@ -121,7 +72,7 @@ export default function AdminActivities() {
         <TableComponent
           headers={[
             { title: 'Name', key: 'name' },
-            { title: 'Companies', key: 'company' },
+            { title: 'Companies', key: 'company.companyNameTh' },
             { title: 'Start time', key: 'start_time' },
             { title: 'End time', key: 'end_time' },
             { title: 'Participants', key: 'currentParticipants' },
@@ -129,18 +80,18 @@ export default function AdminActivities() {
           ]}
           headerStyle='text-center text-mgray-2'
           textStyle='text-center text-mgray-2'
-          data={mockData}
+          data={data}
         />
       </div>
       {/* Mobile Collapsible */}
       <ExpandList
         title='Name'
-        data={mockData}
+        data={data}
         children={(data) => (
           <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
             <div className='flex flex-col'>
               <p className='text-[12px]'>Company</p>
-              <p className='text-[10px]'>{data.company}</p>
+              <p className='text-[10px]'>{data.company.companyNameTh}</p>
             </div>
             <div className='grid grid-cols-2'>
               <div>
