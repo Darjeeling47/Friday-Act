@@ -1,64 +1,36 @@
-'ues client'
+'use client';
+
 // import react
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 // import components
 import SearchBar from "@/components/basic/SearchBar";
-
-// import libs
-import getCompanies from "@/libs/companies/getCompanies";
-
-// import interface
-import { CompanyItem } from "@/interface/companiesInterface";
+import CompanyTableLoad from "@/components/companies/companyTableLoad";
+import CompanyTable from "@/components/companies/companyTable";
 
 export default function CompanyPage() {
-  const [search, setSearch] = useState<string>("");
-  const [companies, setCompanies] = useState<CompanyItem[] | null>(null);
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   const fetchCompanies = async () => {
-  //     const allCompanies: CompanyItem[] | null = await getCompanies({ search });
-  //     if (allCompanies) {
-  //       setCompanies(allCompanies);
-  //     }
-  //   }
-  //   fetchCompanies();
-  // }, [])
+  // Primary variable
+  const [search, setSearch] = useState<string>('')
 
   return (
     <main className='flex flex-col justify-start items-center gap-12 pt-10 pb-5 w-full max-w-7xl min-h-screen'>
       {/* Header */}
-      <div className="flex flex-row justify-between items-center w-full">
-        <div className="font-semibold text-header-1">Companies</div>
-        <button
-          className="bg-vidva px-3 py-2 rounded-xl text-body-2 text-white"
-          onClick={(e) => {
-            e.preventDefault();
-            router.push('/admin/tags/create');
-          }}
-        >
-          New Tag
-        </button>
+      <div className="justify-between gap-12 grid grid-cols-1 sm:grid-cols-2 w-full">
+        <div className="flex justify-start col-span-1">
+          <div className="w-full font-semibold text-center text-header-1 sm:text-left">
+            Companies
+          </div>
+        </div>
+        <div className="flex justify-end col-span-1">
+          <SearchBar
+            onChange={(value: string) => setSearch(value)}
+            className="w-full md:w-auto"
+          />
+        </div>
       </div>
       {/* Body */}
-      <SearchBar
-        onChange={(value: string) => setSearch(value)}
-        wFull
-      />
-      <div>
-        {companies ? (
-          companies.map((company: CompanyItem) => (
-            <p key={company.companyId}>{company.companyNameEn}</p>
-          ))
-        ) : null}
-      </div>
-      {/* {loading ? (
-        <TagTableLoad />
-      ) : (
-        <TagTable tags={tags} handleDeleteTag={handleDeleteTag} />
-      )} */}
+      <CompanyTableLoad />
+      <CompanyTable />
     </main>
   )
 }
