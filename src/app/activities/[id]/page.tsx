@@ -27,7 +27,6 @@ const Page: React.FC = () => {
     <main className="mx-auto px-2 sm:px-4 p-4 container">
       {/* Content Wrapper */}
       <div className="flex md:flex-row flex-col items-start md:items-start gap-4">
-        {/* Left: Picture */}
         <div className="flex flex-[0.9] justify-center items-center">
           <img
             src="/Poster/Psychological.png"
@@ -36,9 +35,7 @@ const Page: React.FC = () => {
           />
         </div>
 
-        {/* Right: Event Details */}
         <div className="flex flex-col flex-[1.12] justify-start p-2">
-          {/* Event Title */}
           <div>
             <h2 className="mb-4 font-bold text-3xl text-mgray-1">
               Psychological Resilience for Success
@@ -58,23 +55,24 @@ const Page: React.FC = () => {
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mt-8">
+              <div className="flex flex-wrap gap-2 mb-4">
               <Tag
                 text="Cyber Security"
-                color="bg-blue-100"
+                color="3b82f6"
               />
               <Tag
                 text="Cloud"
-                color="bg-orange-100"
+                color="f97316"
               />
               <Tag
                 text="Web Development"
-                color="bg-green-100"
+                color="22c55e"
               />
+            </div>
             </div>
 
             {/* Event Information */}
             <div className="mt-4">
-              {/* Time */}
               <div className="flex md:flex-row flex-col items-start md:items-center gap-2 mt-4">
                 <div className="flex items-center">
                   <svg
@@ -94,7 +92,7 @@ const Page: React.FC = () => {
                 </h3>
               </div>
 
-              {/* Location */}
+
               <div className="flex md:flex-row flex-col items-start md:items-center gap-2 mt-4">
                 <div className="flex items-center">
                   <svg
@@ -114,7 +112,6 @@ const Page: React.FC = () => {
                 </h3>
               </div>
 
-              {/* Speaker Information */}
               <div className="flex md:flex-row flex-col items-start md:items-center mt-4">
                 <div className="flex items-start md:items-center">
                   <svg
@@ -139,7 +136,6 @@ const Page: React.FC = () => {
                 </div>
               </div>
 
-              {/* Event Description */}
               <div>
                 <h3 className="mt-4 mb-8 font-normal text-m text-mgray-d3">
                   Resilience หรือทักษะการฟื้นคืนกิจกรรมดีๆที่จัดโดยพี่ๆ จากธนาคารจิตอาสาที่จะมาช่วยเราสร้างเครื่องมือเพื่อเตรียมรับมือกับภาวะวิกฤติของชีวิต...
@@ -147,8 +143,7 @@ const Page: React.FC = () => {
               </div>
             </div>
 
-            {/* Apply Button */}
-            <div className="content-end mt-12 sm:mt-8 md:mt-0 lg:mt-28 text-center self-start md:self-end">
+            <div className="content-end mt-12 sm:mt-8 lg:mt-8 text-center">
               <Button
                 onClick={handleClick}
                 className={`${

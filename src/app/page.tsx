@@ -1,41 +1,20 @@
-'use client'
+// 'use client'
 
 // import react
 import Image from 'next/image'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import Cookies from 'js-cookie'
 
 // import components
-import Button from '@/components/basic/Button'
 import ActivityCard from '@/components/activity/ActivityCard'
+import Button from '@/components/basic/Button'
 
 // api
 import getActivities from '@/libs/activities/getActivities'
 
-export default function Home() {
-  const token = Cookies.get('access_token')
+export default async function Home() {
+  const activityData = await getActivities()
+  console.log(activityData.activities[0].tags)
 
-  // Primary variables
-  const [activities, setActivities] = useState([])
-
-  // useEffect for Fetch activities
-  useEffect(() => {
-    console.log(token)
-    const fetchActivities = async () => {
-      try {
-        console.log(token)
-        const response = await getActivities(token as string)
-        setActivities(response)
-
-        console.log(response)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-    fetchActivities()
-  }, [])
+  const activities = activityData.activities
 
   return (
     <main className='flex flex-col gap-12 px-4 md:px-8'>
@@ -113,9 +92,12 @@ export default function Home() {
           Incoming Activities
         </h2>
         <div className='gap-8 grid grid-cols-1 lg:grid-cols-2'>
+          {activities.map((activity, i) => (
+            <ActivityCard key={i} activity={activity} />
+          ))}
+          {/* <ActivityCard />
           <ActivityCard />
-          <ActivityCard />
-          <ActivityCard />
+          <ActivityCard /> */}
         </div>
       </div>
     </main>
