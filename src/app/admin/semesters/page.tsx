@@ -66,7 +66,7 @@ export default function Semesters() {
       startDate: data.start_date,
       endDate: data.end_date,
     }).toString()
-    router.push(`semesters/edit/${uid}?${query}`)
+    router.push(`admin/semesters/edit/${uid}?${query}`)
   }
 
   // Function for delete semester
