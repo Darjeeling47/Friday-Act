@@ -1,35 +1,12 @@
+// app/auth/callback/page.tsx
+
 'use client'
 
-import { useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 
-export default function Callback() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+// Dynamically import the Callback component with SSR disabled
+const Callback = dynamic(() => import('./Callback'), { ssr: false })
 
-  useEffect(() => {
-    const code = searchParams.get('code')
-
-    if (code) {
-      // Send the code to the server-side route for processing
-      fetch('/api/auth/callback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code }),
-      })
-        .then((res) => {
-          if (res.ok) {
-            // Redirect to the homepage on success
-            router.replace('/')
-          } else {
-            console.error('Failed to process login')
-          }
-        })
-        .catch((error) => {
-          console.error('Error during login:', error)
-        })
-    }
-  }, [searchParams, router])
-
-  return <p>Processing login...</p>
+export default function Page() {
+  return <Callback />
 }
