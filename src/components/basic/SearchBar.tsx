@@ -15,7 +15,7 @@ export default function SearchBar({
   value,
 }: {
   onChange?: Function
-  onSubmit: Function
+  onSubmit?: Function
   wFull?: boolean
   filter?: any[]
   value?: string
@@ -26,9 +26,11 @@ export default function SearchBar({
       <form onSubmit={(e) => {
         e.preventDefault()
         if (inputRef.current) {
-          onSubmit(inputRef.current.value)
-          inputRef.current.value = ''
-          inputRef.current?.blur()
+          if (onSubmit) {
+            onSubmit(inputRef.current.value)
+            inputRef.current.value = ''
+            inputRef.current?.blur()
+          }
         }
       }}
         className="flex flex-row justify-between items-center bg-neutral-50 shadow-2 px-4 py-1 rounded-3xl w-full"
