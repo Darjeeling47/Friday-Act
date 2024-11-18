@@ -21,8 +21,10 @@ export default function Home() {
 
   // useEffect for Fetch activities
   useEffect(() => {
+    console.log(token)
     const fetchActivities = async () => {
       try {
+        console.log(token)
         const response = await getActivities(token as string)
         setActivities(response)
 
