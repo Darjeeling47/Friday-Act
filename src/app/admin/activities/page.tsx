@@ -8,11 +8,13 @@ import SearchBar from '@/components/basic/SearchBar'
 import TableComponent from '@/components/table/TableComponent'
 // import util
 import Cookies from 'js-cookie'
+import formatTime from '@/utils/timeUtils'
 
 type Activity = {
   id: number
   name: string
   company: string
+  date: string
   start_time: string
   end_time: string
   currentParticipants: number
@@ -41,7 +43,19 @@ export default function AdminActivities() {
         },
       })
       const data = await response.json().then((data) => data.activities)
-      setData(data)
+      const parsedData = data.map((activity: any) => {
+        return {
+          id: activity.id,
+          name: activity.name,
+          company: activity.company,
+          date: new Date(activity.date).toLocaleDateString(),
+          startTime: formatTime(activity.startTime),
+          endTime: formatTime(activity.endTime),
+          currentParticipants: activity.currentParticipants,
+          maxParticipants: activity.maxParticipants,
+        }
+      })
+      setData(parsedData)
       console.log(data)
     } catch (e) {
       console.log(e)
@@ -60,7 +74,7 @@ export default function AdminActivities() {
 
   // Return
   return (
-    <div className='mt-20 flex flex-col gap-y-5 px-2 sm:-mx-24 sm:mt-36 sm:gap-y-7'>
+    <div className='mt-20 flex flex-col gap-y-5 px-2 sm:mt-36 sm:gap-y-7'>
       <div className='flex w-full justify-between'>
         <p className='text-2xl font-semibold'>Activities</p>
         <Button href='/admin/activities/create'>New Activity</Button>
@@ -73,10 +87,11 @@ export default function AdminActivities() {
           headers={[
             { title: 'Name', key: 'name' },
             { title: 'Companies', key: 'company.companyNameTh' },
-            { title: 'Start time', key: 'start_time' },
-            { title: 'End time', key: 'end_time' },
+            { title: 'Date', key: 'date' },
+            { title: 'Start time', key: 'startTime' },
+            { title: 'End time', key: 'endTime' },
             { title: 'Participants', key: 'currentParticipants' },
-            { title: 'Max participants', key: 'max_participants' },
+            { title: 'Max participants', key: 'maxParticipants' },
           ]}
           headerStyle='text-center text-mgray-2'
           textStyle='text-center text-mgray-2'
@@ -89,18 +104,24 @@ export default function AdminActivities() {
         data={data}
         children={(data) => (
           <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
-            <div className='flex flex-col'>
-              <p className='text-[12px]'>Company</p>
-              <p className='text-[10px]'>{data.company.companyNameTh}</p>
+            <div className='grid grid-cols-2'>
+              <div>
+                <p className='text-[12px]'>Company</p>
+                <p className='text-[10px]'>{data.company.companyNameTh}</p>
+              </div>
+              <div>
+                <p className='text-[12px]'>Date</p>
+                <p className='text-[10px]'>{data.date}</p>
+              </div>
             </div>
             <div className='grid grid-cols-2'>
               <div>
                 <p className='text-[12px]'>Start time</p>
-                <p className='text-[10px]'>{data.start_time}</p>
+                <p className='text-[10px]'>{data.startTime}</p>
               </div>
               <div>
                 <p className='text-[12px]'>End time</p>
-                <p className='text-[10px]'>{data.end_time}</p>
+                <p className='text-[10px]'>{data.endTime}</p>
               </div>
             </div>
             <div className='grid grid-cols-2'>
@@ -110,7 +131,7 @@ export default function AdminActivities() {
               </div>
               <div>
                 <p className='text-[12px]'>Max participants</p>
-                <p className='text-[10px]'>{data.max_participants} people</p>
+                <p className='text-[10px]'>{data.maxParticipants} people</p>
               </div>
             </div>
             <Button
