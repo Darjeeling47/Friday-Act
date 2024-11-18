@@ -16,7 +16,7 @@ import { cn } from "@/utils/utils";
 import { validateHexColor } from "@/utils/validateUtils";
 
 // import interface
-import { TagItem, Tag } from "@/interface/tagsInterface";
+import { TagItem, Tag, Tags } from "@/interface/tagsInterface";
 
 export default function EditTag() {
   // Primary variables
@@ -61,15 +61,9 @@ export default function EditTag() {
       return;
     }
 
-    const isNameUsing = await getTags({search: nameEdit}).then((res)=> {
-      const tags = res?.tags;
-      if (tags) {
-        return tags.filter(tag => tag.name === nameEdit && tag.id !== parseInt(tagId));
-      }
-    })
-
-    if (isNameUsing && isNameUsing.length > 0) {
-      setNameEditError("Name already in use, please change the name");
+    const allTags: Tags | null = await getTags({ search: nameEdit });
+    if (allTags && allTags.tags.some(tag => tag.name.toLowerCase() === nameEdit.toLowerCase() && tag.id !== parseInt(tagId))) {
+      setNameEditError("A tag with this name already exists.");
       setIsNameEditError(true);
       return;
     }
