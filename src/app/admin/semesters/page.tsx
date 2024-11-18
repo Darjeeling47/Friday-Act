@@ -48,8 +48,8 @@ export default function Semesters() {
     fetchData()
   }, [])
 
-  if (loading) return <div className='text-xl font-semibold'>Loading...</div>
-  if (error) return <div className='text-xl font-semibold'>Error: {error}</div>
+  if (loading) return <div className='font-semibold text-xl'>Loading...</div>
+  if (error) return <div className='font-semibold text-xl'>Error: {error}</div>
 
   // Function for create semester
   const onClickCreate = () => {
@@ -84,7 +84,7 @@ export default function Semesters() {
   // return
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <main className='container flex flex-col gap-5'>
+      <main className='flex flex-col gap-5 container'>
         <div className='flex flex-col gap-5'>
           <TableHeader
             onClick={onClickCreate}
@@ -93,7 +93,7 @@ export default function Semesters() {
             headerStyle='text-xl md:text-2xl'
             buttonStyle='text-sm md:text-xl'
           />
-          <div className='hidden sm:flex'>
+          <div className='sm:flex hidden'>
             <TableComponent
               headers={headers}
               data={data}
@@ -105,20 +105,16 @@ export default function Semesters() {
             />
           </div>
         </div>
-        <div className='flex justify-end p-2 sm:hidden'>
+        <div className='flex justify-end sm:hidden p-2'>
           <SearchBar
             onChange={handleSearch}
-            filter={[
-              { category: 'Category 1', options: ['Option 1', 'Option 2'] },
-              { category: 'Category 2', options: ['Option 3', 'Option 4'] },
-            ]}
           />
         </div>
         <ExpandList
           title='Year'
           data={data}
           children={(data: Semester) => (
-            <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
+            <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
               <div className='grid grid-cols-2'>
                 <div>
                   <p className='text-[12px]'>Semester</p>
@@ -141,7 +137,7 @@ export default function Semesters() {
               </div>
               <div className='flex justify-end space-x-2'>
                 <Button
-                  className='rounded-xl bg-[#D9D9D9] px-10 py-2 text-center text-[10px] text-white'
+                  className='bg-[#D9D9D9] px-10 py-2 rounded-xl text-[10px] text-center text-white'
                   onClick={() => {
                     if (onClickEdit) {
                       onClickEdit(data)
@@ -150,7 +146,7 @@ export default function Semesters() {
                   Edit
                 </Button>
                 <Button
-                  className='rounded-xl bg-vidva px-10 py-2 text-center text-[10px] text-white'
+                  className='bg-vidva px-10 py-2 rounded-xl text-[10px] text-center text-white'
                   onClick={() => {
                     if (onClickDelete) {
                       onClickDelete(data)

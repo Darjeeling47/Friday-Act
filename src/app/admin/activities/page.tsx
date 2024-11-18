@@ -100,15 +100,15 @@ export default function AdminActivities() {
 
   // Return
   return (
-    <div className='sm:-mx-24 mt-20 sm:mt-36 px-2 flex flex-col gap-y-5 sm:gap-y-7'>
+    <div className='flex flex-col gap-y-5 sm:gap-y-7 sm:-mx-24 mt-20 sm:mt-36 px-2'>
       <div className='flex justify-between w-full'>
-        <p className='text-2xl font-semibold'>Activities</p>
-          <Button href='/admin/activities/create'>New Activity</Button>
+        <p className='font-semibold text-2xl'>Activities</p>
+        <Button href='/admin/activities/create'>New Activity</Button>
       </div>
       <div className='flex justify-end p-2'>
         <SearchBar onChange={handleSearch} />
       </div>
-      <div className='hidden sm:flex'>
+      <div className='sm:flex hidden'>
         <TableComponent
           headers={[
             { title: 'Name', key: 'name' },
@@ -124,7 +124,7 @@ export default function AdminActivities() {
         />
       </div>
       {/* Mobile Collapsible */}
-     <ExpandList 
+      <ExpandList
         title='Name'
         data={mockData}
         children={(data) => (
@@ -154,15 +154,15 @@ export default function AdminActivities() {
               </div>
             </div>
             <Button
-              className='bg-vidva text-white text-center rounded-xl px-3 py-1 text-[10px]'
+              className='bg-vidva px-3 py-1 rounded-xl text-[10px] text-center text-white'
               href={`/admin/activities/${data.id}`}
             >
               More Details
             </Button>
           </div>
-        )} 
-        listKey={'name'}> 
-        </ExpandList>
+        )}
+        listKey={'name'}>
+      </ExpandList>
     </div>
   )
 }

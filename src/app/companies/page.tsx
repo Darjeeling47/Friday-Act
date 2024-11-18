@@ -27,15 +27,15 @@ const CompaniesPage: React.FC = () => {
   };
 
   return (
-    <main className=" sm:p-6 md:px-10 container">
+    <main className="md:px-10 sm:p-6 container">
       {/* Header with Title and SearchBar */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center mt-4 mb-8">
-        <h1 className="font-bold text-4xl mb-4">Companies</h1>
+      <div className="items-center gap-4 grid grid-cols-1 sm:grid-cols-2 mt-4 mb-8">
+        <h1 className="mb-4 font-bold text-4xl">Companies</h1>
         <SearchBar onChange={handleSearchChange} />
       </div>
 
       {/* Company Cards */}
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2">
+      <div className="gap-8 grid grid-cols-1 sm:grid-cols-2">
         {filteredCompanies.length > 0 ? ( 
           filteredCompanies.map((company) => (
             <CompanyCard
