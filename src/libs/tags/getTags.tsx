@@ -30,6 +30,7 @@ export default async function getTags({
       url,
       {
         method: 'GET',
+        cache: 'no-cache',
         signal: controller.signal // Attach the AbortController's signal to the fetch request
       }
     );

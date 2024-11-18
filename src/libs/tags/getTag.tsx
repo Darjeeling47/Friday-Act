@@ -1,11 +1,11 @@
 // import interface
-import { TagItem } from "@/interface/tagsInterface";
+import { Tag } from "@/interface/tagsInterface";
 
 export default async function getTag({
   id
 }: {
   id: string
-}): Promise<TagItem | null> {
+}): Promise<Tag | null> {
   // Create an AbortController instance
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 seconds timeout
@@ -13,6 +13,7 @@ export default async function getTag({
   try {
     const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}api/v1/tags/${id}`, {
       method: 'GET',
+      cache: 'no-cache',
       signal: controller.signal, // Attach the AbortController's signal to the fetch request
     });
 

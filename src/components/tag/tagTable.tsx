@@ -1,15 +1,11 @@
 'use client'
 
 // import react
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-// import libs
-import getTags from "@/libs/tags/getTags"
-import deleteTag from "@/libs/tags/deleteTag";
-
 // import interface
-import { Tags, TagItem } from "@/interface/tagsInterface";
+import { TagItem } from "@/interface/tagsInterface";
+import { encodeBase64 } from "@/utils/hashUtils";
 
 // interface
 interface TagTableProps {
@@ -25,9 +21,10 @@ export default function TagTable({
   const router = useRouter();
 
   // Handle for edit tag
-  const handleEditTag = (): void => {
-    router.push('/tag/edit')
-  }
+  const handleEditTag = (id: string): void => {
+    const hashedId = encodeBase64(id);
+    router.push(`/admin/tag/edit/${hashedId}`);
+  };
 
   return (
     <table className="table-fixed w-full">
@@ -80,7 +77,7 @@ export default function TagTable({
                     className="w-full aspect-square"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                       e.preventDefault();
-                      handleEditTag();
+                      handleEditTag(tag.id.toString());
                     }}
                     aria-label="Edit Tag"
                   >

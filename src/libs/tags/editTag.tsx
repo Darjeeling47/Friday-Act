@@ -16,13 +16,14 @@ export default async function editTag({
 
   try {
     const response = await fetch(
-      `${process.env.PUBLIC_BACKEND_URL}api/v1/tags/${tag.id}`,
+      `${process.env.PUBLIC_BACKEND_URL}api/v1/tags/${String(tag.id)}`,
       {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+        cache: 'no-cache',
         signal: controller.signal, // Attach the AbortController's signal to the fetch request
       }
     )

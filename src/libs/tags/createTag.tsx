@@ -20,6 +20,7 @@ export default async function createTag({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      cache: 'no-cache',
       signal: controller.signal, // Attach the AbortController's signal to the fetch request
     });
 

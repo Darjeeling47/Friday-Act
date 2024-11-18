@@ -57,7 +57,7 @@ export default function Tag() {
           className="bg-vidva px-3 py-2 rounded-xl text-body-2 text-white"
           onClick={(e) => {
             e.preventDefault();
-            router.push('/tag/create');
+            router.push('/admin/tag/create');
           }}
         >
           New Tag
