@@ -45,9 +45,9 @@ const App: React.FC = () => {
                 <span>pr@chula.ac.th</span>
               </div>
             </div>
-            <address className='text-m text-mgray-2'>
-              จุฬาลงกรณ์มหาวิทยาลัย, 254 ถนนพญาไท แขวงวังใหม่ เขตปทุมวัน
-              กรุงเทพมหานคร 10330
+            <address className='text-m text-mgray-2 md:w-80 mb-2'>
+              จุฬาลงกรณ์มหาวิทยาลัย, 254 ถนนพญาไท แขวงวังใหม่ 
+              เขตปทุมวัน กรุงเทพมหานคร 10330
             </address>
             <a href='#' className='text-sm text-blue-600'>
               Link for the company
