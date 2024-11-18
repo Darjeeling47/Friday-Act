@@ -20,22 +20,35 @@ export default function SearchBar({
   filter?: any[]
   value?: string
 }) {
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
   return (
     <div className={cn("flex flex-row items-center gap-2", wFull ? 'w-full' : 'w-80')}>
-      <div className="flex flex-row justify-between items-center bg-neutral-50 shadow-2 px-4 py-1 rounded-3xl w-full">
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        if (inputRef.current) {
+          onSubmit(inputRef.current.value)
+          inputRef.current.value = ''
+          inputRef.current?.blur()
+        }
+      }}
+        className="flex flex-row justify-between items-center bg-neutral-50 shadow-2 px-4 py-1 rounded-3xl w-full"
+      >
         <input
           type="text"
           placeholder="Search"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            if (onChange) {
+              onChange(e.target.value)
+            }
+          }
+          }
           className="bg-neutral-50 border-none w-full font-light placeholder:font-light text-lg text-mgray-1 placeholder:text-lg placeholder:text-mgray-2 outline-none"
         />
-        <button className='px-1 h-full'>
+        <button className='px-1 h-full' type='submit'>
           <MagnifyingGlassIcon stroke="#525252" className="w-4" />
         </button>
-      </div>
+      </form>
     </div>
   )
 }
