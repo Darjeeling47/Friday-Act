@@ -12,7 +12,7 @@ import { cn } from "@/utils/utils";
 import { validateHexColor } from "@/utils/validateUtils";
 import { Tags } from "@/interface/tagsInterface";
 
-export default function CreateTag() {
+export default function CreateTagPage() {
   // Primary variables
   const router = useRouter();
   const [nameCreate, setNameCreate] = useState<string>("");
@@ -47,8 +47,6 @@ export default function CreateTag() {
       return;
     }
     if (!validateHexColor(colorCreate)) {
-      console.log("Invalid HEX color code", colorCreate);
-      console.log("Invalid HEX color code", validateHexColor(colorCreate));
       setColorCreateError("Please enter a valid HEX color code");
       setIsColorCreateError(true);
       return;
@@ -63,7 +61,7 @@ export default function CreateTag() {
 
     const result = await createTag({ tagName: dataForm.name, tagColor: dataForm.color });
     if (result.success) {
-      router.push('/admin/tag');
+      router.push('/admin/tags');
     }
     else {
       alert("Failed to create tag");
@@ -89,7 +87,7 @@ export default function CreateTag() {
   // return
   return (
     <main className="py-28 w-full">
-      <div className='flex flex-col justify-start items-start gap-4 mx-auto w-full max-w-xl'>
+      <div className='flex flex-col justify-start items-start gap-4 shadow-2 mx-auto p-2 md:p-8 rounded-xl w-full max-w-xl'>
         <div className="flex flex-row justify-center items-center gap-3 w-full">
           <i className="text-header-1 text-vidva bi bi-tags-fill"></i>
           <h1 className="font-semibold text-header-1">Create Tag</h1>
@@ -112,7 +110,7 @@ export default function CreateTag() {
                   placeholder="Please Enter"
                   value={nameCreate}
                   onChange={(e) => setNameCreate(e.target.value)}
-                  className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-full font-light placeholder:font-light text-lg text-mgray-1 placeholder:text-lg placeholder:text-mgray-2 outline-none`,
+                  className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-full font-light placeholder:font-light text-body-2 text-mgray-1 placeholder:text-body-2 placeholder:text-mgray-2 outline-none`,
                     isNameCreateError ? "border-red-500" : "border-neutral-200"
                   )}
                 />
@@ -131,11 +129,11 @@ export default function CreateTag() {
                     placeholder="Please Enter"
                     value={colorCreate}
                     onChange={(e) => setColorCreate(e.target.value.trim().toLowerCase())}
-                    className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-full font-light placeholder:font-light text-lg text-mgray-1 placeholder:text-lg placeholder:text-mgray-2 outline-none`,
+                    className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-2/3 sm:w-9/12 font-light placeholder:font-light text-body-2 text-mgray-1 placeholder:text-body-2 placeholder:text-mgray-2 outline-none`,
                       isColorCreateError ? "border-red-500" : "border-neutral-200"
                     )}
                   />
-                  <div className={cn("border rounded-lg w-3/12")} style={{ backgroundColor: colorCreate.length != 0 ? `#${colorCreate}` : '#fff' }}></div>
+                  <div className={cn("border rounded-lg w-1/3 sm:w-3/12")} style={{ backgroundColor: colorCreate.length != 0 ? `#${colorCreate}` : '#fff' }}></div>
                 </div>
                 {isColorCreateError &&
                   (<p className="text-detail text-red-500">{colorCreateError}</p>)

@@ -23,7 +23,7 @@ export default function TagTable({
   // Handle for edit tag
   const handleEditTag = (id: string): void => {
     const hashedId = encodeBase64(id);
-    router.push(`/admin/tag/edit/${hashedId}`);
+    router.push(`/admin/tags/edit/${hashedId}`);
   };
 
   return (
@@ -55,7 +55,9 @@ export default function TagTable({
       <tbody>
         {
         tags != null && tags.length !== 0 ? (
-          tags.map((tag: TagItem) => (
+          tags
+          .sort((a: TagItem, b: TagItem) => a.name.localeCompare(b.name))
+          .map((tag: TagItem) => (
             <tr key={tag.id} className='border border-r-0 border-l-0 w-full text-body-2'>
               <td className='p-1 sm:p-2 w-5/12 lg:w-7/12 truncate'>
                 {tag.name}

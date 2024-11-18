@@ -5,7 +5,7 @@ export default async function getActivity({
 }) {
   try {
     const response = await fetch(
-      `${process.env.PUBLIC_BACKEND_URL}api/v1/activities/${id}`,
+      `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities/${id}`,
       {
         method: "GET",
         headers: {

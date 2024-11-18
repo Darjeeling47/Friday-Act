@@ -31,7 +31,7 @@ export default function ActivitiesCatalog({
       ...group,
       activities: group.activities.filter(
         (item) =>
-          item.company?.name?.toLowerCase().includes(search.toLowerCase()) ||
+          item.company?.companyNameEn.toLowerCase().includes(search.toLowerCase()) ||
           item.name.toLowerCase().includes(search.toLowerCase())
       )
     })).filter(group => group.activities.length > 0);

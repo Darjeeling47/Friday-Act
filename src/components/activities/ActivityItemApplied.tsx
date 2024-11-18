@@ -8,7 +8,7 @@ import Link from "next/link";
 import Tag from '../basic/Tag'
 
 // import libs
-import { getImageAsBase64 } from "@/libs/getImageAsBase64";
+import { getImageAsBase64 } from "@/utils/getImageAsBase64";
 
 // import interface
 import { ActivityItem } from '@/interface/activitiesInterface'
@@ -60,7 +60,7 @@ export default function ActivityItemApplied({
       <div className="flex flex-col justify-between items-between w-full h-full">
         <div className="flex flex-col justify-start items-start gap-3 w-full">
           <h3 className="font-normal text-header-3 text-mgray-1">{activity.name}</h3>
-          <p className="line-clamp-1 font-light text-mgray-2 text-subtitle">{activity.company?.name}</p>
+          <p className="line-clamp-1 font-light text-mgray-2 text-subtitle">{activity.company?.companyNameEn}</p>
           <div className="flex flex-wrap gap-2 border-white pt-3 border-t w-full">
             {activity.tags.sort().map((tag: TagItem) => (
               <Tag key={tag.id} text={tag.name} color={tag.color} />

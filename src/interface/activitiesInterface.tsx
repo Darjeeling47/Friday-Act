@@ -1,7 +1,7 @@
 // import interface
 import { Pagination } from "./basicsInterface";
 import { CompanyItem } from "./companiesInterface";
-import Semesters from "./semestersInterface";
+import { Semester } from "./semestersInterface";
 import { TagItem } from "./tagsInterface";
 
 export interface Activities {

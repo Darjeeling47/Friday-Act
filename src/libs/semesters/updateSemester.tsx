@@ -18,19 +18,19 @@ export default async function updateSemester(
       endDate,
     }
 
-      if (!backendUrl || !token) {
-        throw new Error('Environment variables are not set correctly')
-      }
+    if (!backendUrl || !token) {
+      throw new Error('Environment variables are not set correctly')
+    }
 
-      const response = await fetch(`${backendUrl}/api/v1/semesters/${uid}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-        cache: 'no-cache',
-      })
+    const response = await fetch(`${backendUrl}/api/v1/semesters/${uid}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+      cache: 'no-cache',
+    })
 
     if (!response.ok) {
       const errorText = await response.text()

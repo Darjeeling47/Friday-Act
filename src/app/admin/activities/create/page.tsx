@@ -80,8 +80,8 @@ export default function CreateActivity() {
 
   // Return
   return (
-    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:px-48 sm:py-8 sm:shadow-none'>
-      <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-12'>
+    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:py-8 sm:shadow-none'>
+      <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-6 md:mt-12'>
         <div className='flex items-center justify-center gap-x-4'>
           <Image
             src='/logo/Logo_Create.png'
@@ -89,12 +89,12 @@ export default function CreateActivity() {
             width={40}
             height={40}
           />
-          <h1 className='text-2xl font-semibold sm:text-4xl'>
+          <h1 className='text-2xl font-semibold sm:text-[30px] md:text-[40px]'>
             Create Activity
           </h1>
         </div>
         <form
-          className='flex flex-col gap-y-5 px-4 sm:mx-24 sm:px-16'
+          className='flex flex-col gap-y-5 px-4 sm:mx-24 md:mx-12'
           onSubmit={handleSubmitForm}>
           <div className='flex flex-col'>
             <label htmlFor='name' className='text-base text-mgray-2'>

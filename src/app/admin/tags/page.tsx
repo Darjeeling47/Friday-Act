@@ -16,7 +16,7 @@ import deleteTag from "@/libs/tags/deleteTag";
 // import interfaces
 import { TagItem, Tags } from "@/interface/tagsInterface";
 
-export default function Tag() {
+export default function TagPage() {
   // Primary variable
   const [search, setSearch] = useState<string>("")
   const [tags, setTags] = useState<TagItem[] | null>(null);
@@ -57,17 +57,19 @@ export default function Tag() {
           className="bg-vidva px-3 py-2 rounded-xl text-body-2 text-white"
           onClick={(e) => {
             e.preventDefault();
-            router.push('/admin/tag/create');
+            router.push('/admin/tags/create');
           }}
         >
           New Tag
         </button>
       </div>
       {/* Body */}
-      <SearchBar
-        onChange={(value: string) => setSearch(value)}
-        wFull
-      />
+      <div className="flex justify-end w-full">
+        <SearchBar
+          onChange={(value: string) => setSearch(value)}
+          className="w-full md:w-auto"
+        />
+      </div>
       {loading ? (
         <TagTableLoad />
       ) : (
