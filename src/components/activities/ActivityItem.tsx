@@ -2,6 +2,7 @@
 //import react
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 // import components
 import Tag from "../basic/Tag";
@@ -36,7 +37,10 @@ export default function ActivitiesItem({
 
   // return
   return (
-    <div className="flex flex-row justify-start items-start gap-5 hover:bg-mgray-3/20 p-5 rounded-[30px] w-full h-full transition-transform duration-300">
+    <Link
+      className="flex flex-row justify-start items-start gap-5 hover:bg-mgray-3/20 p-5 rounded-[30px] w-full h-full transition-transform duration-300"
+      href={`/activity/${activity.id}`}
+    >
       <div className="flex justify-center items-center bg-white shadow-1 rounded-3xl h-44 sm:h-56 md:h-64 lg:h-72 aspect-2/3">
         {imgSrc ? (
           <Image
@@ -77,6 +81,6 @@ export default function ActivitiesItem({
           )
         }
       </div>
-    </div>
+    </Link>
   );
 }
