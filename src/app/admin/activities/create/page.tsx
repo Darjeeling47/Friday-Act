@@ -5,12 +5,16 @@ import Image from 'next/image'
 import { useRef, useState } from 'react'
 // import components
 import Button from '@/components/basic/Button'
+// import util
+import Cookies from 'js-cookie'
 
+// HTTP Constant
 const HTTP = 'http://143.198.87.246'
 
 export default function CreateActivity() {
   // Variables
   // Primary
+  const token = Cookies.get('token')
   const [fileName, setFileName] = useState('')
   // Secondary
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -46,7 +50,7 @@ export default function CreateActivity() {
     const submit = async () => {
       try {
         const formData = new FormData()
-        Object.keys(data).forEach(key => {
+        Object.keys(data).forEach((key) => {
           formData.append(key, data[key])
         })
 
@@ -57,7 +61,7 @@ export default function CreateActivity() {
         const response = await fetch(`${HTTP}/api/v1/activities`, {
           method: 'POST',
           headers: {
-          'Authorization': `Bearer ${process.env.NEXT_USER_TOKEN}`,
+            Authorization: `Bearer ${token}`,
           },
           body: formData,
         })
@@ -67,17 +71,16 @@ export default function CreateActivity() {
         } else {
           console.log('Creating activity failed with response: ' + response)
         }
-      
-        } catch (e) {
+      } catch (e) {
         console.log(e)
       }
     }
-      submit()
-    }
+    submit()
+  }
 
   // Return
   return (
-    <main className='rounded-3xl shadow-2 sm:shadow-none bg-mgray-5 sm:bg-transparent sm:px-48 sm:py-8'>
+    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:px-48 sm:py-8 sm:shadow-none'>
       <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-12'>
         <div className='flex items-center justify-center gap-x-4'>
           <Image
@@ -236,4 +239,3 @@ export default function CreateActivity() {
     </main>
   )
 }
-

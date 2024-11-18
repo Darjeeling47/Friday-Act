@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 
 // function to exchange code for token
 async function exchangeCodeForToken(code: string) {
@@ -21,7 +21,6 @@ async function exchangeCodeForToken(code: string) {
       }).toString(),
     }
   )
-  // console.log(response)
   if (!response.ok) {
     throw new Error('Failed to exchange code for token')
   }
@@ -65,7 +64,6 @@ export async function POST(req: Request) {
 
     // Fetch user profile data
     const userProfile = await getMe(token)
-    // console.log(userProfile)
 
     // Store data in cookies
     const response = NextResponse.json({ success: true })
@@ -97,6 +95,6 @@ export async function POST(req: Request) {
     return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/`)
   } catch (error) {
     console.error('Error in callback handler:', error)
-    return 'error'
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
