@@ -9,24 +9,23 @@ interface CompanyCardProps {
 
 const CompanyCard: React.FC<CompanyCardProps> = ({ id, name, description }) => {
   return (
-    <div className="gap-4 p-4 w-120 hover:shadow-lg transition-shadow">
-      {/* รูปหรือ placeholder */}
-      <div className="w-20 h-20 bg-mgray-6 rounded-lg mb-4"></div>
+    <Link href={`/companies/${id}`}>
+      <div className="gap-4 p-8 w-120 transition-shadow bg-white rounded-lg shadow-md cursor-pointer group hover:shadow-2xl hover:bg-white/80">
+        <div className="w-20 h-20 bg-mgray-6 rounded-lg mb-4"></div>
 
-      {/* ข้อมูลบริษัท */}
-      <div>
-        <h3 className="text-lg font-semibold text-mgray-2">{name}</h3>
-        <p className="text-sm text-mgray-d3 mt-1">{description}</p>
+        <div>
+          <h3 className="text-lg font-semibold text-mgray-2">{name}</h3>
+          <p className="text-sm text-mgray-d3 mt-1">{description}</p>
 
-        {/* ลิงก์ไปยังหน้า company/[id] */}
-        <Link
-          href={`/companies/{id}`}
-          className="text-sm text-blue-400 mt-2 inline-block hover:underline"
-        >
-          View Details
-        </Link>
+          <Link
+            href={`/companies/${id}`}
+            className="text-sm text-blue-400 mt-2 inline-block hover:underline"
+          >
+            View Details
+          </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

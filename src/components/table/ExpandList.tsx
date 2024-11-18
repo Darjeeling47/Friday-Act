@@ -21,7 +21,7 @@ export default function ExpandList({
       </p>
       {data.map((data, index) => (
         <ExpandCard
-          key={`${data[listKey]}-${index}`}
+          key={`${listKey}-${index}`}
           title={data[listKey]}
           children={children(data)}
         />

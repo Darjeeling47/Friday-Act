@@ -1,6 +1,5 @@
 'use client'
 import { formatDate_Utc_to_EN } from '@/utils/utils'
-import Image from 'next/image'
 import { useState } from 'react'
 
 export default function TableComponent({
@@ -110,6 +109,38 @@ export default function TableComponent({
                     </td>
                   )
                 }
+                if (header.key.includes('.')) {
+                  // Handle nested objects
+                  const keys = header.key.split('.')
+                  let current = rowData
+                
+                  for (const key of keys) {
+                    if (current === null || current === undefined || !current.hasOwnProperty(key)) {
+                      return undefined  // Return undefined if the key doesn't exist
+                    }
+                    current = current[key]
+                  }
+                
+                  if (current && typeof current === 'object') {
+                    // If 'current' is an object, you can render a specific property or stringify it
+                    return (
+                      <td
+                        key={`${index}-${subIndex}`}
+                        className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                        {JSON.stringify(current)}
+                      </td>
+                    )
+                  }
+                
+                  return (
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      {current}
+                    </td>
+                  )
+                }
+                
                 return (
                   <td
                     key={`${index}-${subIndex}`}
