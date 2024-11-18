@@ -110,6 +110,25 @@ export default function TableComponent({
                     </td>
                   )
                 }
+                if (header.key.includes('.')) {
+                  // nested objects
+                  const keys = header.key.split('.')
+                  let current = rowData
+
+                  for (const key of keys) {
+                    if (current === null || current === undefined || !current.hasOwnProperty(key) ) {
+                      return undefined
+                    }
+                    current = current[key]
+                  }
+                  return (
+                     <td
+                      key={`${index}-${subIndex}`}
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      {current}
+                    </td>
+                  )
+                }
                 return (
                   <td
                     key={`${index}-${subIndex}`}

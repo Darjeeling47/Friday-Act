@@ -19,9 +19,9 @@ export default function ExpandList({
       <p className='border-b border-b-mgray-6 py-2 pl-7 text-[15px] font-medium text-mgray-2'>
         {title}
       </p>
-      {data.map((data, _) => (
+      {data.map((data, index) => (
         <ExpandCard
-          key={listKey}
+          key={`${listKey}-${index}`}
           title={data[listKey]}
           children={children(data)}
         />
