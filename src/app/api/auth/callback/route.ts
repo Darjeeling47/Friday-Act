@@ -21,7 +21,7 @@ async function exchangeCodeForToken(code: string) {
       }).toString(),
     }
   )
-
+  // console.log(response)
   if (!response.ok) {
     throw new Error('Failed to exchange code for token')
   }
@@ -39,7 +39,6 @@ async function getMe(token: string) {
       Authorization: `Bearer ${token}`,
     },
   })
-
   if (!response.ok) {
     throw new Error('Failed to get profile data')
   }
@@ -59,7 +58,6 @@ export async function POST(req: Request) {
     // Exchange code for token
     const tokenData = await exchangeCodeForToken(code)
     const token = tokenData.access_token
-    console.log(token)
 
     if (!token) {
       throw new Error('Token not found')

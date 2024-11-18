@@ -1,8 +1,12 @@
-import React from 'react';
+const Tag = ({ text = "", color = "004457" }) => {
+  const bgColor = `#${color}33`; // Adding transparency manually for the background color
+  const textColor = `#${color}`;
 
-const Tag = ({ text = "", bgColor = 'bg-blue-200', textColor = 'text-blue-700' }) => {
   return (
-    <span className={`${bgColor} ${textColor} px-2 py-1 rounded-full w-fit`}>
+    <span
+      style={{ backgroundColor: bgColor, color: textColor }}
+      className="px-2 py-1 rounded-full w-fit"
+    >
       {text}
     </span>
   );
