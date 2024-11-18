@@ -66,9 +66,9 @@ export default function AdminActivities() {
         <Button href='/admin/activities/create'>New Activity</Button>
       </div>
       <div className='flex justify-end p-2'>
-        <SearchBar onSubmit={handleSearch} />
+        <SearchBar onChange={handleSearch} />
       </div>
-      <div className='sm:flex hidden'>
+      <div className='hidden sm:flex'>
         <TableComponent
           headers={[
             { title: 'Name', key: 'name' },
@@ -120,8 +120,7 @@ export default function AdminActivities() {
             </Button>
           </div>
         )}
-        listKey={'name'}>
-      </ExpandList>
+        listKey={'name'}></ExpandList>
     </div>
   )
 }
