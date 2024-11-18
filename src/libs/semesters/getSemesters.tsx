@@ -1,5 +1,25 @@
-export default async function getSemesters(): Promise<any> {
+import { Semesters } from '@/interface/semestersInterface'
+
+export default async function getSemesters({
+  search,
+  limit,
+  page,
+}: {
+  search?: string
+  limit?: number
+  page?: number
+}): Promise<Semesters | null> {
   try {
+    let paramsString = '?search='
+    if (search) {
+      paramsString += `search=${search}`
+    }
+    if (limit) {
+      paramsString += `&limit=${limit}`
+    }
+    if (page) {
+      paramsString += `&page=${page}`
+    }
     const backendUrl = process.env.PUBLIC_BACKEND_URL
 
     if (!backendUrl) {
@@ -8,7 +28,9 @@ export default async function getSemesters(): Promise<any> {
       )
     }
 
-    const response = await fetch(`${backendUrl}api/v1/semesters?search=`)
+    const response = await fetch(
+      `${backendUrl}/api/v1/semesters${paramsString}`
+    )
     if (!response.ok) {
       throw new Error(`Failed to fetch semesters: ${response.statusText}`)
     }

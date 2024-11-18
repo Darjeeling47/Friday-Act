@@ -10,15 +10,21 @@ import Button from '@/components/basic/Button'
 import { formatDate_Utc_to_EN } from '@/utils/utils'
 import SearchBar from '@/components/basic/SearchBar'
 import ExpandList from '@/components/table/ExpandList'
+import {
+  SemesterItem,
+  Semesters,
+  Semester,
+} from '@/interface/semestersInterface'
+import { encodeBase64 } from '@/utils/hashUtils'
 
-export default function Semesters() {
+export default function SemestersPage() {
   const router = useRouter()
 
   // Primary variable
-  const [data, setData] = useState<Semester[]>([])
+  const [semesters, setSemesters] = useState<SemesterItem[] | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [searchValue, setSearchValue] = useState('')
+  const [search, setSearch] = useState('')
   const headers = [
     { key: 'year', title: 'Year' },
     { key: 'semester', title: 'Semester' },
@@ -28,28 +34,22 @@ export default function Semesters() {
     { key: 'delete', title: '' },
   ]
 
+  const fetchSemesters = async () => {
+    setLoading(true)
+    const allSemesters: Semesters | null = await getSemesters({ search })
+    if (allSemesters) {
+      setSemesters(allSemesters.semesters)
+    }
+    setLoading(false)
+  }
+
   // useEffect for fetch data in table
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getSemesters()
-        const semesters = data.semesters
-        setData(semesters)
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message)
-        } else {
-          setError('An unknown error occurred')
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
+    fetchSemesters()
+  }, [search])
 
-  if (loading) return <div className='font-semibold text-xl'>Loading...</div>
-  if (error) return <div className='font-semibold text-xl'>Error: {error}</div>
+  if (loading) return <div className='text-xl font-semibold'>Loading...</div>
+  if (error) return <div className='text-xl font-semibold'>Error: {error}</div>
 
   // Function for create semester
   const onClickCreate = () => {
@@ -57,34 +57,28 @@ export default function Semesters() {
   }
 
   // Function for edit semester
-  const onClickEdit = (data: Semester) => {
-    let uid = data.id
-    const query = new URLSearchParams({
-      id: data.id.toString(),
-      year: data.year.toString(),
-      semester: data.semester.toString(),
-      startDate: data.start_date,
-      endDate: data.end_date,
-    }).toString()
-    router.push(`admin/semesters/edit/${uid}?${query}`)
+  const onClickEdit = (data: SemesterItem) => {
+    const id = encodeBase64(data.id.toString())
+    router.push(`semesters/edit/${id}`)
+    setSearch('')
   }
 
   // Function for delete semester
-  const onClickDelete = async (data: Semester) => {
-    await deleteSemester(data.id)
+  const onClickDelete = async (data: SemesterItem) => {
+    const result = await deleteSemester(data.id)
+    setSearch('')
+    if (result) fetchSemesters()
   }
 
   // handle for search
   const handleSearch = (value: string) => {
-    // TODO: handle search logic
-    setSearchValue(value)
-    console.log('Search Value:', value)
+    setSearch(value)
   }
 
   // return
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <main className='flex flex-col gap-5 container'>
+      <main className='container flex flex-col gap-5'>
         <div className='flex flex-col gap-5'>
           <TableHeader
             onClick={onClickCreate}
@@ -93,10 +87,10 @@ export default function Semesters() {
             headerStyle='text-xl md:text-2xl'
             buttonStyle='text-sm md:text-xl'
           />
-          <div className='sm:flex hidden'>
+          <div className='hidden sm:flex'>
             <TableComponent
               headers={headers}
-              data={data}
+              data={semesters || []}
               defaultRowsPerPage={5}
               onClickEdit={onClickEdit}
               onClickDelete={onClickDelete}
@@ -105,16 +99,14 @@ export default function Semesters() {
             />
           </div>
         </div>
-        <div className='flex justify-end sm:hidden p-2'>
-          <SearchBar
-            onChange={handleSearch}
-          />
+        <div className='flex justify-end p-2 sm:hidden'>
+          <SearchBar onChange={handleSearch} />
         </div>
         <ExpandList
           title='Year'
-          data={data}
-          children={(data: Semester) => (
-            <div className='flex flex-col gap-y-5 px-7 pb-5 border-b border-b-mgray-6 text-mgray-2'>
+          data={semesters || []}
+          children={(data: SemesterItem) => (
+            <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
               <div className='grid grid-cols-2'>
                 <div>
                   <p className='text-[12px]'>Semester</p>
@@ -137,7 +129,7 @@ export default function Semesters() {
               </div>
               <div className='flex justify-end space-x-2'>
                 <Button
-                  className='bg-[#D9D9D9] px-10 py-2 rounded-xl text-[10px] text-center text-white'
+                  className='rounded-xl bg-[#D9D9D9] px-10 py-2 text-center text-[10px] text-white'
                   onClick={() => {
                     if (onClickEdit) {
                       onClickEdit(data)
@@ -146,7 +138,7 @@ export default function Semesters() {
                   Edit
                 </Button>
                 <Button
-                  className='bg-vidva px-10 py-2 rounded-xl text-[10px] text-center text-white'
+                  className='rounded-xl bg-vidva px-10 py-2 text-center text-[10px] text-white'
                   onClick={() => {
                     if (onClickDelete) {
                       onClickDelete(data)

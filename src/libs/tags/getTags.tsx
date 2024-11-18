@@ -14,7 +14,7 @@ export default async function getTags({
   const timeoutId = setTimeout(() => controller.abort(), 5000);
 
   try {
-    let paramsString = "?"
+    let paramsString = '?'
     if (search) {
       paramsString += `search=${search}`
     }
