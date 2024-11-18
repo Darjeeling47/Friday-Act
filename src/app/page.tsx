@@ -1,21 +1,19 @@
-// 'use client'
-
 // import react
-import Image from 'next/image'
+import Image from 'next/image';
 
 // import components
-import ActivityCard from '@/components/activity/ActivityCard'
-import Button from '@/components/basic/Button'
+import ActivityCard from '@/components/activity/ActivityCard';
+import Button from '@/components/basic/Button';
 
 // api
-import getActivities from '@/libs/activities/getActivities'
+import getActivities from '@/libs/activities/getActivities';
 
 export default async function Home() {
   const activityData = await getActivities()
-  console.log(activityData.activities[0].tags)
-
-  const activities = activityData.activities
-
+  // console.log(activityData.activities[0].tags)
+  
+  const activities: Activity[] = activityData.activities
+  
   return (
     <main className='flex flex-col gap-12 px-4 md:px-8'>
       {/* Hero */}
@@ -42,7 +40,7 @@ export default async function Home() {
             width={500}
             height={500}
             className='h-full w-fit object-cover'
-          />
+            />
         </div>
       </div>
 
@@ -55,7 +53,7 @@ export default async function Home() {
             width={500}
             height={500}
             className='h-fit w-full rounded'
-          />
+            />
           <p className='text-sm text-mgray-1 md:text-base'>
             Experience Real-World Opportunities
           </p>
@@ -67,7 +65,7 @@ export default async function Home() {
             width={500}
             height={500}
             className='h-fit w-full rounded'
-          />
+            />
           <p className='text-sm text-mgray-1 md:text-base'>
             Connect with Top Companies
           </p>
@@ -79,7 +77,7 @@ export default async function Home() {
             width={500}
             height={500}
             className='h-fit w-full rounded'
-          />
+            />
           <p className='text-sm text-mgray-1 md:text-base'>
             Boost Your Career Prospects
           </p>
@@ -95,11 +93,43 @@ export default async function Home() {
           {activities.map((activity, i) => (
             <ActivityCard key={i} activity={activity} />
           ))}
-          {/* <ActivityCard />
-          <ActivityCard />
-          <ActivityCard /> */}
         </div>
       </div>
     </main>
   )
 }
+
+type Activity = {
+  id: number;
+  company_id: number;
+  semester_id: number;
+  company: {
+    companyId: number;
+    companyNameTh: string;
+    companyNameEn: string;
+    description: string;
+    logoUrl: string;
+  };
+  semester: {
+    id: number;
+    year: Date;
+    semester: number;
+  };
+  tags: {
+    id: number;
+    name: string;
+    color: string;
+  }[];
+  name: string;
+  description: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  poster_url: string;
+  location: string;
+  max_participants: number;
+  currentParticipants: number;
+  speaker: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
