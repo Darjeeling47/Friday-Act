@@ -1,6 +1,6 @@
 export default async function getActivities(token: string, group?: string) {
   // Construct the API endpoint URL
-  const url = `${process.env.PUBLIC_BACKEND_URL}api/v1/activities${group ? `?group=${group}` : ''}`
+  const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${group ? `?group=${group}` : ''}`
 
   const response = await fetch(url, {
     method: 'GET',
