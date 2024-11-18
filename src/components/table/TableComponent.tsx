@@ -154,11 +154,11 @@ export default function TableComponent({
         </tbody>
       </table>
       {rowsPerPage && totalPages > 1 && (
-        <div className='mt-4 flex justify-center space-x-2'>
+        <div className='flex justify-center space-x-2 mt-4'>
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className='rounded border px-2 py-1 disabled:opacity-50'>
+            className='disabled:opacity-50 px-2 py-1 border rounded'>
             &lt;
           </button>
           {[...Array(totalPages)].map((_, pageIndex) => (
@@ -172,7 +172,7 @@ export default function TableComponent({
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className='rounded border px-2 py-1 disabled:opacity-50'>
+            className='disabled:opacity-50 px-2 py-1 border rounded'>
             &gt;
           </button>
         </div>
