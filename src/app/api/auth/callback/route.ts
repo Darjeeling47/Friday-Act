@@ -75,7 +75,7 @@ export async function POST(req: Request) {
 
     // Store the token
     cookieStore.set('access_token', token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
       maxAge: tokenData.expires_in,
@@ -83,14 +83,14 @@ export async function POST(req: Request) {
 
     // Store user profile data
     cookieStore.set('user_profile', JSON.stringify(userProfile), {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
     })
 
     // Store login state
     cookieStore.set('is_logged_in', 'true', {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       path: '/',
     })

@@ -2,31 +2,40 @@
 
 // import react
 import Image from 'next/image'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 // import components
 import Button from '@/components/basic/Button'
 import ActivityCard from '@/components/activity/ActivityCard'
-import { useEffect } from 'react'
-import { getActivities } from '@/libs/activities/getActivities'
-import Cookies from 'js-cookie'
+
+// api
+import getActivities from '@/libs/activities/getActivities'
 
 export default function Home() {
-  // Get the token using js-cookie
   const token = Cookies.get('access_token')
 
+  // Primary variables
+  const [activities, setActivities] = useState([])
+
+  // useEffect for Fetch activities
   useEffect(() => {
-    // Fetch data
-    const a = async () => {
+    console.log(token)
+    const fetchActivities = async () => {
       try {
-        const response = await getActivities({ token: token as string })
+        console.log(token)
+        const response = await getActivities(token as string)
+        setActivities(response)
+
         console.log(response)
       } catch (e) {
         console.log(e)
       }
     }
 
-    a()
-  }, [token]) // Add token as a dependency
+    fetchActivities()
+  }, [])
 
   return (
     <main className='flex flex-col gap-12 px-4 md:px-8'>
