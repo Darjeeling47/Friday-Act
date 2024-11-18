@@ -1,3 +1,6 @@
+// import cookies
+import Cookies from "js-cookie";
+
 export default async function createTag({
   tagName,
   tagColor
@@ -5,6 +8,8 @@ export default async function createTag({
   tagName: string,
   tagColor: string
 }) {
+  // Primary variable
+  const token = Cookies.get('access_token')
   const data = {
     name: tagName,
     color: tagColor,
@@ -15,6 +20,7 @@ export default async function createTag({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
       cache: 'no-cache',

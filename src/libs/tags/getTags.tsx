@@ -1,3 +1,6 @@
+// import cookies
+import Cookies from 'js-cookie'
+
 // import interface
 import { Tags } from "@/interface/tagsInterface";
 
@@ -10,8 +13,8 @@ export default async function getTags({
   limit?: number
   page?: number
 }): Promise<Tags | null> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
+  // Primary variable
+  const token = Cookies.get('access_token')
 
   try {
     let paramsString = "?"
@@ -29,13 +32,12 @@ export default async function getTags({
       url,
       {
         method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         cache: 'no-cache',
-        signal: controller.signal // Attach the AbortController's signal to the fetch request
       }
     );
-
-    // Clear the timeout if the request completes in time
-    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorText = await response.text();
