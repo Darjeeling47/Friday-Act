@@ -16,7 +16,7 @@ export default async function editTag({
 
   try {
     const response = await fetch(
-      `${process.env.PUBLIC_BACKEND_URL}api/v1/tags/${String(tag.id)}`,
+      `${process.env.PUBLIC_BACKEND_URL}/api/v1/tags/${String(tag.id)}`,
       {
         method: 'PUT',
         headers: {

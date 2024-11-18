@@ -11,7 +11,7 @@ export default async function getTag({
   const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 seconds timeout
 
   try {
-    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}api/v1/tags/${id}`, {
+    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/tags/${id}`, {
       method: 'GET',
       cache: 'no-cache',
       signal: controller.signal, // Attach the AbortController's signal to the fetch request

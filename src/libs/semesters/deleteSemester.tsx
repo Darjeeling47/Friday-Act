@@ -7,7 +7,7 @@ export default async function deleteSemester(did: number): Promise<any> {
       throw new Error('Environment variables are not set correctly')
     }
 
-    const response = await fetch(`${backendUrl}api/v1/semesters/${did}`, {
+    const response = await fetch(`${backendUrl}/api/v1/semesters/${did}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

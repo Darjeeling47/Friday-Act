@@ -11,7 +11,7 @@ export default async function createTag({
   }
   
   try {
-    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}api/v1/tags`, {
+    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/tags`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

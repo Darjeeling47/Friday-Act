@@ -13,7 +13,7 @@ export default async function updateSemester(
       throw new Error('Environment variables are not set correctly')
     }
 
-    const response = await fetch(`${backendUrl}api/v1/semesters/${uid}`, {
+    const response = await fetch(`${backendUrl}/api/v1/semesters/${uid}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

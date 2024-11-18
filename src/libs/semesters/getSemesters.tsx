@@ -8,7 +8,7 @@ export default async function getSemesters(): Promise<any> {
       )
     }
 
-    const response = await fetch(`${backendUrl}api/v1/semesters?search=`)
+    const response = await fetch(`${backendUrl}/api/v1/semesters?search=`)
     if (!response.ok) {
       throw new Error(`Failed to fetch semesters: ${response.statusText}`)
     }

@@ -18,7 +18,7 @@ import { validateHexColor } from "@/utils/validateUtils";
 // import interface
 import { TagItem, Tag, Tags } from "@/interface/tagsInterface";
 
-export default function EditTag() {
+export default function EditTagPage() {
   // Primary variables
   const router = useRouter();
   const { id } = useParams();
@@ -125,7 +125,7 @@ export default function EditTag() {
   // return
   return (
     <main className="py-28 w-full">
-      <div className='flex flex-col justify-start items-start gap-4 mx-auto w-full max-w-xl'>
+      <div className='flex flex-col justify-start items-start gap-4 shadow-2 mx-auto w-full max-w-xl'>
         <div className="flex flex-row justify-center items-center gap-3 w-full">
           <i className="text-header-1 text-vidva bi bi-tags-fill"></i>
           <h1 className="font-semibold text-header-1">Edit Tag</h1>

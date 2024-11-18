@@ -12,7 +12,7 @@ export default async function createSemester(
       throw new Error('Environment variables are not set correctly')
     }
 
-    const response = await fetch(`${backendUrl}api/v1/semesters`, {
+    const response = await fetch(`${backendUrl}/api/v1/semesters`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -16,7 +16,7 @@ import deleteTag from "@/libs/tags/deleteTag";
 // import interfaces
 import { TagItem, Tags } from "@/interface/tagsInterface";
 
-export default function Tag() {
+export default function TagPage() {
   // Primary variable
   const [search, setSearch] = useState<string>("")
   const [tags, setTags] = useState<TagItem[] | null>(null);
@@ -64,10 +64,11 @@ export default function Tag() {
         </button>
       </div>
       {/* Body */}
-      <SearchBar
-        onChange={(value: string) => setSearch(value)}
-        wFull
-      />
+      <div className="flex justify-end w-full">
+        <SearchBar
+          onChange={(value: string) => setSearch(value)}
+        />
+      </div>
       {loading ? (
         <TagTableLoad />
       ) : (

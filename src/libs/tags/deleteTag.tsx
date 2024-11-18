@@ -8,7 +8,7 @@ export default async function deleteTag({
   const timeoutId = setTimeout(() => controller.abort(), 5000); // Set timeout to 5 seconds
 
   try {
-    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}api/v1/tags/${id}`, {
+    const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/tags/${id}`, {
       method: 'DELETE',
       cache: 'no-cache',
       signal: controller.signal, // Attach the AbortController's signal to the fetch request

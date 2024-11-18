@@ -1,9 +1,6 @@
-import { ActivityItem } from "@/interface/activitiesInterface";
-
 export async function getImageAsBase64(url: string): Promise<string | undefined> {
   try {
-    const imgUrl = url.slice(1);
-    const imgSrc = `${process.env.PUBLIC_BACKEND_URL}${imgUrl}`;
+    const imgSrc = `${process.env.PUBLIC_BACKEND_URL}${url}`;
     const response = await fetch(imgSrc);
     if (!response.ok) {
       return undefined;
