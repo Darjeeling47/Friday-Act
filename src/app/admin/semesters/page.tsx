@@ -34,6 +34,7 @@ export default function SemestersPage() {
     { key: 'delete', title: '' },
   ]
 
+  // Function for fetch data
   const fetchSemesters = async () => {
     setLoading(true)
     const allSemesters: Semesters | null = await getSemesters({ search })
@@ -43,7 +44,7 @@ export default function SemestersPage() {
     setLoading(false)
   }
 
-  // useEffect for fetch data in table
+  // useEffect for fetch data
   useEffect(() => {
     fetchSemesters()
   }, [search])
@@ -84,8 +85,8 @@ export default function SemestersPage() {
             onClick={onClickCreate}
             headerTitle='Semesters'
             buttonTitle='New Semesters'
-            headerStyle='text-xl md:text-2xl'
-            buttonStyle='text-sm md:text-xl'
+            headerStyle='text-[24px]'
+            buttonStyle='text-[13px]'
           />
           <div className='hidden sm:flex'>
             <TableComponent
