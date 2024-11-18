@@ -1,4 +1,9 @@
-export default async function getActivities(token: string, group?: string) {
+import { cookies } from 'next/headers'
+
+export default async function getActivities(group?: string) {
+  const cookieStore = cookies()
+  const token = cookieStore.get('access_token')?.value
+
   // Construct the API endpoint URL
   const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${group ? `?group=${group}` : ''}`
 
@@ -17,6 +22,5 @@ export default async function getActivities(token: string, group?: string) {
 
   // Return data
   const data = await response.json()
-  console
   return data
 }
