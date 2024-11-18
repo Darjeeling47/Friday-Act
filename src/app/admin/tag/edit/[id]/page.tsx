@@ -6,11 +6,9 @@ import { useRouter, useParams } from "next/navigation";
 // import utils
 import { decodeBase64 } from "@/utils/hashUtils";
 
-// import components
-import Button from "@/components/basic/Button";
-
 // import libs
 import getTag from "@/libs/tags/getTag";
+import getTags from "@/libs/tags/getTags";
 import editTag from "@/libs/tags/editTag";
 
 // import utils
@@ -34,9 +32,6 @@ export default function EditTag() {
   const [isColorEditError, setIsColorEditError] = useState<boolean>(false);
   const [colorEditError, setColorEditError] = useState<string>("");
 
-  // Helper to safely set background color
-  const safeBackgroundColor = validateHexColor(colorEdit) ? `#${colorEdit}` : "#ffffff";
-
   const dataForm: TagItem = {
     id: parseInt(tagId as string),
     name: nameEdit,
@@ -46,7 +41,7 @@ export default function EditTag() {
   // Handle for submit form
   const handleSubmit = async () => {
     if (!nameEdit) {
-      setNameEditError("Please enter a name");
+      setNameEditError("Please enter a valid name");
       setIsNameEditError(true);
       return;
     }
@@ -63,6 +58,19 @@ export default function EditTag() {
     if (!validateHexColor(colorEdit)) {
       setColorEditError("Please enter a valid HEX color code");
       setIsColorEditError(true);
+      return;
+    }
+
+    const isNameUsing = await getTags({search: nameEdit}).then((res)=> {
+      const tags = res?.tags;
+      if (tags) {
+        return tags.filter(tag => tag.name === nameEdit && tag.id !== parseInt(tagId));
+      }
+    })
+
+    if (isNameUsing && isNameUsing.length > 0) {
+      setNameEditError("Name already in use, please change the name");
+      setIsNameEditError(true);
       return;
     }
 
@@ -104,6 +112,7 @@ export default function EditTag() {
     fetchTag();
   }, [id]);
 
+  // UseEffect for validate name and color
   useEffect(() => {
     if (nameEdit.length > 0 && nameEdit.length <= 50) {
       setIsNameEditError(false)
@@ -140,7 +149,7 @@ export default function EditTag() {
               <label htmlFor="Name" className="font-light text-body-1">Name</label>
               <div className="flex flex-col justify-start items-start gap-1 w-full">
                 <input
-                aria-label="Name"
+                  aria-label="Name"
                   type="text"
                   placeholder="Please Enter"
                   value={nameEdit}
@@ -168,23 +177,22 @@ export default function EditTag() {
                       isColorEditError ? "border-red-500" : "border-neutral-200"
                     )}
                   />
-                  <div className={cn("border rounded-lg w-3/12")} style={{ backgroundColor: safeBackgroundColor }}></div>
+                  <div className={cn("border rounded-lg w-3/12")} style={{ backgroundColor: colorEdit.length != 0 ? `#${colorEdit}`: '#fff' }}></div>
                 </div>
                 {isColorEditError &&
                   (<p className="text-detail text-red-500">{colorEditError}</p>)
                 }
               </div>
             </div>
-            <Button className="w-full" onClick={handleSubmit}>
+            <button className="bg-vidva hover:bg-vidva/80 shadow px-4 py-2 rounded-md w-full text-mgray-4" onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}>
               Save
-            </Button>
+            </button>
           </form>
         </div>
       </div>
     </main>
   );
 }
-function decodeHash(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-

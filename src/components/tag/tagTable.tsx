@@ -69,7 +69,7 @@ export default function TagTable({
                 </div>
               </td>
               <td className='p-1 sm:p-2 w-3/12 lg:w-2/12 text-center'>
-                #{tag.color}
+                #{tag.color.toLowerCase()}
               </td>
               <td className='p-1 sm:p-2 w-1/12 lg:w-1/12'>
                 <div className="flex justify-center items-center w-full h-full">

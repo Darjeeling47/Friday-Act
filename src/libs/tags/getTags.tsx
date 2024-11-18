@@ -25,7 +25,6 @@ export default async function getTags({
       paramsString += `&page=${page}`
     }
     const url = `${process.env.PUBLIC_BACKEND_URL}api/v1/tags${paramsString}`
-    console.log(url);
     const response = await fetch(
       url,
       {

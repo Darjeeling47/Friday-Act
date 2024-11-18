@@ -1,16 +1,13 @@
-// import interface
-import { TagItem } from "@/interface/tagsInterface";
-
 export default async function createTag({
-  tag
+  tagName,
+  tagColor
 }: {
-  tag: TagItem
+  tagName: string,
+  tagColor: string
 }) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
   const data = {
-    name: tag.name,
-    color: tag.color,
+    name: tagName,
+    color: tagColor,
   }
   
   try {
@@ -21,11 +18,7 @@ export default async function createTag({
       },
       body: JSON.stringify(data),
       cache: 'no-cache',
-      signal: controller.signal, // Attach the AbortController's signal to the fetch request
     });
-
-    // Clear the timeout if the request completes in time
-    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorText = await response.text();
