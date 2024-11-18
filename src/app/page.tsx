@@ -1,21 +1,52 @@
+'use client'
+
 // import react
 import Image from 'next/image'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 // import components
 import Button from '@/components/basic/Button'
-import ActivityCard from '@/components/ActivityCard'
+import ActivityCard from '@/components/activity/ActivityCard'
+
+// api
+import getActivities from '@/libs/activities/getActivities'
 
 export default function Home() {
+  const token = Cookies.get('access_token')
+
+  // Primary variables
+  const [activities, setActivities] = useState([])
+
+  // useEffect for Fetch activities
+  useEffect(() => {
+    console.log(token)
+    const fetchActivities = async () => {
+      try {
+        console.log(token)
+        const response = await getActivities(token as string)
+        setActivities(response)
+
+        console.log(response)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    fetchActivities()
+  }, [])
+
   return (
     <main className='flex flex-col gap-12 px-4 md:px-8'>
       {/* Hero */}
       <div className='flex w-full flex-col-reverse items-center gap-8 lg:flex-row'>
         <div className='flex w-full flex-col gap-8 lg:w-1/2'>
           <div className='flex flex-col gap-4 text-balance'>
-            <h1 className='text-center text-4xl font-semibold text-mgray-1 md:text-5xl lg:text-7xl'>
+            <h1 className='text-pretty text-center text-4xl font-semibold text-mgray-1 md:text-5xl lg:text-left lg:text-7xl'>
               Friday Activity System
             </h1>
-            <p className='text-center text-base text-mgray-2 md:text-lg'>
+            <p className='text-pretty text-center text-base text-mgray-2 md:text-lg lg:text-left'>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard.
             </p>
