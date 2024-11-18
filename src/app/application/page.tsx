@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplications from "@/libs/applications/getApplications";
 
+import Cookies from 'js-cookie'
+const token = Cookies.get('access_token') || '';
+
 interface Application {
   id: number;
   user: {
@@ -56,7 +59,10 @@ export default function Application() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getApplications();
+        if (!token) {
+          throw new Error('Token is not available');
+        }
+        const data = await getApplications(token);
         const applications = data.applications;
         const formattedData = applications.map((application: Application) => ({
           ...application,
