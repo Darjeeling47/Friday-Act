@@ -11,13 +11,12 @@ export default function CreateSemester() {
   const [semester, setSemester] = useState<string>('')
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
-  const [icon, setIcon] = useState<string>('/logo/Logo_Calendar.png')
 
   // Styling variables
   const [headerStyle, setHeaderStyle] = useState(
-    'text-2xl font-semibold text-mgray-1'
+    'text-[24px] font-semibold text-mgray-1 item-center text-center'
   )
-  const [imgStyle, setImgStyle] = useState('')
+  const [iconStyle, setIconStyle] = useState(' text-[40px] text-vidva')
   const [typeStyle, setTypeStyle] = useState(
     'block text-sm font-medium text-mgray-2'
   )
@@ -49,14 +48,8 @@ export default function CreateSemester() {
     <main className='container'>
       <div className='flex h-[50vh] flex-col items-center justify-center'>
         <div className='shadow-md w-full max-w-4xl rounded-lg bg-[#FAFAFA] p-8'>
-          <div className='mb-6 mt-6 flex flex-wrap items-center justify-center space-x-4 space-y-4'>
-            <Image
-              src={icon}
-              alt='icon'
-              width={40}
-              height={40}
-              className={`${imgStyle}`}
-            />
+          <div className='mb-6 mt-6 flex flex-wrap items-center justify-center space-x-4'>
+            <i className={`bi-calendar2-week-fill ${iconStyle}`}></i>
             <h2 className={`${headerStyle}`}>Create Semester</h2>
           </div>
 

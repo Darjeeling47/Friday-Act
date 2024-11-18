@@ -1,15 +1,24 @@
+import { SemesterItem } from '@/interface/semestersInterface'
+import Cookies from 'js-cookie'
+
 export default async function updateSemester(
   uid: number,
   year: number,
   semester: number,
   startDate: string,
   endDate: string
-): Promise<any> {
+): Promise<SemesterItem | null> {
   try {
+    const token = Cookies.get('access_token')
     const backendUrl = process.env.PUBLIC_BACKEND_URL
-    const userToken = process.env.USER_TOKEN
+    const data = {
+      year,
+      semester,
+      startDate,
+      endDate,
+    }
 
-    if (!backendUrl || !userToken) {
+    if (!backendUrl || !token) {
       throw new Error('Environment variables are not set correctly')
     }
 
@@ -17,14 +26,10 @@ export default async function updateSemester(
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userToken}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        year,
-        semester,
-        startDate,
-        endDate,
-      }),
+      body: JSON.stringify(data),
+      cache: 'no-cache',
     })
 
     if (!response.ok) {

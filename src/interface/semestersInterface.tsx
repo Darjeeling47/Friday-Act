@@ -1,4 +1,18 @@
+import { Pagination } from './basicsInterface'
+
+export interface Semesters {
+  success: boolean
+  count: number
+  pagination: Pagination
+  semesters: SemesterItem[]
+}
+
 export interface Semester {
+  success: boolean
+  semester: SemesterItem
+}
+
+export interface SemesterItem {
   id: number
   year: number
   semester: number

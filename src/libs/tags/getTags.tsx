@@ -17,7 +17,7 @@ export default async function getTags({
   const token = Cookies.get('access_token')
 
   try {
-    let paramsString = "?"
+    let paramsString = '?'
     if (search) {
       paramsString += `search=${search}`
     }
