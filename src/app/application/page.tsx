@@ -37,17 +37,27 @@ interface Application {
   cancellationReason: string | null;
 }
 
+type FormattedApplication = Application & {
+  username: string;
+  sid: string;
+  activity: string;
+  attenddate: string;
+  applydate: string;
+  status: string;
+};
+
 export default function Application() {
   const [searchValue, setSearchValue] = useState('');
-  const [data, setData] = useState<Application[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [data, setData] = useState<FormattedApplication[]>([]);
+  const [filteredData, setFilteredData] = useState<FormattedApplication[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getApplications()
-        const applications = data.applications
+        const data = await getApplications();
+        const applications = data.applications;
         const formattedData = applications.map((application: Application) => ({
           ...application,
           username: application.user.thaiName,
@@ -56,39 +66,51 @@ export default function Application() {
           attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : 'Pending',
           applydate: formatDate_Utc_to_EN(application.createdAt),
           status: application.isApproved ? 'Approved' : application.isCanceled ? 'Canceled' : 'Pending',
-        }))
-        setData(formattedData)
+        }));
+        setData(formattedData);
+        setFilteredData(formattedData);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          setError(error.message)
+          setError(error.message);
         } else {
-          setError('An unknown error occurred')
+          setError('An unknown error occurred');
         }
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  if (loading) return <div className='text-xl font-semibold'>Loading...</div>
-  if (error) return <div className='text-xl font-semibold'>Error: {error}</div>
-
-  const headers = [
-    {"key" : "username", "title" : "User's Name"},
-    {"key" : "sid", "title" : "Student ID"},
-    {"key" : "activity", "title" : "Activity"},
-    {"key" : "attenddate", "title" : "Attend Date"},
-    {"key" : "applydate", "title" : "Apply Date"},
-    {"key" : "status", "title" : "Status"},
-    {"key" : "edit", "title" : ""},
-  ];
+  useEffect(() => {
+    const lowercasedSearchValue = searchValue.toLowerCase();
+    const filtered = data.filter((item) =>
+      item.username.toLowerCase().includes(lowercasedSearchValue) ||
+      item.sid.toLowerCase().includes(lowercasedSearchValue) ||
+      item.activity.toLowerCase().includes(lowercasedSearchValue) ||
+      item.status.toLowerCase().includes(lowercasedSearchValue)
+    );
+    setFilteredData(filtered);
+  }, [searchValue, data]);
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
     console.log("Search Value:", value);
   };
+
+  if (loading) return <div className='text-xl font-semibold'>Loading...</div>;
+  if (error) return <div className='text-xl font-semibold'>Error: {error}</div>;
+
+  const headers = [
+    { key: "username", title: "User's Name" },
+    { key: "sid", title: "Student ID" },
+    { key: "activity", title: "Activity" },
+    { key: "attenddate", title: "Attend Date" },
+    { key: "applydate", title: "Apply Date" },
+    { key: "status", title: "Status" },
+    { key: "edit", title: "" },
+  ];
 
   return (
     <main className='py-16 max-md:py-10 gap-[30px] flex flex-col max-md:items-center'>
@@ -102,7 +124,7 @@ export default function Application() {
           ]}
         />
       </div>
-      <TableComponent headers={headers} data={data} textStyle="max-md:text-xs" headerStyle="max-md:text-xs" />
+      <TableComponent headers={headers} data={filteredData} textStyle="max-md:text-xs" headerStyle="max-md:text-xs" />
     </main>
-  )
+  );
 }
