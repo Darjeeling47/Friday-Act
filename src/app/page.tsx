@@ -5,8 +5,11 @@ import Image from 'next/image';
 import ActivityCard from '@/components/activity/ActivityCard';
 import Button from '@/components/basic/Button';
 
-// api
+// import libs
 import getActivities from '@/libs/activities/getActivities';
+
+// import interface
+import { Activities,ActivityItem } from '@/interface/activitiesInterface';
 
 export default async function Home() {
   const activityData = await getActivities()
@@ -39,7 +42,7 @@ export default async function Home() {
             alt='heropic'
             width={500}
             height={500}
-            className='h-full w-fit object-cover'
+            className='w-fit h-full object-cover'
             />
         </div>
       </div>
@@ -52,9 +55,9 @@ export default async function Home() {
             alt='feature-1'
             width={500}
             height={500}
-            className='h-fit w-full rounded'
+            className='rounded w-full h-fit'
           />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          <p className='text-mgray-1 text-sm md:text-base'>
             Experience Real-World Opportunities
           </p>
         </div>
@@ -64,9 +67,9 @@ export default async function Home() {
             alt='feature-2'
             width={500}
             height={500}
-            className='h-fit w-full rounded'
+            className='rounded w-full h-fit'
             />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          <p className='text-mgray-1 text-sm md:text-base'>
             Connect with Top Companies
           </p>
         </div>
@@ -76,16 +79,16 @@ export default async function Home() {
             alt='feature-3'
             width={500}
             height={500}
-            className='h-fit w-full rounded'
+            className='rounded w-full h-fit'
             />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          <p className='text-mgray-1 text-sm md:text-base'>
             Boost Your Career Prospects
           </p>
         </div>
       </div>
 
       {/* Incoming Activities */}
-      <div className='flex flex-col gap-8'>
+      {/* <div className='flex flex-col gap-8'>
         <h2 className='font-medium text-2xl md:text-3xl'>
           Incoming Activities
         </h2>
@@ -94,42 +97,7 @@ export default async function Home() {
             <ActivityCard key={i} activity={activity} />
           ))}
         </div>
-      </div>
+      </div> */}
     </main>
   )
 }
-
-type Activity = {
-  id: number;
-  company_id: number;
-  semester_id: number;
-  company: {
-    companyId: number;
-    companyNameTh: string;
-    companyNameEn: string;
-    description: string;
-    logoUrl: string;
-  };
-  semester: {
-    id: number;
-    year: Date;
-    semester: number;
-  };
-  tags: {
-    id: number;
-    name: string;
-    color: string;
-  }[];
-  name: string;
-  description: string;
-  date: string;
-  start_time: string;
-  end_time: string;
-  poster_url: string;
-  location: string;
-  max_participants: number;
-  currentParticipants: number;
-  speaker: string;
-  createdAt: Date;
-  updatedAt: Date;
-};

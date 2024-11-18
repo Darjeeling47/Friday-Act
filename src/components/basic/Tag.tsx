@@ -13,7 +13,7 @@ export default function Tag({
   return (
     <div
       className={cn(
-        "px-2 py-1 rounded-full text-footnote",
+        "h-7 flex justify-center items-center px-2 rounded-full text-detail whitespace-nowrap",
       )}
       style={{
         color: color ? `#${color}` : "#000",

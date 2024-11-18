@@ -56,3 +56,34 @@ export interface ActivityItem {
   company: CompanyItem | null,
   tags: TagItem[]
 }
+
+export interface ActivityParticipants {
+  success: boolean;
+  count: number;
+  participants: ActivityParticipantItem[];
+}
+
+export interface ActivityParticipantItem {
+  studentId: string,
+  firstNameTh: string,
+  firstNameEn: string,
+  lastNameTh: string,
+  lastNameEn: string,
+  program: {
+    programId: number,
+    programName: string
+  },
+  faculty: {
+    facultyId: number,
+    facultyName: string
+  },
+  department: {
+    departmentId: number,
+    departmentName: string
+  },
+  university: {
+    universityId: number,
+    universityName: string
+  },
+  admissionYear: number
+}
