@@ -17,29 +17,26 @@ const CompaniesPage: React.FC = () => {
     { id: 7, name: "Company 7", description: "Short description about your company7", link: "/company/7" },
   ];
 
-  // กรองข้อมูลบริษัทตามค่าค้นหา
   const filteredCompanies = companies.filter((company) =>
     company.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleSearchChange = (value: string) => {
-    setSearchValue(value); // อัปเดตค่าค้นหาใน State
+    setSearchValue(value);
     console.log("Search Value:", value);
   };
 
   return (
-    <main className="mx-auto p-6 container">
+    <main className="md:px-10 sm:p-6 container">
       {/* Header with Title and SearchBar */}
-      <div className="flex justify-between items-center mt-4 mb-8 w-full">
-        <h1 className="font-bold text-4xl">Companies</h1>
-        <SearchBar
-          onChange={handleSearchChange} // เรียกใช้งาน handleSearchChange
-        />
+      <div className="items-center gap-4 grid grid-cols-1 sm:grid-cols-2 mt-4 mb-8">
+        <h1 className="mb-4 font-bold text-4xl">Companies</h1>
+        <SearchBar onChange={handleSearchChange} />
       </div>
 
       {/* Company Cards */}
-      <div className="gap-8 grid grid-cols-2">
-        {filteredCompanies.length > 0 ? (
+      <div className="gap-8 grid grid-cols-1 sm:grid-cols-2">
+        {filteredCompanies.length > 0 ? ( 
           filteredCompanies.map((company) => (
             <CompanyCard
               key={company.id}
@@ -49,7 +46,7 @@ const CompaniesPage: React.FC = () => {
             />
           ))
         ) : (
-          <p className="col-span-2 text-center">No companies found.</p>
+          <p className="col-span-full text-center">No companies found.</p>
         )}
       </div>
     </main>

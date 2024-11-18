@@ -127,6 +127,7 @@ const ActivityList: React.FC<ActivityListProps> = ({
             style={{
               color: '#BEBEBE',
               marginRight: '4px',
+              fontSize: '1px'
             }}>
             {activity.date}
           </div>
