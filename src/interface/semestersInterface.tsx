@@ -1,4 +1,4 @@
-interface Semester {
+export interface Semester {
   id: number
   year: number
   semester: number

@@ -57,7 +57,7 @@ export default function TagPage() {
           className="bg-vidva px-3 py-2 rounded-xl text-body-2 text-white"
           onClick={(e) => {
             e.preventDefault();
-            router.push('/admin/tag/create');
+            router.push('/admin/tags/create');
           }}
         >
           New Tag
@@ -67,6 +67,7 @@ export default function TagPage() {
       <div className="flex justify-end w-full">
         <SearchBar
           onChange={(value: string) => setSearch(value)}
+          className="w-full md:w-auto"
         />
       </div>
       {loading ? (

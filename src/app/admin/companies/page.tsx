@@ -36,7 +36,7 @@ export default function CompanyPage() {
           className="bg-vidva px-3 py-2 rounded-xl text-body-2 text-white"
           onClick={(e) => {
             e.preventDefault();
-            router.push('/admin/tag/create');
+            router.push('/admin/tags/create');
           }}
         >
           New Tag

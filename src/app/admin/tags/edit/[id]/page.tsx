@@ -70,7 +70,7 @@ export default function EditTagPage() {
 
     const result = await editTag({ tag: dataForm });
     if (result.success) {
-      router.push('/admin/tag');
+      router.push('/admin/tags');
     }
   };
 
@@ -96,11 +96,11 @@ export default function EditTagPage() {
           setColorEdit(tag.color ? tag.color.toLowerCase() : "");
         } else {
           console.error("Failed to fetch tag data");
-          router.push('/admin/tag')
+          router.push('/admin/tags')
         }
       } catch (error) {
         console.error("Error fetching tag:", error);
-        router.push('/admin/tag')
+        router.push('/admin/tags')
       }
     };
     fetchTag();
@@ -125,7 +125,7 @@ export default function EditTagPage() {
   // return
   return (
     <main className="py-28 w-full">
-      <div className='flex flex-col justify-start items-start gap-4 shadow-2 mx-auto w-full max-w-xl'>
+      <div className='flex flex-col justify-start items-start gap-4 shadow-2 mx-auto p-5 md:p-8 rounded-xl w-full max-w-xl'>
         <div className="flex flex-row justify-center items-center gap-3 w-full">
           <i className="text-header-1 text-vidva bi bi-tags-fill"></i>
           <h1 className="font-semibold text-header-1">Edit Tag</h1>
@@ -134,10 +134,6 @@ export default function EditTagPage() {
           <form
             action="PUT"
             className="flex flex-col justify-start items-start gap-6"
-            onSubmit={(e) => {
-              e.preventDefault(); // Prevent default form submission
-              handleSubmit();
-            }}
           >
             <div className="flex flex-col w-full">
               <label htmlFor="Name" className="font-light text-body-1">Name</label>
@@ -148,7 +144,7 @@ export default function EditTagPage() {
                   placeholder="Please Enter"
                   value={nameEdit}
                   onChange={(e) => setNameEdit(e.target.value)}
-                  className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-full font-light placeholder:font-light text-lg text-mgray-1 placeholder:text-lg placeholder:text-mgray-2 outline-none`,
+                  className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-full font-light placeholder:font-light text-body-2 text-mgray-1 placeholder:text-body-2 placeholder:text-mgray-2 outline-none`,
                     isNameEditError ? "border-red-500" : "border-neutral-200"
                   )}
                 />
@@ -167,11 +163,11 @@ export default function EditTagPage() {
                     placeholder="Please Enter"
                     value={colorEdit}
                     onChange={(e) => setColorEdit(e.target.value.toLowerCase())}
-                    className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-full font-light placeholder:font-light text-lg text-mgray-1 placeholder:text-lg placeholder:text-mgray-2 outline-none`,
+                    className={cn(`bg-neutral-50 p-1 lg:p-2 border rounded-lg w-2/3 sm:w-9/12 font-light placeholder:font-light text-body-2 text-mgray-1 placeholder:text-body-2 placeholder:text-mgray-2 outline-none`,
                       isColorEditError ? "border-red-500" : "border-neutral-200"
                     )}
                   />
-                  <div className={cn("border rounded-lg w-3/12")} style={{ backgroundColor: colorEdit.length != 0 ? `#${colorEdit}`: '#fff' }}></div>
+                  <div className={cn("border rounded-lg w-1/3 sm:w-3/12")} style={{ backgroundColor: colorEdit.length != 0 ? `#${colorEdit}`: '#fff' }}></div>
                 </div>
                 {isColorEditError &&
                   (<p className="text-detail text-red-500">{colorEditError}</p>)
