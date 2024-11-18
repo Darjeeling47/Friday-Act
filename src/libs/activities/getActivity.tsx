@@ -1,4 +1,4 @@
-export async function getActivity({
+export default async function getActivity({
   id
 }:{
   id:string

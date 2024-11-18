@@ -53,7 +53,7 @@ export default function ActivitiesCatalog({
   return (
     <>
       <div className="justify-between gap-10 grid grid-cols-1 sm:grid-cols-2 w-full">
-        <h1 className="col-span-1 font-bold text-center text-mgray-1 text-title-1 sm:text-left">Activities</h1>
+        <h1 className="col-span-1 font-bold text-center text-header-1 text-mgray-1 sm:text-left">Activities</h1>
         <div className="flex justify-end items-center col-span-1">
           <SearchBar onChange={setSearch} className="mt-1 w-full sm:w-80" />
         </div>
@@ -61,7 +61,7 @@ export default function ActivitiesCatalog({
 
       {filteredActivitiesGroupByDate.map((groupDate: ActivitiesGroupByDateItem, index) => (
         <div key={index} className="flex flex-col justify-start items-start gap-8 py-8 border-b-1 border-b-mgray-2 w-full">
-          <h2 className="font-normal text-mgray-2 text-title-3">{formatDate(groupDate.date)}</h2>
+          <h2 className="font-normal text-header-2 text-mgray-2">{formatDate(groupDate.date)}</h2>
           <div className="justify-start gap-8 grid grid-cols-1 lg:grid-cols-2 w-full">
             {
               (new Date(groupDate.date) >= new Date(nearestFriday.getTime() - (6 * 24 * 60 * 60 * 1000))) && (new Date(groupDate.date) <= nearestFriday) ?

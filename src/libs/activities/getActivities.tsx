@@ -1,6 +1,8 @@
-export default async function getActivities(token: string, group?: string) {
+export default async function getActivities(
+  token: string, group?: string
+) {
   // Construct the API endpoint URL
-  const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${group ? `?group=${group}` : ''}`
+  const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${group ? `?group=${group}` : ''}`;
 
   const response = await fetch(url, {
     method: 'GET',
@@ -8,15 +10,14 @@ export default async function getActivities(token: string, group?: string) {
       Authorization: `Bearer ${token}`,
     },
     cache: 'no-store',
-  })
+  });
 
   // Check if the response is successful
   if (!response.ok) {
-    throw new Error('get activiies failed')
+    throw new Error('get activities failed');
   }
 
   // Return data
-  const data = await response.json()
-  console
-  return data
+  const data = await response.json();
+  return data;
 }

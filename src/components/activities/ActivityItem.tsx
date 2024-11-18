@@ -36,7 +36,7 @@ export default function ActivitiesItem({
 
   // return
   return (
-    <div className="flex flex-row justify-start items-start gap-5 hover:bg-vidva/10 p-5 rounded-[30px] w-full h-full transition-transform duration-300">
+    <div className="flex flex-row justify-start items-start gap-5 hover:bg-mgray-3/20 p-5 rounded-[30px] w-full h-full transition-transform duration-300">
       <div className="flex justify-center items-center bg-white shadow-1 rounded-3xl h-44 sm:h-56 md:h-64 lg:h-72 aspect-2/3">
         {imgSrc ? (
           <Image
@@ -58,23 +58,22 @@ export default function ActivitiesItem({
       </div>
       <div className="flex flex-col justify-between items-between w-full h-full">
         <div className="flex flex-col justify-start items-start gap-3 w-full">
-          <h3 className="font-normal text-headline text-mgray-1">{activity.name}</h3>
-          <p className="line-clamp-1 font-light text-mgray-2 text-subheadline">{activity.company?.name}</p>
-          <hr className='my-2' />
+          <h3 className="font-normal text-header-3 text-mgray-1">{activity.name}</h3>
+          <p className="line-clamp-1 font-light text-mgray-2 text-subtitle">{activity.company?.name}</p>
           <div className="flex flex-wrap gap-2 pt-3 border-t-2 border-t-white w-full">
             {activity.tags.sort().map((tag: TagItem) => (
               <Tag key={tag.id} text={tag.name} color={tag.color} />
             ))}
           </div>
-          <div className="line-clamp-1 sm:line-clamp-2 lg:line-clamp-3 w-full font-light text-footnote text-mgray-2">
+          <div className="line-clamp-1 sm:line-clamp-2 lg:line-clamp-3 w-full font-light text-body-2 text-mgray-2">
             {activity.description}
           </div>
         </div>
         {
           availableSeats ? (
-            <p className='font-light text-body text-emerald-500'>{availableSeats} Seat{availableSeats !== 1 ? "s" : ""} left</p>
+            <p className='font-light text-body-1 text-emerald-500'>{availableSeats} Seat{availableSeats !== 1 ? "s" : ""} left</p>
           ) : (
-            <p className='font-light text-body text-rose-600'>Full</p>
+            <p className='font-light text-body-1 text-rose-600'>Full</p>
           )
         }
       </div>

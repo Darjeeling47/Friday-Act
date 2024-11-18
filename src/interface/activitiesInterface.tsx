@@ -1,7 +1,7 @@
 // import interface
 import { Pagination } from "./basicsInterface";
 import { CompanyItem } from "./companiesInterface";
-import { Semester } from "./semestersInterface";
+import Semesters from "./semestersInterface";
 import { TagItem } from "./tagsInterface";
 
 export interface Activities {
@@ -52,7 +52,7 @@ export interface ActivityItem {
   updated_at: string | null;
   currentParticipants: string;
   isApplied?: boolean,
-  semester: SemesterItem
+  semester: Semester
   company: CompanyItem | null,
   tags: TagItem[]
 }
