@@ -1,15 +1,26 @@
-const Tag = ({ text = "", color = "004457" }) => {
-  const bgColor = `#${color}33`; // Adding transparency manually for the background color
-  const textColor = `#${color}`;
+// import util
+import { cn } from "@/utils/utils";
 
+// Tag component
+export default function Tag({
+  text,
+  color
+}: {
+  text: string,
+  color?: string
+}) {
+  // return
   return (
-    <span
-      style={{ backgroundColor: bgColor, color: textColor }}
-      className="px-2 py-1 rounded-full w-fit"
+    <div
+      className={cn(
+        "px-2 py-1 rounded-full text-footnote",
+      )}
+      style={{
+        color: color ? `#${color}` : "#000",
+        backgroundColor: color ? `#${color}20` : "#00000020",
+      }}
     >
       {text}
-    </span>
+    </div>
   );
 };
-
-export default Tag;
