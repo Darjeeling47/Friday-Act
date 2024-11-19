@@ -2,7 +2,7 @@
 
 import TableHeader from "@/components/table/TableHeader";
 import SearchBar from "@/components/basic/SearchBar";
-import TableComponent from "@/components/table/TableComponent";
+import TableComponent from "@/components/basic/TableComponent";
 import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplications from "@/libs/application/getApplications";

@@ -1,79 +1,88 @@
-"use client";
+'use client';
 
-// import
-// react
-import React, { useState } from "react";
-// components
 import Tag from "@/components/basic/Tag";
+import getActivity from "@/libs/activities/getActivity";
+import { getImageAsBase64 } from '@/utils/getImageAsBase64';
+import { useEffect, useState } from "react";
 import Button from "@/components/basic/Button";
 
-// Variables
-// Primary
-const initialSeats = 20;
-const maxSeats = 100;
+// ฟังก์ชันสำหรับฟอร์แมตวันที่
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toISOString().split("T")[0];
+};
 
-// Component
-const Page: React.FC = () => {
-  // Variables - Status
-  const [isClicked, setIsClicked] = useState(false);
+export default function Page({ params }: { params: { id: string } }) {
+  const [activityData, setActivityData] = useState<any>(null);
+  const [imgSrc, setImgSrc] = useState<string | undefined>(undefined);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
-  // handle
+  useEffect(() => {
+    const fetchActivityData = async () => {
+      const data = await getActivity({ id: params.id });
+      setActivityData(data);
+
+      if (data.activity.posterUrl) {
+        const imgBase64 = await getImageAsBase64(data.activity.posterUrl);
+        setImgSrc(imgBase64);
+      }
+    };
+
+    fetchActivityData();
+  }, [params.id]);
+
+  if (!activityData) {
+    return <div>Loading...</div>;
+  }
+
+  const initialSeats = 0;
+
   const handleClick = () => {
-    setIsClicked(!isClicked);
+    setIsClicked((prev) => !prev);
+    console.log(isClicked ? 'Cancelled Application' : 'Applied for Activity');
   };
 
-  // return
   return (
     <main className="mx-auto px-2 sm:px-4 p-4 container">
-      {/* Content Wrapper */}
-      <div className="flex md:flex-row flex-col items-start md:items-start gap-4">
-        <div className="flex flex-[0.9] justify-center items-center">
+      <div className="flex flex-col md:flex-row items-start md:items-start gap-4">
+        {/* Left Column */}
+        <div className="flex-[0.9] flex justify-center items-center">
           <img
-            src="/Poster/Psychological.png"
-            alt="Psychological Resilience for Success"
+            src={imgSrc || "/Poster/Psychological.png"}
+            alt={activityData.activity.name}
             className="rounded-lg w-full max-w-md"
           />
         </div>
 
-        <div className="flex flex-col flex-[1.12] justify-start p-2">
+        {/* Right Column */}
+        <div className="flex-[1.12] flex flex-col justify-between p-2">
           <div>
-            <h2 className="mb-4 font-bold text-3xl text-mgray-1">
-              Psychological Resilience for Success
+            <h2 className="mb-6 font-bold text-3xl text-mgray-1">
+              {activityData.activity.name}
             </h2>
-            <h2 className="flex justify-between items-center">
+
+            <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <img
                   src="/Logo/JBank.png"
                   alt="Logo"
                   className="rounded-lg w-8 h-8"
                 />
-                <span className="ml-2">ธนาคารจิตอาสา</span>
+                <span className="ml-2">{activityData.activity.name}</span>
               </div>
-              <span className="text-green-500">{`${initialSeats}/${maxSeats} seats`}</span>
-            </h2>
+              <span className="text-green-500">
+                {`${initialSeats}/${activityData.activity.max_participants || '0'}  seats`}
+              </span>
+            </div>
             <hr className="border-gray-300 my-4 border-t" />
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mt-8">
-              <div className="flex flex-wrap gap-2 mb-4">
-              <Tag
-                text="Cyber Security"
-                color="3b82f6"
-              />
-              <Tag
-                text="Cloud"
-                color="f97316"
-              />
-              <Tag
-                text="Web Development"
-                color="22c55e"
-              />
-            </div>
+            <div className="flex flex-wrap gap-2 mt-8 mb-8">
+              <Tag text="Cyber Security" color="3b82f6" />
+              <Tag text="Cloud" color="f97316" />
+              <Tag text="Web Development" color="22c55e" />
             </div>
 
-            {/* Event Information */}
             <div className="mt-4">
-              <div className="flex md:flex-row flex-col items-start md:items-center gap-2 mt-4">
+              <div className="flex md:flex-row flex-col items-start gap-2">
                 <div className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -88,12 +97,11 @@ const Page: React.FC = () => {
                   </h3>
                 </div>
                 <h3 className="font-light text-base text-gray-600 md:text-lg lg:text-xl">
-                  29 Mar 2024 | 09:00 - 12:00
+                  {`${formatDate(activityData.activity.date)} | ${activityData.activity.startTime} - ${activityData.activity.endTime}`}
                 </h3>
               </div>
 
-
-              <div className="flex md:flex-row flex-col items-start md:items-center gap-2 mt-4">
+              <div className="flex md:flex-row flex-col items-start gap-2 mt-4">
                 <div className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -108,12 +116,12 @@ const Page: React.FC = () => {
                   </h3>
                 </div>
                 <h3 className="font-light text-base text-gray-600 md:text-lg lg:text-xl">
-                  อาคารจุฬาพัฒน์ 4 ชั้น 3 (หลัง MBK)
+                  {activityData.activity.location}
                 </h3>
               </div>
 
-              <div className="flex md:flex-row flex-col items-start md:items-center mt-4">
-                <div className="flex items-start md:items-center">
+              <div className="flex md:flex-row flex-col items-start mt-4">
+                <div className="flex items-start">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-6 h-6 text-gray-600"
@@ -128,38 +136,31 @@ const Page: React.FC = () => {
                 </div>
                 <div className="flex flex-col mt-2 md:mt-0 ml-0 md:ml-4">
                   <h3 className="font-light text-base text-gray-600 md:text-lg">
-                    Wiset Bumrungwong
-                  </h3>
-                  <h3 className="font-light text-base text-gray-600 md:text-lg">
-                    Sorrayut Rattanaponjnard, PHD
+                    {activityData.activity.speaker}
                   </h3>
                 </div>
               </div>
 
               <div>
-                <h3 className="mt-4 mb-8 font-normal text-m text-mgray-d3">
-                  Resilience หรือทักษะการฟื้นคืนกิจกรรมดีๆที่จัดโดยพี่ๆ จากธนาคารจิตอาสาที่จะมาช่วยเราสร้างเครื่องมือเพื่อเตรียมรับมือกับภาวะวิกฤติของชีวิต...
+                <h3 className="mt-4 mb-8 font-normal text-m text-mgray-d3 sm:mb-12">
+                  {activityData.activity.description}
                 </h3>
               </div>
             </div>
+          </div>
 
-            <div className="content-end mt-12 sm:mt-8 lg:mt-8 text-center">
-              <Button
-                onClick={handleClick}
-                className={`${
-                  isClicked
-                    ? "bg-gray-500 hover:bg-gray-600 active:bg-gray-700"
-                    : "bg-vidva hover:bg-vidva/80"
-                } transition-transform duration-150 text-white font-bold rounded w-full`}
-              >
-                {isClicked ? "Cancel Application" : "Apply Activity"}
-              </Button>
-            </div>
+          <div className="mt-4 text-center md:mt-20 ">
+            <Button
+              onClick={handleClick}
+              className={`${
+                isClicked ? 'bg-gray-600 hover:bg-gray-500' : 'bg-vidva hover:bg-vidva/80'
+              } active:bg-gray-400 transition-transform duration-150 text-white font-bold rounded w-full py-2`}
+            >
+              {isClicked ? 'Cancel Application' : 'Apply Activity'}
+            </Button>
           </div>
         </div>
       </div>
     </main>
   );
-};
-
-export default Page;
+}
