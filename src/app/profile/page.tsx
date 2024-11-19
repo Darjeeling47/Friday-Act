@@ -86,12 +86,12 @@ export default function Profile() {
             <Image
               src={profileUrl}
               alt='Profile Picture'
-              className='w-[100px] rounded-lg object-contain md:w-[100px]'
+              className='h-[100px] w-[100px] rounded-lg object-contain'
               width={1500}
               height={1500}
             />
           ) : (
-            <div className='w-[100px] rounded-lg bg-mgray-4 object-contain md:w-[100px]'></div>
+            <div className='h-[100px] w-[100px] rounded-lg bg-mgray-4 object-contain'></div>
           )}
           <span className='flex flex-col'>
             <h1 className='text-xl md:text-2xl text-balance font-medium'>
@@ -134,9 +134,9 @@ export default function Profile() {
               {applications ? applications.count : 0}
             </p>
           </div>
-          <div className='flex flex-col gap-1 divide-y divide-mgray-4 rounded-md border-1 border-mgray-4 md:flex-row md:divide-x'>
+          <div className='flex flex-col gap-1 divide-y divide-mgray-4 rounded-md border-1 border-mgray-4 md:flex-row md:divide-x md:divide-y-0'>
             <div className='w-full px-6 py-4'>
-              <p className='text-sm text-nowrap text-mgray-2'>
+              <p className='text-sm text-mgray-2'>
                 Activities Check
               </p>
               <p className='text-2xl font-medium text-emerald-500'>
@@ -144,7 +144,7 @@ export default function Profile() {
               </p>
             </div>
             <div className='w-full px-6 py-4'>
-              <p className='text-sm text-nowrap text-mgray-2'>
+              <p className='text-sm text-mgray-2'>
                 Activities Absent
               </p>
               <p className='text-2xl font-medium text-rose-600'>
@@ -163,6 +163,7 @@ export default function Profile() {
             {/* <CompanyActivity key={i} data={data} /> */}
           </div>
         ))}
+      <ActivityLog />
     </main>
   )
 }

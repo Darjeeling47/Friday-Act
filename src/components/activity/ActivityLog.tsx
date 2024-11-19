@@ -70,7 +70,8 @@ export default function ActivityLog({
                       activity.status === 'Absent' ? 'bg-red-600/10' : ''
                     }`}>
                     <div className='flex flex-row items-center'>
-                      <div className='mr-4 h-10 w-10 rounded-full bg-slate-400'></div>
+                      {/* <div className='mr-4 h-10 w-10 rounded-full bg-slate-400'></div> */}{' '}
+                      {/* Company Logo (no picture) */}
                       <span className='flex flex-col'>
                         <h3 className='text-base sm:text-lg font-semibold'>
                           {activity.name}
