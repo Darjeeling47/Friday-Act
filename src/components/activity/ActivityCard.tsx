@@ -144,9 +144,7 @@ export default function ActivityItemApplied({
           <div className='flex h-fit w-full flex-col items-center gap-1'>
             {/* Tablet Desktop */}
             <div className='hidden w-full flex-row items-center justify-start gap-2 sm:flex'>
-              <i
-                className='bi bi-square-fill text-mgray-3'
-                style={{ fontSize: '6px' }}></i>
+              <i className='bi bi-clock-fill text-md text-mgray-3'></i>
               <p className='text-detail-1 xl:text-detail-1 text-mgray-2'>
                 {dateActivity}, {timeActivity}
               </p>

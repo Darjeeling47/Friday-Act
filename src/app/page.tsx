@@ -33,7 +33,7 @@ export default async function Home() {
             </p>
           </div>
           <div className='flex w-full flex-row items-center justify-center gap-2'>
-            <Button>Get Started</Button>
+            <Button href='/activities'>Get Started</Button>
             <Button variant='text'>Learn More</Button>
           </div>
         </div>

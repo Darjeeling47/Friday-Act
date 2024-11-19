@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 // import components
 import DropdownItem from './DropdownItem'
 import NavItem from './NavItem'
+import { cookies } from 'next/headers'
 
 export default function NavBar() {
   const [pathname, setPathname] = useState<string>(usePathname().split('/')[1])
@@ -19,6 +20,7 @@ export default function NavBar() {
   const [studentID, setStudentID] = useState('')
   const [profileUrl, setProfileUrl] = useState('')
 
+  const login_status = Cookies.get('is_logged_in')
   useEffect(() => {
     // get login status from cookies
     const login_status = Cookies.get('is_logged_in')
@@ -34,7 +36,7 @@ export default function NavBar() {
       setStudentID(profile.studentId)
       setProfileUrl(profile.profileImageUrl)
     }
-  }, [])
+  }, [login_status])
 
   const handleLogout = () => {
     // Delete cookies
