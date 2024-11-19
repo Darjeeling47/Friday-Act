@@ -107,6 +107,7 @@ export default function Application() {
         textStyle="max-md:text-xs"
         headerStyle="max-md:text-xs"
         spaceText="100px"
+        defaultRowsPerPage={20}
         onClickEdit={clickEdit}
       />
     </main>
