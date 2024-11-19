@@ -1,4 +1,4 @@
-export default async function getApplications() {
+export default async function getApplications(token: string) {
     try {
         const tokeneiei = process.env.NEXT_PUBLIC_TOKEN
         const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/applications`, {

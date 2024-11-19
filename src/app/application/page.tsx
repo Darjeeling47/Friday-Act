@@ -6,6 +6,7 @@ import TableComponent from "@/components/basic/TableComponent";
 import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplications from "@/libs/applications/getApplications";
+import { useRouter } from 'next/navigation';
 
 import Cookies from 'js-cookie'
 const token = Cookies.get('access_token') || '';
@@ -41,6 +42,7 @@ interface Application {
 }
 
 type FormattedApplication = Application & {
+  id: number;
   username: string;
   sid: string;
   activity: string;
@@ -60,12 +62,13 @@ export default function Application() {
     const fetchData = async () => {
       try {
         if (!token) {
-          throw new Error('Token is not available');
+          // throw new Error('Token is not available');
         }
         const data = await getApplications(token);
         const applications = data.applications;
         const formattedData = applications.map((application: Application) => ({
           ...application,
+          id: application.id,
           username: application.user.thaiName,
           sid: application.user.id,
           activity: application.activity.name,
@@ -102,7 +105,6 @@ export default function Application() {
 
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
-    console.log("Search Value:", value);
   };
 
   if (loading) return <div className='text-xl font-semibold'>Loading...</div>;
@@ -118,6 +120,11 @@ export default function Application() {
     { key: "edit", title: "" },
   ];
 
+  const router = useRouter();
+  const clickEdit = (id: number) => {
+    router.push(`/application/${id}`);
+  };
+
   return (
     <main className='py-16 max-md:py-10 gap-[30px] flex flex-col max-md:items-center'>
       <TableHeader headerTitle='Application' buttonTitle='Scan Attendance Qr' style='flex' headerStyle='text-4xl font-semibold' buttonStyle='' />
@@ -130,7 +137,14 @@ export default function Application() {
           ]}
         />
       </div>
-      <TableComponent headers={headers} data={filteredData} textStyle="max-md:text-xs" headerStyle="max-md:text-xs" />
+      <TableComponent
+        headers={headers}
+        data={filteredData}
+        textStyle="max-md:text-xs"
+        headerStyle="max-md:text-xs"
+        spaceText="100px"
+        onClickEdit={clickEdit}
+      />
     </main>
   );
 }

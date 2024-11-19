@@ -1,5 +1,5 @@
-'use client'
-import Image from 'next/image'
+'use client';
+import { formatDate_Utc_to_EN } from '@/utils/utils'
 import { useState } from 'react'
 
 export default function TableComponent({
@@ -9,7 +9,10 @@ export default function TableComponent({
   headerStyle,
   textStyle,
   iconStyle,
+  spaceText,
   defaultRowsPerPage = null,
+  onClickEdit,
+  onClickDelete,
 }: {
   headers: { key: string; title: string }[]
   data: { [key: string]: any }[]
@@ -17,7 +20,11 @@ export default function TableComponent({
   headerStyle?: string
   textStyle?: string
   iconStyle?: string
+  spaceText?: string
+  spaceTool?: string
   defaultRowsPerPage?: number | null
+  onClickEdit?: Function
+  onClickDelete?: Function
 }) {
   const [logoEdit] = useState<string>('/logo/Logo_Edit.png')
   const [logoDelete] = useState<string>('/logo/Logo_Delete.png')
@@ -45,7 +52,12 @@ export default function TableComponent({
             {headers.map((header, index) => (
               <th
                 key={index}
-                style={{ width: header.key === 'edit' || header.key === 'delete' ? '30px' : '100px' }}
+                style={{
+                  width:
+                    header.key === 'edit' || header.key === 'delete'
+                      ? '30px'
+                      : `${spaceText}`,
+                }}
                 className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
@@ -60,14 +72,14 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`border border-l-0 border-r-0 px-1 pt-1.5 max-md:w-28 max-md:h-auto ${iconStyle}`}>
-                      <button>
-                        <Image
-                          src={logoEdit}
-                          alt='Edit'
-                          width={20}
-                          height={20}
-                        />
+                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
+                      <button
+                        onClick={() => {
+                          if (onClickEdit) {
+                            onClickEdit(rowData.id)
+                          }
+                        }}>
+                        <i className={`bi bi-pencil-square ${iconStyle}`}></i>
                       </button>
                     </td>
                   )
@@ -76,18 +88,59 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`border border-l-0 border-r-0 px-1 pt-1.5 max-md:w-28 max-md:h-auto ${iconStyle}`}>
-                      <button>
-                        <Image
-                          src={logoDelete}
-                          alt='Delete'
-                          width={20}
-                          height={20}
-                        />
+                      className={`items-start border border-l-0 border-r-0 p-1 text-start sm:p-2 ${iconStyle}`}>
+                      <button
+                        onClick={() => {
+                          if (onClickDelete) {
+                            onClickDelete(currentData[index])
+                          }
+                        }}>
+                        <i className={`bi bi-trash3 ${iconStyle}`}></i>
                       </button>
                     </td>
                   )
                 }
+                if (header.key === 'start_date' || header.key === 'end_date') {
+                  return (
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      {formatDate_Utc_to_EN(rowData[header.key])}
+                    </td>
+                  )
+                }
+                if (header.key.includes('.')) {
+                  // Handle nested objects
+                  const keys = header.key.split('.')
+                  let current = rowData
+                
+                  for (const key of keys) {
+                    if (current === null || current === undefined || !current.hasOwnProperty(key)) {
+                      return undefined  // Return undefined if the key doesn't exist
+                    }
+                    current = current[key]
+                  }
+                
+                  if (current && typeof current === 'object') {
+                    // If 'current' is an object, you can render a specific property or stringify it
+                    return (
+                      <td
+                        key={`${index}-${subIndex}`}
+                        className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                        {JSON.stringify(current)}
+                      </td>
+                    )
+                  }
+                
+                  return (
+                    <td
+                      key={`${index}-${subIndex}`}
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      {current}
+                    </td>
+                  )
+                }
+                
                 return (
                   <td
                     key={`${index}-${subIndex}`}
@@ -101,11 +154,11 @@ export default function TableComponent({
         </tbody>
       </table>
       {rowsPerPage && totalPages > 1 && (
-        <div className='mt-4 flex justify-center space-x-2'>
+        <div className='flex justify-center space-x-2 mt-4'>
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className='rounded border px-2 py-1 disabled:opacity-50'>
+            className='disabled:opacity-50 px-2 py-1 border rounded'>
             &lt;
           </button>
           {[...Array(totalPages)].map((_, pageIndex) => (
@@ -119,7 +172,7 @@ export default function TableComponent({
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className='rounded border px-2 py-1 disabled:opacity-50'>
+            className='disabled:opacity-50 px-2 py-1 border rounded'>
             &gt;
           </button>
         </div>
