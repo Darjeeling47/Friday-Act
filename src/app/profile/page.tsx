@@ -72,6 +72,7 @@ export default function Profile() {
           search
         )
         setApplications(applications)
+        // console.log('applications:', applications)
 
         // Process activity counts
         let checkCount = 0
@@ -116,10 +117,10 @@ export default function Profile() {
             <div className='h-[100px] w-[100px] rounded-lg bg-mgray-4 object-contain'></div>
           )}
           <span className='flex flex-col'>
-            <h1 className='text-xl md:text-2xl text-balance font-medium'>
+            <h1 className='text-balance text-xl font-medium md:text-2xl'>
               {`${firstNameTH} ${lastNameTH}`}
             </h1>
-            <p className='text-md md:text-lg text-balance font-normal'>
+            <p className='text-md text-balance font-normal md:text-lg'>
               {`${firstNameEN} ${lastNameEN}`}
             </p>
             <p className='text-md mt-1 font-light'>{studentID}</p>
@@ -151,13 +152,13 @@ export default function Profile() {
 
         <div className='flex flex-col space-y-4'>
           <div className='flex flex-col space-y-1 rounded-md border-1 border-mgray-4 px-6 py-4'>
-            <p className='text-sm text-nowrap text-mgray-2'>Activities Apply</p>
+            <p className='text-nowrap text-sm text-mgray-2'>Activities Apply</p>
             <p className='text-2xl font-medium text-mgray-1'>
               {applications ? applications.count : 0}
             </p>
           </div>
           <div className='flex flex-col space-y-1 rounded-md border-1 border-mgray-4 px-6 py-4'>
-            <p className='text-sm text-nowrap text-mgray-2'>Activities Check</p>
+            <p className='text-nowrap text-sm text-mgray-2'>Activities Check</p>
             <p className='text-2xl font-medium text-emerald-500'>
               {activitiesCheck}
             </p>
@@ -217,6 +218,7 @@ type Application = {
   updatedAt: string
   isQrGenerated: boolean
   qrString: string | null
+  status: string
   qrGeneratedAt: string | null
   isApproved: boolean
   isCanceled: boolean

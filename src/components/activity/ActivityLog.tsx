@@ -4,9 +4,9 @@
 import { useState } from 'react'
 
 export default function ActivityLog({
-  semesterData = exampleResponse,
+  semesterData,
 }: {
-  semesterData?: SemesterGroupedResponse
+  semesterData: SemesterGroupedResponse
 }) {
   const { semesters } = semesterData
 
@@ -27,11 +27,7 @@ export default function ActivityLog({
             month: 'short',
             year: 'numeric',
           }),
-          status: app.isCanceled
-            ? 'Absent'
-            : app.isApproved
-              ? 'Present'
-              : 'Pending',
+          status: app.status,
         }))
 
         return (
@@ -42,18 +38,18 @@ export default function ActivityLog({
               className='flex cursor-pointer flex-col items-start justify-between p-4 sm:flex-row sm:items-center'
               onClick={() => setIsOpen((prev) => !prev)}>
               <span className='mb-2 flex flex-row space-x-2 sm:mb-0 md:flex-col'>
-                <h2 className='text-lg sm:text-xl font-semibold text-mgray-1'>
+                <h2 className='text-lg font-semibold text-mgray-1 sm:text-xl'>
                   {semester.year}
                 </h2>
-                <p className='text-sm sm:text-base text-mgray-2'>
+                <p className='text-sm text-mgray-2 sm:text-base'>
                   Semester {semester.semester}
                 </p>
               </span>
               <span className='mb-2 flex flex-row space-x-2 sm:mb-0 md:flex-col'>
-                <h2 className='text-lg sm:text-xl text-right font-semibold text-mgray-1'>
+                <h2 className='text-right text-lg font-semibold text-mgray-1 sm:text-xl'>
                   {activities.length}
                 </h2>
-                <p className='text-sm sm:text-base text-right text-mgray-2'>
+                <p className='text-right text-sm text-mgray-2 sm:text-base'>
                   Activities
                 </p>
               </span>
@@ -71,7 +67,7 @@ export default function ActivityLog({
                     className={`flex flex-col items-start justify-between gap-2 rounded-md p-4 sm:flex-row sm:items-center sm:gap-4 ${
                       activity.status === 'Absent'
                         ? 'bg-red-600/10'
-                        : activity.status === 'Cancel'
+                        : activity.status === 'Canceled'
                           ? 'bg-mgray-1/10'
                           : ''
                     }`}>
@@ -79,23 +75,28 @@ export default function ActivityLog({
                       {/* <div className='mr-4 h-10 w-10 rounded-full bg-slate-400'></div> */}{' '}
                       {/* Company Logo (no picture) */}
                       <span className='flex flex-col'>
-                        <h3 className='text-base sm:text-lg font-semibold'>
+                        <h3 className='text-base font-semibold sm:text-lg'>
                           {activity.name}
                         </h3>
-                        <p className='text-sm sm:text-base text-mgray-2'>
+                        <p className='text-sm text-mgray-2 sm:text-base'>
                           {activity.company}
                         </p>
                       </span>
                     </div>
                     <span className='flex flex-col items-start text-right sm:items-end'>
-                      <h3 className='text-sm sm:text-base text-mgray-2'>
+                      <h3 className='text-sm text-mgray-2 sm:text-base'>
                         {activity.date}
                       </h3>
                       <p
                         className={`text-sm sm:text-base ${
-                          activity.status === 'Absent' ? 'text-rose-600' : ''
+                          activity.status === 'Absent' ||
+                          activity.status === 'Canceled'
+                            ? 'text-rose-600'
+                            : activity.status === 'Approved'
+                              ? 'text-emerald-500'
+                              : ''
                         }`}>
-                        {activity.status === 'Absent' ? 'Absent' : ''}
+                        {activity.status}
                       </p>
                     </span>
                   </div>
@@ -109,57 +110,57 @@ export default function ActivityLog({
   )
 }
 
-// Mock data
-const exampleResponse: SemesterGroupedResponse = {
-  success: true,
-  count: 10,
-  pagination: {
-    current: 1,
-    last: 2,
-    next: 2,
-    prev: null,
-    limit: 5,
-  },
-  semesters: [
-    {
-      semester: {
-        year: 2023,
-        semester: 1,
-      },
-      applications: [
-        {
-          id: 1,
-          user: {
-            id: 1001,
-            thaiName: 'สมชาย ใจดี',
-            studentId: '6201010001',
-          },
-          activity: {
-            id: 2001,
-            name: 'Community Service',
-            company: {
-              id: 3001,
-              name: 'Goodwill Co.',
-            },
-            semester: {
-              id: 4001,
-              year: 2023,
-              semester: 1,
-            },
-          },
-          createdAt: '2023-02-10T12:34:56.000Z',
-          updatedAt: '2023-02-15T12:34:56.000Z',
-          isQrGenerated: true,
-          qrString: 'QR12345',
-          qrGeneratedAt: '2023-02-11T12:34:56.000Z',
-          isApproved: true,
-          isCanceled: false,
-          cancellationReason: null,
-        },
-      ],
-    },
-  ],
-}
+// // Mock data
+// const exampleResponse: SemesterGroupedResponse = {
+//   success: true,
+//   count: 10,
+//   pagination: {
+//     current: 1,
+//     last: 2,
+//     next: 2,
+//     prev: null,
+//     limit: 5,
+//   },
+//   semesters: [
+//     {
+//       semester: {
+//         year: 2023,
+//         semester: 1,
+//       },
+//       applications: [
+//         {
+//           id: 1,
+//           user: {
+//             id: 1001,
+//             thaiName: 'สมชาย ใจดี',
+//             studentId: '6201010001',
+//           },
+//           activity: {
+//             id: 2001,
+//             name: 'Community Service',
+//             company: {
+//               id: 3001,
+//               name: 'Goodwill Co.',
+//             },
+//             semester: {
+//               id: 4001,
+//               year: 2023,
+//               semester: 1,
+//             },
+//           },
+//           createdAt: '2023-02-10T12:34:56.000Z',
+//           updatedAt: '2023-02-15T12:34:56.000Z',
+//           isQrGenerated: true,
+//           qrString: 'QR12345',
+//           qrGeneratedAt: '2023-02-11T12:34:56.000Z',
+//           isApproved: true,
+//           isCanceled: false,
+//           cancellationReason: null,
+//         },
+//       ],
+//     },
+//   ],
+// }
 
 // Type definitions
 type User = {
@@ -197,6 +198,7 @@ type Application = {
   qrGeneratedAt: string | null
   isApproved: boolean
   isCanceled: boolean
+  status: string
   cancellationReason: string | null
 }
 
