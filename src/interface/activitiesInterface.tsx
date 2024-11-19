@@ -37,20 +37,20 @@ export interface ActivitiesGroupBySemesterItem {
 
 export interface ActivityItem {
   id: number;
-  company_id: number;
-  semester_id: number;
+  companyId: number;
+  semesterId: number;
   name: string;
   description: string;
   date: string;
-  start_time: string;
-  end_time: string;
-  poster_url: string;
+  startTime: string;
+  endTime: string;
+  posterUrl: string;
   location: string;
-  max_participants: number;
+  maxParticipants: number;
   speaker: string;
-  created_at: string;
-  updated_at: string | null;
-  currentParticipants: string;
+  createdAt: string;
+  updatedAt: string | null;
+  currentParticipants: number;
   isApplied?: boolean,
   semester: Semester
   company: CompanyItem | null,

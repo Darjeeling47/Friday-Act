@@ -1,7 +1,7 @@
 export async function getImageAsBase64(url: string): Promise<string | undefined> {
   try {
     const imgSrc = `${process.env.PUBLIC_BACKEND_URL}${url}`;
-    console.log(imgSrc);
+    // console.log(imgSrc);
     const response = await fetch(imgSrc);
     if (!response.ok) {
       return undefined;

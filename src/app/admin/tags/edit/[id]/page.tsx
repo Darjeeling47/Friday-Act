@@ -149,7 +149,7 @@ export default function EditTagPage() {
                   )}
                 />
                 {isNameEditError &&
-                  (<p className="text-detail text-red-500">{nameEditError}</p>)
+                  (<p className="text-detail-1 text-red-500">{nameEditError}</p>)
                 }
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function EditTagPage() {
                   <div className={cn("border rounded-lg w-1/3 sm:w-3/12")} style={{ backgroundColor: colorEdit.length != 0 ? `#${colorEdit}`: '#fff' }}></div>
                 </div>
                 {isColorEditError &&
-                  (<p className="text-detail text-red-500">{colorEditError}</p>)
+                  (<p className="text-detail-1 text-red-500">{colorEditError}</p>)
                 }
               </div>
             </div>

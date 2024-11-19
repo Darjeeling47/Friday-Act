@@ -115,7 +115,7 @@ export default function CreateTagPage() {
                   )}
                 />
                 {isNameCreateError &&
-                  (<p className="text-detail text-red-500">{nameCreateError}</p>)
+                  (<p className="text-detail-1 text-red-500">{nameCreateError}</p>)
                 }
               </div>
             </div>
@@ -136,7 +136,7 @@ export default function CreateTagPage() {
                   <div className={cn("border rounded-lg w-1/3 sm:w-3/12")} style={{ backgroundColor: colorCreate.length != 0 ? `#${colorCreate}` : '#fff' }}></div>
                 </div>
                 {isColorCreateError &&
-                  (<p className="text-detail text-red-500">{colorCreateError}</p>)
+                  (<p className="text-detail-1 text-red-500">{colorCreateError}</p>)
                 }
               </div>
             </div>
