@@ -114,10 +114,13 @@ export default function Application() {
     { key: "status", title: "Status" },
     { key: "edit", title: "" },
   ];
-
+  interface IdObject {
+    id: string; // or the appropriate type for your id
+  }
+  
   const router = useRouter();
-  const clickEdit = (id: number) => {
-    router.push(`/application/${id}`);
+  const clickEdit = (id: IdObject) => {
+    router.push(`/admin/application/${id.id}`);
   };
 
   return (
