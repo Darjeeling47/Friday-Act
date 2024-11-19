@@ -19,34 +19,57 @@ export default function NavBar() {
   const [lastNameTH, setLastNameTH] = useState('')
   const [studentID, setStudentID] = useState('')
   const [profileUrl, setProfileUrl] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
 
-  const login_status = Cookies.get('is_logged_in')
   useEffect(() => {
-    // get login status from cookies
     const login_status = Cookies.get('is_logged_in')
-    setIsLogIn(login_status == 'true')
+    setIsLogIn(login_status === 'true')
 
-    // get user profile from cookies
     const user_profile = Cookies.get('user_profile')
-
     if (user_profile) {
       const profile = JSON.parse(user_profile)
       setFirstNameTH(profile.firstNameTh)
       setLastNameTH(profile.lastNameTh)
       setStudentID(profile.studentId)
       setProfileUrl(profile.profileImageUrl)
+      setIsAdmin(profile.isApplicationAdmin)
     }
-  }, [login_status])
+  }, [])
 
   const handleLogout = () => {
-    // Delete cookies
     Cookies.remove('access_token')
     Cookies.remove('user_profile')
     Cookies.remove('is_logged_in')
-
-    // Redirect to login page
     window.location.href = '/login'
   }
+
+  const adminLinks = [
+    { href: '/', label: 'Home', icon: 'bi bi-house-door-fill' },
+    {
+      href: '/admin/activities',
+      label: 'Activity',
+      icon: 'bi bi-calendar-event-fill',
+    },
+    { href: '/admin/companies', label: 'Company', icon: 'bi bi-building-fill' },
+    { href: '/admin/semesters', label: 'Semester', icon: 'bi bi-clock-fill' },
+    { href: '/admin/tags', label: 'Tags', icon: 'bi bi-tags-fill' },
+  ]
+
+  const userLinks = [
+    {
+      href: '/activities',
+      label: 'Activity',
+      icon: 'bi bi-calendar-event-fill',
+    },
+    { href: '/companies', label: 'Company', icon: 'bi bi-building-fill' },
+  ]
+
+  const navLinks = isAdmin
+    ? adminLinks
+    : [
+        { href: '/', label: 'Home', icon: 'bi bi-house-door-fill' },
+        ...userLinks,
+      ]
 
   return (
     <nav className='fixed left-0 right-0 top-0 h-14 w-full bg-mgray-1'>
@@ -78,7 +101,7 @@ export default function NavBar() {
         </div>
 
         {/* Mobile Nav Items */}
-        {isOpen ? (
+        {isOpen && (
           <div
             className={`flex flex-col space-y-2 bg-mgray-1 px-8 py-4 transition-transform duration-300 ease-in-out ${
               isOpen ? 'translate-y-0' : '-translate-y-full'
@@ -107,22 +130,16 @@ export default function NavBar() {
               </div>
             )}
             <line className='border-b border-mgray-2'></line>
-            <DropdownItem href='/' active={pathname == ''}>
-              <i className='bi bi-house-door-fill mr-2'></i>
-              Home
-            </DropdownItem>
-            <DropdownItem href='/activities' active={pathname == 'activities'}>
-              <i className='bi bi-calendar-event-fill mr-2'></i>
-              Activity
-            </DropdownItem>
-            <DropdownItem href='/companies' active={pathname == 'companies'}>
-              <i className='bi bi-building-fill mr-2'></i>
-              Company
-            </DropdownItem>
+            {navLinks.map(({ href, label, icon }) => (
+              <DropdownItem key={href} href={href} active={pathname === href}>
+                <i className={`${icon} mr-2`}></i>
+                {label}
+              </DropdownItem>
+            ))}
             <line className='border-b border-mgray-2'></line>
             {isLogIn ? (
               <>
-                <DropdownItem href='/profile' active={pathname == 'profile'}>
+                <DropdownItem href='/profile' active={pathname === 'profile'}>
                   <i className='bi bi-person-circle mr-2'></i>
                   My Profile
                 </DropdownItem>
@@ -143,18 +160,12 @@ export default function NavBar() {
               </a>
             )}
           </div>
-        ) : (
-          <div
-            className={`collapse -z-10 flex flex-col bg-mgray-1 transition-transform duration-300 ease-in-out ${
-              isOpen ? 'translate-y-0' : '-translate-y-full'
-            }`}></div>
         )}
       </div>
 
       {/* Desktop Nav */}
       <div className='container mx-auto hidden h-full flex-row justify-between lg:flex'>
         <div className='flex h-full flex-row items-center justify-center space-x-6'>
-          {/* Logo */}
           <Image
             src='/logo/Logo_FA.png'
             alt='logo'
@@ -162,45 +173,36 @@ export default function NavBar() {
             height={1000}
             className='mr-4 h-8 w-fit'
           />
-
-          {/* Nav Items */}
-          <NavItem href='/' active={pathname == ''}>
-            Home
-          </NavItem>
-          <NavItem href='/activities' active={pathname == 'activities'}>
-            Activity
-          </NavItem>
-          <NavItem href='/companies' active={pathname == 'companies'}>
-            Company
-          </NavItem>
+          {navLinks.map(({ href, label }) => (
+            <NavItem key={href} href={href} active={pathname === href}>
+              {label}
+            </NavItem>
+          ))}
         </div>
 
         {/* User */}
         <div className='flex h-full w-fit flex-row space-x-6'>
-          <div className='flex h-full w-fit flex-row space-x-2'>
-            {isLogIn ? (
-              <div className='flex flex-row items-center justify-center gap-2'>
-                <a
-                  href='/profile'
-                  className='text-md flex h-full items-center justify-center px-3 text-center font-normal text-mgray-3 hover:text-mgray-4'>
-                  {`${firstNameTH} ${lastNameTH}`}
-                </a>
-                <a
-                  href='#'
-                  onClick={handleLogout}
-                  className='text-md rounded-md font-normal text-mgray-3'>
-                  <i className='bi bi-box-arrow-right mr-2'></i>
-                </a>
-              </div>
-            ) : (
+          {isLogIn ? (
+            <div className='flex flex-row items-center justify-center gap-2'>
               <a
-                href='/login'
+                href='/profile'
                 className='text-md flex h-full items-center justify-center px-3 text-center font-normal text-mgray-3 hover:text-mgray-4'>
-                <i className='bi bi-box-arrow-in-right mr-2'></i>
-                Login
+                {`${firstNameTH} ${lastNameTH}`}
               </a>
-            )}
-          </div>
+              <a
+                href='#'
+                onClick={handleLogout}
+                className='text-md rounded-md font-normal text-mgray-3'>
+                <i className='bi bi-box-arrow-right mr-2'></i>
+              </a>
+            </div>
+          ) : (
+            <a
+              href='/login'
+              className='text-md flex h-full items-center justify-center px-3 text-center font-normal text-mgray-3 hover:text-mgray-4'>
+              Login
+            </a>
+          )}
         </div>
       </div>
     </nav>
