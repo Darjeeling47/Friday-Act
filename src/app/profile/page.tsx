@@ -156,7 +156,13 @@ export default function Profile() {
               {applications ? applications.count : 0}
             </p>
           </div>
-          <div className='flex flex-col gap-1 divide-y divide-mgray-4 rounded-md border-1 border-mgray-4 md:flex-row md:divide-x md:divide-y-0'>
+          <div className='flex flex-col space-y-1 rounded-md border-1 border-mgray-4 px-6 py-4'>
+            <p className='text-sm text-nowrap text-mgray-2'>Activities Check</p>
+            <p className='text-2xl font-medium text-emerald-500'>
+              {activitiesCheck}
+            </p>
+          </div>
+          {/* <div className='flex flex-col gap-1 divide-y divide-mgray-4 rounded-md border-1 border-mgray-4 md:flex-row md:divide-x md:divide-y-0'>
             <div className='w-full px-6 py-4'>
               <p className='text-sm text-mgray-2'>Activities Check</p>
               <p className='text-2xl font-medium text-emerald-500'>
@@ -169,7 +175,7 @@ export default function Profile() {
                 {activitiesAbsent}
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

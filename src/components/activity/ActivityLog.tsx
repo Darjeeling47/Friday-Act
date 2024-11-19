@@ -14,7 +14,7 @@ export default function ActivityLog({
 
   // return
   return (
-    <div className='flex w-full flex-col rounded-md bg-white p-3'>
+    <div className='flex w-full flex-col gap-2 rounded-md'>
       {semesters.map((semesterGroup) => {
         const { semester, applications } = semesterGroup
 
@@ -35,7 +35,9 @@ export default function ActivityLog({
         }))
 
         return (
-          <div key={semester.year + semester.semester} className='mb-6'>
+          <div
+            key={semester.year + semester.semester}
+            className='mb-6 rounded-md bg-white p-3'>
             <div
               className='flex cursor-pointer flex-col items-start justify-between p-4 sm:flex-row sm:items-center'
               onClick={() => setIsOpen((prev) => !prev)}>
@@ -61,13 +63,17 @@ export default function ActivityLog({
               className={`transition-all duration-300 ${
                 isOpen ? 'max-h-full opacity-100' : 'max-h-0 opacity-0'
               }`}>
-              <hr className='border-mgray-3' />
-              <div className='flex max-h-96 flex-col gap-4 overflow-auto'>
+              <hr className='mb-2 border-mgray-3' />
+              <div className='flex flex-col gap-4'>
                 {activities.map((activity) => (
                   <div
                     key={activity.id}
                     className={`flex flex-col items-start justify-between gap-2 rounded-md p-4 sm:flex-row sm:items-center sm:gap-4 ${
-                      activity.status === 'Absent' ? 'bg-red-600/10' : ''
+                      activity.status === 'Absent'
+                        ? 'bg-red-600/10'
+                        : activity.status === 'Cancel'
+                          ? 'bg-mgray-1/10'
+                          : ''
                     }`}>
                     <div className='flex flex-row items-center'>
                       {/* <div className='mr-4 h-10 w-10 rounded-full bg-slate-400'></div> */}{' '}
