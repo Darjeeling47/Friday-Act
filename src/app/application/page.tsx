@@ -66,9 +66,9 @@ export default function Application() {
           username: application.user.thaiName,
           sid: application.user.id,
           activity: application.activity.name,
-          attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : 'Pending',
+          attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : application.isCanceled ? 'Canceled' : 'Absent',
           applydate: formatDate_Utc_to_EN(application.createdAt),
-          status: application.isApproved ? 'Approved' : application.isCanceled ? 'Canceled' : 'Pending',
+          status: application.isApproved ? 'Approved' : application.isCanceled ? 'Canceled' : 'Absent',
         }));
         setData(formattedData);
         setFilteredData(formattedData);
