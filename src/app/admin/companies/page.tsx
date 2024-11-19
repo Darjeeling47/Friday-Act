@@ -1,4 +1,4 @@
-'ues client'
+'use client'
 // import react
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
