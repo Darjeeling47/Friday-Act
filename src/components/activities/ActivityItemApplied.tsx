@@ -92,7 +92,7 @@ export default function ActivityItemApplied({
   return (
     <Link
       className='flex h-full w-full max-w-xl flex-row items-center justify-start gap-5 rounded-md p-5 transition-transform duration-300 hover:bg-mgray-3/10'
-      href={`/activity/${activity.id}`}>
+      href={`/activities/${activity.id}`}>
       <div className='grow-0'>
         <div className='flex aspect-2/3 h-44 items-center justify-center rounded-md bg-white shadow-1 sm:h-56 md:h-64 lg:h-72'>
           {imgSrc ? (
@@ -149,7 +149,7 @@ export default function ActivityItemApplied({
                   className='shadow text-detail-2 md:text-detail-1 line-clamp-1 w-full rounded-md bg-mgray-2 px-4 py-2 text-center text-mgray-4 hover:bg-mgray-2/80'
                   onClick={(e) => {
                     e.preventDefault()
-                    router.push(`/activity/${activity.id}`)
+                    router.push(`/activities/${activity.id}`)
                   }}>
                   Applied
                 </button>
@@ -169,7 +169,7 @@ export default function ActivityItemApplied({
                   className='shadow text-detail-2 md:text-detail-1 line-clamp-1 w-full rounded-md bg-vidva px-4 py-2 text-center text-mgray-4 hover:bg-vidva/80'
                   onClick={(e) => {
                     e.preventDefault()
-                    router.push(`/activity/${activity.id}`)
+                    router.push(`/activities/${activity.id}`)
                   }}>
                   Apply Now
                 </button>
@@ -183,7 +183,7 @@ export default function ActivityItemApplied({
                   className='shadow text-detail-2 md:text-detail-1 line-clamp-1 w-full cursor-not-allowed rounded-md bg-mgray-3 px-4 py-2 text-center text-mgray-5'
                   onClick={(e) => {
                     e.preventDefault()
-                    router.push(`/activity/${activity.id}`)
+                    router.push(`/activities/${activity.id}`)
                   }}>
                   Out of Seat
                 </button>

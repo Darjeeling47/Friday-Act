@@ -66,7 +66,7 @@ export default function ActivitiesItem({
       className='flex h-full w-full max-w-xl flex-row items-center justify-start gap-5 rounded-md p-5 transition-transform duration-300 hover:bg-mgray-3/10'
       onClick={(e) => {
         e.preventDefault()
-        router.push(`/activity/${activity.id}`)
+        router.push(`/activities/${activity.id}`)
       }}>
       <div className='grow-0'>
         <div className='flex aspect-2/3 h-44 items-center justify-center rounded-md bg-white shadow-1 sm:h-56 md:h-64 lg:h-72'>
