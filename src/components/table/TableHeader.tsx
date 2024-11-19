@@ -22,7 +22,7 @@ export default function TableHeader({
 )) {
   return (
     <div
-      className={`flex ${disableButton ? 'justify-start' : 'items-center justify-center justify-between'} ${style}`}>
+      className={`flex ${disableButton ? 'justify-start' : 'w-full items-center justify-center justify-between'} ${style}`}>
       <p className={`text-2xl font-semibold ${headerStyle}`}>{headerTitle}</p>
       {!disableButton && (
         <Button className={`${buttonStyle}`} onClick={onClick} href={href}>
