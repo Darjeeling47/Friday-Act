@@ -1,8 +1,12 @@
 // import cookies
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 
 // import interface
-import { ActivitiesGroupByDate, ActivitiesGroupBySemester, Activities } from '@/interface/activitiesInterface';
+import {
+  ActivitiesGroupByDate,
+  ActivitiesGroupBySemester,
+  Activities,
+} from '@/interface/activitiesInterface'
 
 export default async function getActivities({
   search,
@@ -10,11 +14,13 @@ export default async function getActivities({
   limit,
   page,
 }: {
-  search?: string,
-  group?: string,
-  limit?: string,
-  page?: string,
-}): Promise<ActivitiesGroupByDate | Activities | ActivitiesGroupBySemester | null> {
+  search?: string
+  group?: string
+  limit?: string
+  page?: string
+}): Promise<
+  ActivitiesGroupByDate | Activities | ActivitiesGroupBySemester | null
+> {
   // Primary variable
   const token = Cookies.get('access_token')
   let query = '?'
@@ -32,18 +38,18 @@ export default async function getActivities({
   }
 
   // Construct the API endpoint URL
-  const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${query}`;
+  const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${query}`
   console.log(url)
   const response = await fetch(url, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
+  })
 
   // Check if the response is successful
   if (!response.ok) {
-    throw new Error('get activities failed');
+    throw new Error('get activities failed')
   }
 
   // Return data
