@@ -121,9 +121,9 @@ export default function Profile() {
             <p className='col-span-5 font-medium lg:col-span-3'>Department</p>
             <p className='col-span-7 lg:col-span-9'>{department}</p>
           </div>
-          <div className='col-span-12 flex flex-col gap-1 text-pretty border-b border-mgray-4 pr-4 text-right md:flex-row md:items-center md:justify-between'>
+          <div className='col-span-12 flex flex-col gap-1 text-pretty border-b border-mgray-4 pr-4 md:flex-row md:items-center md:justify-between'>
             <p className='col-span-5 font-medium lg:col-span-3'>Major</p>
-            <p className='col-span-7 lg:col-span-9'>{major}</p>
+            <p className='col-span-7 md:text-right lg:col-span-9'>{major}</p>
           </div>
           <div className='col-span-12 flex flex-col gap-1 border-b border-mgray-4 pr-4 md:flex-row md:items-center md:justify-between'>
             <p className='col-span-5 font-medium lg:col-span-3'>
@@ -158,7 +158,7 @@ export default function Profile() {
       </div>
 
       {/* Activities Log */}
-      {applications && <ActivityLog semesterData={applications} />}
+      {applications ? <ActivityLog semesterData={applications} /> : null}
     </main>
   )
 }
