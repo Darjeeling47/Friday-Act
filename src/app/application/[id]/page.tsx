@@ -1,8 +1,11 @@
 import Button from "@/components/basic/Button";
 import AttendanceDetailTable from "@/components/AttendanceDetailTable";
+import getApplication from "@/libs/applications/getApplication";
 
 export default function Application() {
   // return
+
+
   return (
     <main className='py-16 px-[280px] max-2xl:px-32 max-lg:py-10 max-lg:px-20 max-md:px-4 max-md:py-4 gap-[50px] flex flex-col'>
       <div className='flex justify-between items-center justify-center w-auto h-auto'>
