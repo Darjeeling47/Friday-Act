@@ -10,7 +10,7 @@ import CompanyActivity from '@/components/activity/CompanyActivity'
 import ActivityLog from '@/components/activity/ActivityLog'
 
 // api
-import getApplications from '@/libs/applications/getApplications'
+import getApplications from '@/libs/application/getApplications'
 
 export default function Profile() {
   // useEffect to check if user is logged in

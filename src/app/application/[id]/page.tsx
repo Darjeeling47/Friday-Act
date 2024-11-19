@@ -5,7 +5,8 @@ import { useParams } from 'next/navigation';
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import Button from "@/components/basic/Button";
 import AttendanceDetailTable from "@/components/activity/AttendanceDetailTable";
-import getApplication from "@/libs/applications/getApplication";
+import getApplication from "@/libs/application/getApplication";
+import { useRouter } from 'next/navigation';
 import { format } from "path";
 
 interface Application {
@@ -18,6 +19,7 @@ interface Application {
     id: number;
     name: string;
     company: {
+      id: number;
       name: string;
       logoUrl: string;
     };
@@ -37,7 +39,7 @@ interface Application {
   cancellationReason: string | null;
 }
 
-export default function Application() {
+export default function ApplicationID() {
   const [applications, setApplications] = useState<Application | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +84,14 @@ export default function Application() {
     return `${formattedDate} ${formattedTime}`;
   };
 
+  const router = useRouter();
+  const handleViewClickCompany = (id: number) => {
+    router.push(`/companies/${id}`);
+  };
+  const handleViewClickProfile = (id: number) => {
+    router.push(`/profile`);
+  };
+
   if (!applications) return <div className='text-xl font-semibold'>No data available</div>;
   return (
     <main className='py-16 px-[280px] max-2xl:px-32 max-lg:py-10 max-lg:px-20 max-md:px-4 max-md:py-4 gap-[50px] flex flex-col'>
@@ -93,11 +103,10 @@ export default function Application() {
             <div className='text-2xl max-md:text-lg font-light'>{applications.user.studentId}</div>
           </div>
         </div>
-        <Button variant="outline">View</Button>
+        <Button variant="outline" onClick={handleViewClickProfile}>View</Button>
       </div>
       <div className='flex justify-between items-center justify-center w-auto h-auto'>
         <div className='flex w-[560px] gap-[50px] max-lg:gap-4 items-center'>
-          {/* <div className='w-[108px] h-[108px] max-md:w-20 max-md:h-20 bg-mgray-3 rounded-2xl'></div> */}
           <img
             src={applications.activity.company.logoUrl}
             alt="Company Logo"
@@ -105,7 +114,7 @@ export default function Application() {
           />
           <div className='text-4xl max-md:text-xl font-semibold'>{applications.activity.name}</div>
         </div>
-        <Button variant="outline">View</Button>
+        <Button variant="outline" onClick={() => handleViewClickCompany(applications.activity.company.id)}>View</Button>
       </div>
       <AttendanceDetailTable
         company={applications.activity.company.name}
