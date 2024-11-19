@@ -63,6 +63,8 @@ export default function Application() {
       item.username.toLowerCase().includes(lowercasedSearchValue) ||
       item.sid.toLowerCase().includes(lowercasedSearchValue) ||
       item.activity.toLowerCase().includes(lowercasedSearchValue) ||
+      item.attenddate.toLowerCase().includes(lowercasedSearchValue) ||
+      item.applydate.toLowerCase().includes(lowercasedSearchValue) ||
       item.status.toLowerCase().includes(lowercasedSearchValue)
     );
     setFilteredData(filtered);
