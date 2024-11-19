@@ -90,6 +90,7 @@ export default function CreateSemester() {
       )
     else router.push('/admin/semesters')
     setIsSaving(false)
+    router.back()
   }
 
   return (
