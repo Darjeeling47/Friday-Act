@@ -7,39 +7,9 @@ import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplications from "@/libs/applications/getApplications";
 import { useRouter } from 'next/navigation';
+import { ApplicationItem } from "@/interface/applicationsInterface";
 
-interface Application {
-  id: number;
-  user: {
-    id: string;
-    thaiName: string;
-    studentId: string;
-  };
-  activity: {
-    id: number;
-    name: string;
-    company: {
-      id: number;
-      name: string;
-    };
-    semester: {
-      id: number;
-      year: number;
-      semester: number;
-    };
-  };
-  createdAt: string;
-  updatedAt: string;
-  isQrGenerated: boolean;
-  qrString: string | null;
-  qrGeneratedAt: string;
-  isApproved: boolean;
-  isCanceled: boolean;
-  cancellationReason: string | null;
-  status: string;
-}
-
-type FormattedApplication = Application & {
+type FormattedApplication = ApplicationItem & {
   id: number;
   username: string;
   sid: string;
@@ -61,13 +31,13 @@ export default function Application() {
       try {
         const data = await getApplications();
         const applications = data.applications;
-        const formattedData = applications.map((application: Application) => ({
+        const formattedData = applications.map((application: ApplicationItem) => ({
           ...application,
           id: application.id,
           username: application.user.thaiName,
           sid: application.user.id,
           activity: application.activity.name,
-          attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : application.isCanceled ? 'Canceled' : 'Absent',
+          attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : application.isCanceled ? 'Canceled' : 'Pending',
           applydate: formatDate_Utc_to_EN(application.createdAt),
           status: application.status,
         }));

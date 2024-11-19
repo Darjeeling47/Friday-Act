@@ -8,40 +8,10 @@ import { useParams } from 'next/navigation';
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplication from "@/libs/applications/getApplication";
 import { useRouter } from 'next/navigation';
-
-interface Application {
-  id: number;
-  user: {
-    thaiName: string;
-    studentId: string;
-  };
-  activity: {
-    id: number;
-    name: string;
-    company: {
-      id: number;
-      name: string;
-      logoUrl: string;
-    };
-    semester: {
-      year: number;
-      semester: number;
-    };
-    date: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  isQrGenerated: boolean;
-  qrString: string | null;
-  qrGeneratedAt: string;
-  isApproved: boolean;
-  isCanceled: boolean;
-  cancellationReason: string | null;
-  status: string;
-}
+import { ApplicationItem } from "@/interface/applicationsInterface";
 
 export default function CheckID() {
-  const [applications, setApplications] = useState<Application | null>(null);
+  const [applications, setApplications] = useState<ApplicationItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
