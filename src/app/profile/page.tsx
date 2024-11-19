@@ -158,14 +158,7 @@ export default function Profile() {
       </div>
 
       {/* Activities Log */}
-      {applications &&
-        applications.semesters.map((data, i) => (
-          <div>
-            <ActivityLog key={i} />
-            {/* <CompanyActivity key={i} data={data} /> */}
-          </div>
-        ))}
-      <ActivityLog />
+      {applications && <ActivityLog semesterData={applications} />}
     </main>
   )
 }
