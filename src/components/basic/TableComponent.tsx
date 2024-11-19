@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { formatDate_Utc_to_EN } from '@/utils/utils'
 import { useState } from 'react'
 
@@ -76,7 +76,7 @@ export default function TableComponent({
                       <button
                         onClick={() => {
                           if (onClickEdit) {
-                            onClickEdit(currentData[index])
+                            onClickEdit(rowData.id)
                           }
                         }}>
                         <i className={`bi bi-pencil-square ${iconStyle}`}></i>
