@@ -6,6 +6,7 @@ interface AttendanceDetailTableProps {
   timestamp: string;
   status: string;
   applydate: string;
+  cancellationReason: string | null;
 }
 
 export default function AttendanceDetailTable({
@@ -13,7 +14,8 @@ export default function AttendanceDetailTable({
   date,
   timestamp,
   status,
-  applydate
+  applydate,
+  cancellationReason
 }: AttendanceDetailTableProps) {
   return (
     <div className='w-full h-auto text-xl max-md:text-base'>
