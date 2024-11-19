@@ -53,14 +53,10 @@ export default function ApplicationID() {
         if (!id) {
           throw new Error('ID is required');
         }
-        console.log("eiei0 =", id);
 
         const data = await getApplication(Array.isArray(id) ? id[0] : id);
-        console.log("eiei1 =", data);
         const applications = data.application;
         setApplications(applications);
-        console.log("eiei2 =", applications);
-        console.log("eiei3 =", applications.user.thaiName);
       } catch (error: unknown) {
         if (error instanceof Error) {
           setError(error.message);
@@ -93,29 +89,27 @@ export default function ApplicationID() {
     router.push(`/profile`);
   };
 
-
-
   if (!applications) return <div className='text-xl font-semibold'>No data available</div>;
   return (
     <main className='py-16 px-[280px] max-2xl:px-32 max-lg:py-10 max-lg:px-20 max-md:px-4 max-md:py-4 gap-[50px] flex flex-col'>
       <div className='flex  items-center justify-center w-auto h-auto'>
-        <div className='flex w-[560px] gap-[50px] max-lg:gap-4 items-center'>
+        <div className='flex w-[560px] gap-[30px] max-lg:gap-4 items-center'>
           <div className='w-[108px] h-[108px] max-md:w-20 max-md:h-20 bg-mgray-3 rounded-2xl'></div>
           <div className='flex flex-col h-full w-auto gap-2.5'>
-            <div className='text-4xl max-md:text-xl font-semibold'>{applications.user.thaiName}</div>
-            <div className='text-2xl max-md:text-lg font-light'>{applications.user.studentId}</div>
+            <div className='text-3xl max-md:text-xl font-semibold'>{applications.user.thaiName}</div>
+            <div className='text-xl max-md:text-lg font-light'>{applications.user.studentId}</div>
           </div>
         </div>
         <Button variant="outline" onClick={handleViewClickProfile}>View</Button>
       </div>
       <div className='flex items-center justify-center w-auto h-auto'>
-        <div className='flex w-[560px] gap-[50px] max-lg:gap-4 items-center'>
+        <div className='flex w-[560px] gap-[30px] max-lg:gap-4 items-center'>
           <img
             src={applications.activity.company.logoUrl}
             alt="Company Logo"
             className='w-[108px] h-[108px] max-md:w-20 max-md:h-20 bg-mgray-3 rounded-2xl'
           />
-          <div className='text-4xl max-md:text-xl font-semibold'>{applications.activity.name}</div>
+          <div className='text-3xl max-md:text-xl font-semibold'>{applications.activity.name}</div>
         </div>
         <Button variant="outline" onClick={() => handleViewClickCompany(applications.activity.company.id)}>View</Button>
       </div>
@@ -127,20 +121,6 @@ export default function ApplicationID() {
         applydate={formatDate_Utc_to_EN(applications.createdAt)}
         cancellationReason={applications.cancellationReason || ''}
       />
-<div className='flex w-full gap-5'>
-  {applications.isApproved ? (
-    <Button className='w-full flex-1 bg-gray-400 cursor-not-allowed'>
-      Approved
-    </Button>
-  ) : (
-    <Button
-      className='w-full flex-1'
-      onClick={() => console.log('approved')}
-    >
-      Approve
-    </Button>
-  )}
-</div>
     </main>
   );
 }
