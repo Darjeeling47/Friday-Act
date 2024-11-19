@@ -1,5 +1,3 @@
-// app/auth/callback/Callback.tsx
-
 'use client'
 
 import { useEffect } from 'react'
@@ -33,5 +31,19 @@ export default function Callback() {
     }
   }, [searchParams, router])
 
-  return <p>Processing login...</p>
+  return (
+    <div className='flex flex-col items-center justify-center bg-white py-12'>
+      <div className='mb-4 text-center'>
+        <h2 className='text-xl font-semibold text-gray-700'>
+          Processing your login...
+        </h2>
+        <p className='text-sm text-gray-500'>
+          Please wait a moment while we authenticate your session.
+        </p>
+      </div>
+      <div className='flex items-center justify-center space-x-2'>
+        <div className='h-12 w-12 animate-spin rounded-full border-4 border-gray-500 border-t-transparent'></div>
+      </div>
+    </div>
+  )
 }
