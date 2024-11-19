@@ -90,9 +90,9 @@ export default async function Home() {
           Incoming Activities
         </h2>
         <div className='gap-8 grid grid-cols-1 lg:grid-cols-2'>
-          {activities.map((activity, i) => (
+          {/* {activities.map((activity, i) => (
             <ActivityCard key={i} activity={activity} />
-          ))}
+          ))} */}
         </div>
       </div>
     </main>
