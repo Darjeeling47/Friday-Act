@@ -37,6 +37,7 @@ interface Application {
   isApproved: boolean;
   isCanceled: boolean;
   cancellationReason: string | null;
+  status: string;
 }
 
 export default function ApplicationID() {
@@ -120,8 +121,9 @@ export default function ApplicationID() {
         company={applications.activity.company.name}
         date={formatDate_Utc_to_EN(applications.activity.date)}
         timestamp={applications.isApproved || applications.isCanceled ? formatDateTime(applications.updatedAt) : 'Absent'}
-        status={applications.isApproved ? 'Approved' : applications.isCanceled ? 'Canceled' : 'Absent'}
+        status={applications.status}
         applydate={formatDate_Utc_to_EN(applications.createdAt)}
+        cancellationReason={applications.cancellationReason || ''}
       />
     </main>
   );

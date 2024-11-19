@@ -36,6 +36,7 @@ interface Application {
   isApproved: boolean;
   isCanceled: boolean;
   cancellationReason: string | null;
+  status: string;
 }
 
 type FormattedApplication = Application & {
@@ -68,7 +69,7 @@ export default function Application() {
           activity: application.activity.name,
           attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : application.isCanceled ? 'Canceled' : 'Absent',
           applydate: formatDate_Utc_to_EN(application.createdAt),
-          status: application.isApproved ? 'Approved' : application.isCanceled ? 'Canceled' : 'Absent',
+          status: application.status,
         }));
         setData(formattedData);
         setFilteredData(formattedData);
