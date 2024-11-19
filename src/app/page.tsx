@@ -1,52 +1,56 @@
 // import react
-import Image from 'next/image';
+import { Suspense } from 'react'
+import Image from 'next/image'
 
 // import components
-import ActivityCard from '@/components/activity/ActivityCard';
-import Button from '@/components/basic/Button';
+import Button from '@/components/basic/Button'
+import ActivityCard from '@/components/activity/ActivityCard'
+import ActivityCardLoad from '@/components/activity/ActivityCardLoad'
 
-// api
-import getActivities from '@/libs/activities/getActivities';
+// import libs
+import getActivitiesAsync from '@/libs/activities/getActivitiesAsync'
+import getActivities from '@/libs/activities/getActivities'
+
+// import interface
+import { ActivityItem } from '@/interface/activitiesInterface'
 
 export default async function Home() {
-  const activityData = await getActivities()
-  // console.log(activityData.activities[0].tags)
-  
-  const activities: Activity[] = activityData.activities
-  
+  const activityData: any | null = await getActivities({})
+  const activities: ActivityItem[] = activityData.activities
+
   return (
-    <main className='flex flex-col gap-12 px-4 md:px-8'>
+    <main className='flex flex-col gap-12 px-0 md:px-4'>
       {/* Hero */}
-      <div className='flex lg:flex-row flex-col-reverse items-center gap-8 w-full'>
-        <div className='flex flex-col gap-8 w-full lg:w-1/2'>
+      <div className='flex w-full flex-col-reverse items-center gap-8 lg:flex-row'>
+        <div className='flex w-full flex-col gap-8 lg:w-1/2'>
           <div className='flex flex-col gap-4 text-balance'>
-            <h1 className='font-semibold text-4xl text-center text-mgray-1 text-pretty md:text-5xl lg:text-left lg:text-7xl'>
+            <h1 className='text-pretty text-center text-header-1 font-semibold text-mgray-1 lg:text-left'>
               Friday Activity System
             </h1>
-            <p className='text-base text-center text-mgray-2 text-pretty md:text-lg lg:text-left'>
+            <p className='text-base md:text-lg text-pretty text-center text-mgray-2 lg:text-left'>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard.
             </p>
           </div>
-          <div className='flex flex-row justify-center items-center gap-2 w-full'>
-            <Button>Get Started</Button>
+          <div className='flex w-full flex-row items-center justify-center gap-2'>
+            <Button href='/activities'>Get Started</Button>
             <Button variant='text'>Learn More</Button>
           </div>
         </div>
-        <div className='flex justify-center items-center w-full lg:w-1/2 h-64 lg:h-72 overflow-hidden'>
+        <div className='flex h-64 w-full items-center justify-center overflow-hidden lg:h-72 lg:w-1/2'>
           <Image
             src='/picture/overview.png'
             alt='heropic'
             width={500}
             height={500}
             className='h-full w-fit object-cover'
-            />
+          />
         </div>
       </div>
 
       {/* Features */}
-      <div className='gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3'>
-        <div className='flex flex-col md:justify-center items-center gap-4 md:gap-3 lg:gap-6 rounded-lg'>
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3'>
+        <div className='flex flex-col items-center gap-4 rounded-lg md:justify-center md:gap-3 lg:gap-6'>
           <Image
             src='/picture/feature1.jpg'
             alt='feature-1'
@@ -54,31 +58,31 @@ export default async function Home() {
             height={500}
             className='h-fit w-full rounded'
           />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          <p className='text-sm md:text-base text-mgray-1'>
             Experience Real-World Opportunities
           </p>
         </div>
-        <div className='flex flex-col md:justify-center items-center gap-4 md:gap-3 lg:gap-6 rounded-lg'>
+        <div className='flex flex-col items-center gap-4 rounded-lg md:justify-center md:gap-3 lg:gap-6'>
           <Image
             src='/picture/feature2.jpg'
             alt='feature-2'
             width={500}
             height={500}
             className='h-fit w-full rounded'
-            />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          />
+          <p className='text-sm md:text-base text-mgray-1'>
             Connect with Top Companies
           </p>
         </div>
-        <div className='flex flex-col md:justify-center items-center gap-4 md:gap-3 lg:gap-6 rounded-lg'>
+        <div className='flex flex-col items-center gap-4 rounded-lg md:justify-center md:gap-3 lg:gap-6'>
           <Image
             src='/picture/feature3.jpg'
             alt='feature-3'
             width={500}
             height={500}
             className='h-fit w-full rounded'
-            />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          />
+          <p className='text-sm md:text-base text-mgray-1'>
             Boost Your Career Prospects
           </p>
         </div>
@@ -86,50 +90,18 @@ export default async function Home() {
 
       {/* Incoming Activities */}
       <div className='flex flex-col gap-8'>
-        <h2 className='font-medium text-2xl md:text-3xl'>
-          Incoming Activities
-        </h2>
-        <div className='gap-8 grid grid-cols-1 lg:grid-cols-2'>
-          {/* {activities.map((activity, i) => (
-            <ActivityCard key={i} activity={activity} />
-          ))} */}
-        </div>
+        <h2 className='text-header-2 font-medium'>Incoming Activities</h2>
+
+        <Suspense fallback={<ActivityCardLoad />}>
+          <div className='grid grid-cols-1 gap-8 xl:grid-cols-2'>
+            {activities.slice(0, 4).map((activity) => (
+              <div key={activity.id}>
+                <ActivityCard activity={activity} />
+              </div>
+            ))}
+          </div>
+        </Suspense>
       </div>
     </main>
   )
 }
-
-type Activity = {
-  id: number;
-  company_id: number;
-  semester_id: number;
-  company: {
-    companyId: number;
-    companyNameTh: string;
-    companyNameEn: string;
-    description: string;
-    logoUrl: string;
-  };
-  semester: {
-    id: number;
-    year: Date;
-    semester: number;
-  };
-  tags: {
-    id: number;
-    name: string;
-    color: string;
-  }[];
-  name: string;
-  description: string;
-  date: string;
-  start_time: string;
-  end_time: string;
-  poster_url: string;
-  location: string;
-  max_participants: number;
-  currentParticipants: number;
-  speaker: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
