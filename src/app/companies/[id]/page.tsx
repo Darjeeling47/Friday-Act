@@ -25,31 +25,33 @@ const App: React.FC = () => {
       {/* Company Information Section */}
       <div className="mb-8 flex flex-col-reverse md:flex-row h-full max-w-full items-stretch p-4">
         {/* Content Section */}
-        <div className="flex flex-1 flex-col justify-between mt-8 md:mt-0">
-          <div className="text-center md:text-left mx-auto md:mx-0">
-            <h1 className="mb-4 text-4xl font-bold text-mgray-2 ">
+        <div className="flex flex-1 flex-col justify-between mx-auto mt-8 md:mt-0 sm:text-left">
+          <div className="text-center md:text-left mx-auto md:mx-0 sm:text-left">
+            <h1 className="mb-4 text-4xl font-bold text-mgray-2 sm:text-left">
               Company Name
             </h1>
-            <p className="max-w-md text-base text-mgray-2">
+            <p className="max-w-md text-base text-mgray-2 sm:text-left">
               Short description for the company that will tell all about it.
               Like we make it for you.
             </p>
           </div>
           <div className="mt-auto">
-            <div className="my-4 flex flex-col md:flex-row gap-5 text-mgray-2 text-center md:text-left">
-              <div className="flex items-center gap-2 mx-auto md:mx-0">
+            <div className="my-4 flex flex-col gap-2 text-mgray-2 text-left">
+              <div className="flex flex-row items-center gap-2 mx-auto md:mx-0 sm:justify-start">
                 <PhoneIcon />
                 <span>0 2215 3555</span>
+              </div>
+              <div className="flex flex-row items-center gap-2 mx-auto md:mx-0 sm:justify-start">
                 <MailIcon />
                 <span>pr@chula.ac.th</span>
               </div>
             </div>
-            <address className="text-m text-mgray-2 md:w-80 mb-2 text-center md:text-left mx-auto md:mx-0">
+            <address className="text-m text-mgray-2 md:w-80 mb-2 text-center md:text-left mx-auto md:mx-0 sm:text-left">
               จุฬาลงกรณ์มหาวิทยาลัย, 254 ถนนพญาไท แขวงวังใหม่ 
               เขตปทุมวัน กรุงเทพมหานคร 10330
             </address>
-            <div className="flex justify-center md:justify-start">
-              <a href="#" className="text-sm text-blue-600">
+            <div className="flex justify-center md:justify-start sm:justify-start">
+              <a href="#" className="text-sm text-blue-600 sm:text-left">
                 Link for the company
               </a>
             </div>
