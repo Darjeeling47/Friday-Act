@@ -93,6 +93,8 @@ export default function ApplicationID() {
     router.push(`/profile`);
   };
 
+
+
   if (!applications) return <div className='text-xl font-semibold'>No data available</div>;
   return (
     <main className='py-16 px-[280px] max-2xl:px-32 max-lg:py-10 max-lg:px-20 max-md:px-4 max-md:py-4 gap-[50px] flex flex-col'>
@@ -125,9 +127,20 @@ export default function ApplicationID() {
         applydate={formatDate_Utc_to_EN(applications.createdAt)}
         cancellationReason={applications.cancellationReason || ''}
       />
-          <div className='flex w-full gap-5'>
-        <Button className='w-full'>Edit</Button>
-      </div>
+<div className='flex w-full gap-5'>
+  {applications.isApproved ? (
+    <Button className='w-full flex-1 bg-gray-400 cursor-not-allowed'>
+      Approved
+    </Button>
+  ) : (
+    <Button
+      className='w-full flex-1'
+      onClick={() => console.log('approved')}
+    >
+      Approve
+    </Button>
+  )}
+</div>
     </main>
   );
 }
