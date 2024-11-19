@@ -1,26 +1,29 @@
 // import react
+import { Suspense } from 'react';
 import Image from 'next/image';
 
 // import components
-import ActivityCard from '@/components/activity/ActivityCard';
 import Button from '@/components/basic/Button';
+import ActivityCard from '@/components/activity/ActivityCard';
+import ActivityCardLoad from '@/components/activity/ActivityCardLoad';
 
-// api
-import getActivities from '@/libs/activities/getActivities';
+// import libs
+import getActivitiesAsync from '@/libs/activities/getActivitiesAsync';
+
+// import interface
+import { ActivityItem } from '@/interface/activitiesInterface';
 
 export default async function Home() {
-  const activityData = await getActivities()
-  // console.log(activityData.activities[0].tags)
-  
-  const activities: Activity[] = activityData.activities
-  
+  const activityData: any | null = await getActivitiesAsync({})
+  const activities: ActivityItem[] = activityData.activities
+
   return (
-    <main className='flex flex-col gap-12 px-4 md:px-8'>
+    <main className='flex flex-col gap-12 px-0 md:px-4'>
       {/* Hero */}
       <div className='flex lg:flex-row flex-col-reverse items-center gap-8 w-full'>
         <div className='flex flex-col gap-8 w-full lg:w-1/2'>
           <div className='flex flex-col gap-4 text-balance'>
-            <h1 className='font-semibold text-4xl text-center text-mgray-1 text-pretty md:text-5xl lg:text-left lg:text-7xl'>
+            <h1 className='font-semibold text-center text-header-1 text-mgray-1 text-pretty lg:text-left'>
               Friday Activity System
             </h1>
             <p className='text-base text-center text-mgray-2 text-pretty md:text-lg lg:text-left'>
@@ -39,8 +42,8 @@ export default async function Home() {
             alt='heropic'
             width={500}
             height={500}
-            className='h-full w-fit object-cover'
-            />
+            className='w-fit h-full object-cover'
+          />
         </div>
       </div>
 
@@ -52,9 +55,9 @@ export default async function Home() {
             alt='feature-1'
             width={500}
             height={500}
-            className='h-fit w-full rounded'
+            className='rounded w-full h-fit'
           />
-          <p className='text-sm text-mgray-1 md:text-base'>
+          <p className='text-mgray-1 text-sm md:text-base'>
             Experience Real-World Opportunities
           </p>
         </div>
@@ -64,9 +67,9 @@ export default async function Home() {
             alt='feature-2'
             width={500}
             height={500}
-            className='h-fit w-full rounded'
-            />
-          <p className='text-sm text-mgray-1 md:text-base'>
+            className='rounded w-full h-fit'
+          />
+          <p className='text-mgray-1 text-sm md:text-base'>
             Connect with Top Companies
           </p>
         </div>
@@ -76,9 +79,9 @@ export default async function Home() {
             alt='feature-3'
             width={500}
             height={500}
-            className='h-fit w-full rounded'
-            />
-          <p className='text-sm text-mgray-1 md:text-base'>
+            className='rounded w-full h-fit'
+          />
+          <p className='text-mgray-1 text-sm md:text-base'>
             Boost Your Career Prospects
           </p>
         </div>
@@ -86,50 +89,20 @@ export default async function Home() {
 
       {/* Incoming Activities */}
       <div className='flex flex-col gap-8'>
-        <h2 className='font-medium text-2xl md:text-3xl'>
+        <h2 className='font-medium text-header-2'>
           Incoming Activities
         </h2>
-        <div className='gap-8 grid grid-cols-1 lg:grid-cols-2'>
-          {/* {activities.map((activity, i) => (
-            <ActivityCard key={i} activity={activity} />
-          ))} */}
-        </div>
+        
+        <Suspense fallback={<ActivityCardLoad/>}>
+          <div className='gap-8 grid grid-cols-1 xl:grid-cols-2'>
+            {activities.slice(0, 4).map((activity) => (
+              <div key={activity.id}>
+                <ActivityCard activity={activity} />
+              </div>
+            ))}
+          </div>
+        </Suspense>
       </div>
     </main>
   )
 }
-
-type Activity = {
-  id: number;
-  company_id: number;
-  semester_id: number;
-  company: {
-    companyId: number;
-    companyNameTh: string;
-    companyNameEn: string;
-    description: string;
-    logoUrl: string;
-  };
-  semester: {
-    id: number;
-    year: Date;
-    semester: number;
-  };
-  tags: {
-    id: number;
-    name: string;
-    color: string;
-  }[];
-  name: string;
-  description: string;
-  date: string;
-  start_time: string;
-  end_time: string;
-  poster_url: string;
-  location: string;
-  max_participants: number;
-  currentParticipants: number;
-  speaker: string;
-  createdAt: Date;
-  updatedAt: Date;
-};

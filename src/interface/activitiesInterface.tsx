@@ -37,22 +37,53 @@ export interface ActivitiesGroupBySemesterItem {
 
 export interface ActivityItem {
   id: number;
-  company_id: number;
-  semester_id: number;
+  companyId: number;
+  semesterId: number;
   name: string;
   description: string;
   date: string;
-  start_time: string;
-  end_time: string;
-  poster_url: string;
+  startTime: string;
+  endTime: string;
+  posterUrl: string;
   location: string;
-  max_participants: number;
+  maxParticipants: number;
   speaker: string;
-  created_at: string;
-  updated_at: string | null;
-  currentParticipants: string;
+  createdAt: string;
+  updatedAt: string | null;
+  currentParticipants: number;
   isApplied?: boolean,
   semester: Semester
   company: CompanyItem | null,
   tags: TagItem[]
+}
+
+export interface ActivityParticipants {
+  success: boolean;
+  count: number;
+  participants: ActivityParticipantItem[];
+}
+
+export interface ActivityParticipantItem {
+  studentId: string,
+  firstNameTh: string,
+  firstNameEn: string,
+  lastNameTh: string,
+  lastNameEn: string,
+  program: {
+    programId: number,
+    programName: string
+  },
+  faculty: {
+    facultyId: number,
+    facultyName: string
+  },
+  department: {
+    departmentId: number,
+    departmentName: string
+  },
+  university: {
+    universityId: number,
+    universityName: string
+  },
+  admissionYear: number
 }

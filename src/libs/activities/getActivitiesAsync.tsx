@@ -1,10 +1,10 @@
 // import cookies
-import Cookies from 'js-cookie';
+import { cookies } from 'next/headers';
 
 // import interface
 import { ActivitiesGroupByDate, ActivitiesGroupBySemester, Activities } from '@/interface/activitiesInterface';
 
-export default async function getActivities({
+export default async function getActivitiesAsync({
   search,
   group,
   limit,
@@ -16,7 +16,8 @@ export default async function getActivities({
   page?: string,
 }): Promise<ActivitiesGroupByDate | Activities | ActivitiesGroupBySemester | null> {
   // Primary variable
-  const token = Cookies.get('access_token')
+const cookieStore = cookies()
+const token = cookieStore.get('access_token')?.value
   let query = '?'
   if (search && search.length > 0) {
     query += `search=${search}&`
