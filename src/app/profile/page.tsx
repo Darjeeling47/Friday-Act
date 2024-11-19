@@ -1,55 +1,70 @@
 'use client'
 
+// import react
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Cookies from 'js-cookie'
+
+// import components
 import CompanyActivity from '@/components/activity/CompanyActivity'
-import getApplications from '@/libs/application/getApplications'
 import ActivityLog from '@/components/activity/ActivityLog'
-import { cookies } from 'next/headers'
+
+// api
+import getApplications from '@/libs/application/getApplications'
 
 export default function Profile() {
-  const isLogIn = Cookies.get('is_logged_in')
-  if (!isLogIn) {
-    window.location.href = '/login'
-  }
+  // useEffect to check if user is logged in
+  useEffect(() => {
+    const isLogIn = Cookies.get('is_logged_in')
+    if (!isLogIn) {
+      window.location.href = '/login'
+    }
+  }, [])
 
+  // Primart variables
+  const [profileUrl, setProfileUrl] = useState('')
   const [firstNameTH, setFirstNameTH] = useState('')
   const [lastNameTH, setLastNameTH] = useState('')
   const [firstNameEN, setFirstNameEN] = useState('')
   const [lastNameEN, setLastNameEN] = useState('')
   const [studentID, setStudentID] = useState('')
+  const [applications, setApplications] =
+    useState<SemesterGroupedResponse | null>(null)
+
+  // Secondary variables
   const [faculty, setFaculty] = useState('')
   const [department, setDepartment] = useState('')
   const [major, setMajor] = useState('')
   const [admissionYear, setAdmissionYear] = useState('')
-  const [profileUrl, setProfileUrl] = useState('')
-  const [applications, setApplications] =
-    useState<SemesterGroupedResponse | null>(null)
   const [activitiesCheck, setActivitiesCheck] = useState(0)
   const [activitiesAbsent, setActivitiesAbsent] = useState(0)
 
+  // useEffect to get user profile from cookies
   useEffect(() => {
     const user_profile = Cookies.get('user_profile')
     if (user_profile) {
       const profile = JSON.parse(user_profile)
+
       setFirstNameTH(profile.firstNameTh)
       setLastNameTH(profile.lastNameTh)
       setFirstNameEN(profile.firstNameEn)
       setLastNameEN(profile.lastNameEn)
+
+      setProfileUrl(profile.profileImageUrl)
       setStudentID(profile.studentId)
+
       setFaculty(profile.faculty.facultyName)
       setDepartment(profile.department.departmentName)
       setMajor(profile.program.programName)
       setAdmissionYear(profile.admissionYear)
-      setProfileUrl(profile.profileImageUrl)
     }
   }, [])
 
+  // useEffect to get user applications
   useEffect(() => {
     const fetchApplications = async () => {
       const group = 'semester'
-      const search = '6733072221'
+      const search = studentID
 
       try {
         const applications: SemesterGroupedResponse = await getApplications(
@@ -84,6 +99,7 @@ export default function Profile() {
     }
   }, [studentID])
 
+  // return
   return (
     <main className='flex flex-col gap-6'>
       <div className='flex flex-row justify-between'>
