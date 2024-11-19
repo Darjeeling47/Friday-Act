@@ -1,15 +1,12 @@
 "use client";
 
-import TableHeader from "@/components/basic/TableHeader";
+import TableHeader from "@/components/table/TableHeader";
 import SearchBar from "@/components/basic/SearchBar";
 import TableComponent from "@/components/basic/TableComponent";
 import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplications from "@/libs/applications/getApplications";
 import { useRouter } from 'next/navigation';
-
-import Cookies from 'js-cookie'
-const token = Cookies.get('access_token') || '';
 
 interface Application {
   id: number;
@@ -61,10 +58,7 @@ export default function Application() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!token) {
-          // throw new Error('Token is not available');
-        }
-        const data = await getApplications(token);
+        const data = await getApplications();
         const applications = data.applications;
         const formattedData = applications.map((application: Application) => ({
           ...application,
@@ -131,10 +125,6 @@ export default function Application() {
       <div className="flex justify-end max-md:justify-center">
         <SearchBar
           onChange={handleSearchChange}
-          filter={[
-            { category: "Category 1", options: ["Option 1", "Option 2"] },
-            { category: "Category 2", options: ["Option 3", "Option 4"] },
-          ]}
         />
       </div>
       <TableComponent

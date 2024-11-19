@@ -1,6 +1,6 @@
 import Button from "@/components/basic/Button";
-import AttendanceDetailTable from "@/components/AttendanceDetailTable";
-import getApplication from "@/libs/applications/getApplication";
+import AttendanceDetailTable from "@/components/activity/AttendanceDetailTable";
+import getApplications from "@/libs/applications/getApplication";
 
 export default function Application() {
   // return

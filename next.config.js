@@ -15,7 +15,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'cedtintern.cp.eng.chula.ac.th',
         port: '',
-        pathname: '/**', // Match all paths
+        pathname: '/**',
       },
     ],
   },
