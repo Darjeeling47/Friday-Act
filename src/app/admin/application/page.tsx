@@ -5,7 +5,7 @@ import SearchBar from "@/components/basic/SearchBar";
 import TableComponent from "@/components/table/TableComponent";
 import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
-import getApplications from "@/libs/application/getApplications";
+import getApplications from "@/libs/applications/getApplications";
 import { useRouter } from 'next/navigation';
 
 interface Application {

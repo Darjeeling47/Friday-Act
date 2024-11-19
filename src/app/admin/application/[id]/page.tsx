@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import Button from "@/components/basic/Button";
 import AttendanceDetailTable from "@/components/activity/AttendanceDetailTable";
-import getApplication from "@/libs/application/getApplication";
+import getApplication from "@/libs/applications/getApplication";
 import { useRouter } from 'next/navigation';
 import { format } from "path";
 
