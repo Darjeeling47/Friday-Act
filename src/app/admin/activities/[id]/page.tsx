@@ -1,200 +1,53 @@
-'use client'
-
+'use server'
 // import
 // react
-import React, { useEffect, useState } from 'react'
-// next
-import { useParams } from 'next/navigation'
+import React from 'react'
 // components
 import Tag from '@/components/basic/Tag'
 import Button from '@/components/basic/Button'
-import TableHeader from '@/components/table/TableHeader'
-import TableComponent from '@/components/table/TableComponent'
-import ExpandList from '@/components/table/ExpandList'
-import SearchBar from '@/components/basic/SearchBar'
 // util
-import Cookies from 'js-cookie'
-import { log } from 'console'
 import { formatDate_Utc_to_EN } from '@/utils/utils'
 import formatTime from '@/utils/timeUtils'
+import getActivity from '@/libs/activities/getActivity'
+import { cookies } from 'next/headers'
+import ActivityParticipantTable from '@/components/activity/ActivityParticipantTable'
+import deleteActivity from '@/libs/activities/deleteActivity'
+import ActivityDeleteEditButtons from '@/components/activity/ActivityDeleteEditButtons'
 
-// Mock Participants Data
-// Schema: {
-//   thaiName: string,
-//   studentId: string,
-//   faculty: string,
-//   department: string,
-//   program: string,
-//   admissionYear: string,
-// }
+// Function for fetching activity details
+const fetchActivityDetail = async ({ id }: { id: string }) => {
+  try {
+    const response = await getActivity({ id })
+    console.log(response)
 
-//}
-
-const mockData = [
-  {
-    thaiName: 'นายสมชาย ใจดี',
-    studentId: '601234567',
-    faculty: 'วิศวกรรมศาสตร์',
-    department: 'วิศวกรรมคอมพิวเตอร์',
-    program: 'วิศวกรรมซอฟต์แวร์',
-    admissionYear: '2563',
-    status: 'Pending',
-  },
-  {
-    thaiName: 'นางสมหญิง ใจดี',
-    studentId: '601234568',
-    faculty: 'วิศวกรรมศาสตร์',
-    department: 'วิศวกรรมคอมพิวเตอร์',
-    program: 'วิศวกรรมซอฟต์แวร์',
-    admissionYear: '2563',
-    status: 'Approved',
-  },
-  {
-    thaiName: 'นายสมชาย ใจดี',
-    studentId: '601234567',
-    faculty: 'วิศวกรรมศาสตร์',
-    department: 'วิศวกรรมคอมพิวเตอร์',
-    program: 'วิศวกรรมซอฟต์แวร์',
-    admissionYear: '2563',
-    status: 'Pending',
-  },
-]
-
-// Type for Activity Detail
-type ActivityDetailProps = {
-  id: string
-  name: string
-  company: {
-    id: number
-    companyNameTh: string
-    logoUrl: string
+    if (response.success) {
+      const data = response.activity
+      console.log(data)
+      return data
+    } else {
+      console.log('Failed to fetch activity details with error: ')
+      console.log(response)
+      return null
+    }
+  } catch (e) {
+    console.log(e)
   }
-  description: string
-  date: string
-  start_time: string
-  end_time: string
-  poster_url: string
-  location: string
-  tags: {
-    name: string
-    color: string
-  }[]
-  speaker: string
-  current_participants: number
-  max_participants: number
+  return null
 }
 
-// Variables
-// Primary
-const initialSeats = 20
-const maxSeats = 100
-const HTTP = 'http://143.198.87.246'
-
 // Component
-export default function ActivityDetail() {
-  // Variables - Primary
-  const token = Cookies.get('token')
-  const { id } = useParams<{ id: string }>()
-  const [activity, setActivity] = useState<ActivityDetailProps>()
-  const [participants, setParticipants] = useState<any[]>([])
-
-  // Function for fetching activity details
-  const fetchActivityDetail = async () => {
-    try {
-      const response = await fetch(`${HTTP}/api/v1/activities/${id}`, {
-        headers: {
-          // TODO: change authorization method
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        const data = await response.json().then((data) => data.activity)
-        console.log(data)
-        const parsedData: ActivityDetailProps = {
-          id: data.id,
-          name: data.name,
-          description: data.description,
-          date: data.date,
-          start_time: data.startTime,
-          end_time: data.endTime,
-          poster_url: data.posterUrl,
-          location: data.location,
-          speaker: data.speaker,
-          current_participants: data.currentParticipants,
-          max_participants: data.maxParticipants,
-          tags: data.tags,
-          company: data.company,
-        }
-        setActivity(parsedData)
-        console.log(parsedData)
-      } else {
-        console.log('Failed to fetch activity details with error: ')
-        console.log(response)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  // Function for fetching Participants
-  const fetchParticipants = async (queryString?: string) => {
-    if (!queryString) {
-      queryString = ''
-    }
-    try {
-      const response = await fetch(
-        `${HTTP}/api/v1/activities/${id}/participants${queryString}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      if (response.ok) {
-        const data = await response.json()
-        setParticipants(data)
-      } else {
-        console.log('Failed to fetch participants with error: ')
-        console.log(response)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  // useEffect for fetching activity details
-  useEffect(() => {
-    fetchActivityDetail()
-    console.log(activity)
-    fetchParticipants()
-  }, [])
-
-  // handle click delete
-  const handleClickDelete = async () => {
-    try {
-      const response = await fetch(`${HTTP}/api/v1/activities/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      if (response.ok) {
-        console.log('Deleted')
-      } else {
-        console.log('Deletion failed with response: ' + response)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  // handle search bar
-  const handleSearch = (value: string) => {
-    fetchParticipants(`?search=${value}`)
-  }
+export default async function ActivityDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  // Variables - primary
+  // token
+  const cookieStore = cookies()
+  const token = cookieStore.get('acces_token')?.value
+  // id
+  const id = (await params).id
+  const activity = await fetchActivityDetail({ id })
 
   // return
   if (activity) {
@@ -229,14 +82,14 @@ export default function ActivityDetail() {
                     {activity.company.companyNameTh}
                   </span>
                 </div>
-                <span className='hidden text-green-500 sm:block'>{`${activity.current_participants}/${activity.max_participants} seats`}</span>
+                <span className='hidden text-green-500 sm:block'>{`${activity.currentParticipants}/${activity.maxParticipants} seats`}</span>
               </h2>
               <hr className='hidden border-t border-gray-300 sm:block' />
 
               {/* Tags */}
               {/* Desktop */}
               <div className='hidden flex-col flex-wrap gap-2 sm:flex sm:flex-row'>
-                {activity.tags.map((tag) => (
+                {activity.tags.map((tag: { name: string; color: string }) => (
                   <Tag text={tag.name} color={tag.color} />
                 ))}
               </div>
@@ -256,7 +109,7 @@ export default function ActivityDetail() {
                   </h3>
                 </div>
                 <div className='ml-2 flex w-full flex-col gap-y-2'>
-                  {activity.tags.map((tag) => (
+                  {activity.tags.map((tag: { name: string; color: string }) => (
                     <Tag text={tag.name} color={tag.color} />
                   ))}
                 </div>
@@ -274,7 +127,7 @@ export default function ActivityDetail() {
                 <h3 className='ml-2 text-[15px] font-normal text-mgray-d3 sm:text-[18px]'>
                   Participation :
                 </h3>
-                <span className='ml-2 text-green-500'>{`${activity.current_participants}/${activity.max_participants} seats`}</span>
+                <span className='ml-2 text-green-500'>{`${activity.currentParticipants}/${activity.maxParticipants} seats`}</span>
               </div>
 
               {/* Event Information */}
@@ -298,7 +151,7 @@ export default function ActivityDetail() {
                       </h3>
                       <span className='ml-2 hidden lg:block'> |</span>
                       <h3 className='ml-2 text-[15px] text-mgray-d3 md:font-light lg:text-[18px]'>
-                        {`${formatTime(activity.start_time)} - ${formatTime(activity.end_time)}`}
+                        {`${formatTime(activity.startTime)} - ${formatTime(activity.endTime)}`}
                       </h3>
                     </div>
                   </div>
@@ -348,94 +201,15 @@ export default function ActivityDetail() {
                 </h3>
               </div>
             </div>
+
             {/* Apply Button */}
-            <div className='mt-8 flex content-end gap-x-5 text-center'>
-              <Button href={`${id}/edit`} className='w-full rounded'>
-                Edit
-              </Button>
-              {/* Desktop: Variant Outline */}
-              <Button
-                onClick={handleClickDelete}
-                variant='outline'
-                className='hidden w-full rounded sm:block'>
-                Delete
-              </Button>
-              <Button
-                onClick={handleClickDelete}
-                variant='text'
-                className='w-full rounded sm:hidden'>
-                Delete
-              </Button>
-            </div>
+           <ActivityDeleteEditButtons id={id}/> 
           </div>
         </div>
 
-        {/* Participants Table */}
-        <div>
-          <div className='flex flex-col justify-center gap-y-5 sm:flex-row sm:justify-between'>
-            <TableHeader
-              headerTitle={'Participants'}
-              headerStyle='py-[13px] sm:py-0'
-              disableButton
-            />
-            <SearchBar onChange={handleSearch} />
-          </div>
-          <TableComponent
-            tableStyle='mt-6 hidden md:table'
-            headers={[
-              { title: 'Student name', key: 'thaiName' },
-              { title: 'Student ID', key: 'studentId' },
-              { title: 'Faculty', key: 'faculty' },
-              { title: 'Department', key: 'department' },
-              { title: 'Major', key: 'program' },
-              { title: 'Admission year', key: 'admissionYear' },
-              { title: 'Status', key: 'status' },
-              { title: '', key: 'edit' },
-            ]}
-            headerStyle='text-center text-mgray-2'
-            textStyle='text-center text-mgray-2'
-            data={mockData}
-          />
-        </div>
-        <ExpandList
-          title={'Name'}
-          breakpoint='md'
-          children={(data) => (
-            <div className='flex flex-col gap-y-5 border-b border-b-mgray-6 px-7 pb-5 text-mgray-2'>
-              <div className='flex flex-col'>
-                <p className='text-[12px]'>Student ID</p>
-                <p className='text-[10px]'>{data.studentId}</p>
-              </div>
-              <div className='grid grid-cols-2'>
-                <div>
-                  <p className='text-[12px]'>Faculty</p>
-                  <p className='text-[10px]'>{data.faculty}</p>
-                </div>
-                <div>
-                  <p className='text-[12px]'>Department</p>
-                  <p className='text-[10px]'>{data.department}</p>
-                </div>
-              </div>
-              <div className='grid grid-cols-2'>
-                <div>
-                  <p className='text-[12px]'>Major</p>
-                  <p className='text-[10px]'>{data.program}</p>
-                </div>
-                <div>
-                  <p className='text-[12px]'>Admission Year</p>
-                  <p className='text-[10px]'>{data.admissionYear}</p>
-                </div>
-              </div>
-              <Button
-                className='rounded-xl bg-vidva px-3 py-1 text-center text-[10px] text-white'
-                href={`/admin/activities/${data.studentId}`}>
-                More Details
-              </Button>
-            </div>
-          )}
-          listKey={'thaiName'}
-          data={mockData}
-        />
+        {/* Participants - Client*/}
+        <ActivityParticipantTable />
+        
       </main>
     )
   }

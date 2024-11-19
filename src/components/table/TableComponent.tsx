@@ -100,7 +100,7 @@ export default function TableComponent({
                     </td>
                   )
                 }
-                if (header.key === 'start_date' || header.key === 'end_date') {
+                if (header.key === 'start_date' || header.key === 'end_date' || header.key === 'date') {
                   return (
                     <td
                       key={`${index}-${subIndex}`}
@@ -120,7 +120,7 @@ export default function TableComponent({
                       current === undefined ||
                       !current.hasOwnProperty(key)
                     ) {
-                      return undefined // Return undefined if the key doesn't exist
+                      return '\u00A0' // Return blank space if the key doesn't exist
                     }
                     current = current[key]
                   }
@@ -149,7 +149,7 @@ export default function TableComponent({
                   <td
                     key={`${index}-${subIndex}`}
                     className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
-                    {rowData[header.key]}
+                    {rowData[header.key] ? rowData[header.key] : '\u00A0'}
                   </td>
                 )
               })}

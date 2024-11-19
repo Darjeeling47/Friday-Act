@@ -80,7 +80,7 @@ export default function CreateActivity() {
 
   // Return
   return (
-    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:py-8 sm:shadow-none'>
+    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent lg:py-8 sm:shadow-none md:mx-12 lg:mx-24 xl:mx-48'>
       <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-6 md:mt-12'>
         <div className='flex items-center justify-center gap-x-4'>
           <Image
