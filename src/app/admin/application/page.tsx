@@ -94,7 +94,7 @@ export default function Application() {
   };
 
   return (
-    <main className='py-16 max-md:py-10 gap-[30px] flex flex-col max-md:items-center'>
+    <main className='py-6 gap-[30px] flex flex-col max-md:items-center'>
        <TableHeader disableButton={true} headerTitle='Application'  style='flex' headerStyle='text-4xl font-semibold' buttonStyle='' />
       <div className="flex justify-end max-md:justify-center">
         <SearchBar
