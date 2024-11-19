@@ -51,11 +51,23 @@ const config: Config = {
           d1: '#FEFEFE',
           d2: '#EAEAEA',
           d3: '#4F4F4F',
-          d4: '#434343'
+          d4: '#434343',
         },
         vidva: '#8B2333',
         mgreen: '#10B981',
         mred: '#E83C59',
+      },
+      fontSize: {
+        title: 'clamp(1.25rem, 2vw + 1rem, 2rem)' /* 20px to 32px */,
+        'header-1': 'clamp(1.5rem,2.5vw + 1rem,2.25rem)' /* 24px to 36px */,
+        'header-2':
+          ' clamp(1.125rem,2vw + 0.875rem,1.75rem)' /* 18px to 28px */,
+        'header-3': 'clamp(1rem,1.5vw + 0.875rem,1.5rem)' /* 16px to 24px */,
+        subtitle: 'clamp(0.875rem,1.5vw + 0.75rem,1.25rem)' /* 14px to 20px */,
+        'body-1':
+          'clamp(0.75rem,1.25vw + 0.625rem,1.125rem)' /* 12px to 18px */,
+        'body-2': 'clamp(0.625rem, 1vw + 0.5rem, 1rem)' /* 10px to 16px */,
+        detail: 'clamp(0.625rem,1vw + 0.5rem,0.875rem)' /* 10px to 14px */,
       },
     },
     container: {
@@ -68,7 +80,7 @@ const config: Config = {
         '2xl': '6rem',
       },
     },
-    boxShadow:{
+    boxShadow: {
       '1': '0px 4px 15px 0px #DADADA',
       '2': '10px 10px 30px 0px #E2E2E2, -10px -10px 30px 0px #F2F2F2',
       'none': 'none',
@@ -85,7 +97,7 @@ const config: Config = {
       'detail-2': 'clamp(0.5rem, 1vw + 0.5rem, 0.75rem)', /* 8px to 12px */
     },
     aspectRatio: {
-      'square': '1 / 1',
+      square: '1 / 1',
       '2/3': '2 / 3',
       '4/3': '4 / 3',
     },

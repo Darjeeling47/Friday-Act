@@ -65,11 +65,11 @@ export default function NavBar() {
             onClick={() => setIsOpen(!isOpen)}
             className='relative h-8 w-8'>
             <i
-              className={`bi bi-x absolute inset-0 m-auto text-3xl text-mgray-3 transition-transform duration-300 ${
+              className={`bi bi-x text-3xl absolute inset-0 m-auto text-mgray-3 transition-transform duration-300 ${
                 isOpen ? 'rotate-0 opacity-100' : 'rotate-90 opacity-0'
               }`}></i>
             <i
-              className={`bi bi-list absolute inset-0 m-auto text-3xl text-mgray-3 transition-transform duration-300 ${
+              className={`bi bi-list text-3xl absolute inset-0 m-auto text-mgray-3 transition-transform duration-300 ${
                 isOpen ? '-rotate-90 opacity-0' : 'rotate-0 opacity-100'
               }`}></i>
           </button>
@@ -83,13 +83,17 @@ export default function NavBar() {
             }`}>
             {isLogIn && (
               <div className='flex flex-row items-center gap-4 px-4'>
-                <Image
-                  src={profileUrl}
-                  alt='Profile Picture'
-                  className='w-[64px] rounded-lg object-contain'
-                  width={1500}
-                  height={1500}
-                />
+                {profileUrl ? (
+                  <Image
+                    src={profileUrl}
+                    alt='Profile Picture'
+                    className='h-[64px] w-[64px] rounded-lg object-contain'
+                    width={1500}
+                    height={1500}
+                  />
+                ) : (
+                  <div className='h-[64px] w-[64px] rounded-lg bg-mgray-4 object-contain'></div>
+                )}
                 <p className='flex flex-col gap-1'>
                   <span className='font-nor text-lg text-mgray-3'>
                     {`${firstNameTH} ${lastNameTH}`}
