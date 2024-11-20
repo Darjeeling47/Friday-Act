@@ -1,80 +1,130 @@
+'use client';
 // import
 // react
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 // components
 import CompanyActivity from "@/components/activity/CompanyActivity";
+import getCompany from "@/libs/companies/getCompany";
+import ActivityLog from "@/components/activity/ActivityLog";
 
-// Variables
-// Primary
-const sampleActivities = [
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-  { name: "Activity Name", company: "Company Name", date: "08 OCT 2024" },
-];
 
+const exampleResponse: SemesterGroupedResponse = {
+  success: true,
+  count: 10,
+  pagination: {
+    current: 1,
+    last: 2,
+    next: 2,
+    prev: null,
+    limit: 5,
+  },
+  semesters: [
+    {
+      semester: {
+        year: 2023,
+        semester: 1,
+      },
+      applications: [
+        {
+          id: 1,
+          user: {
+            id: 1001,
+            thaiName: 'สมชาย ใจดี',
+            studentId: '6201010001',
+          },
+          activity: {
+            id: 2001,
+            name: 'Community Service',
+            company: {
+              id: 3001,
+              name: 'Goodwill Co.',
+            },
+            semester: {
+              id: 4001,
+              year: 2023,
+              semester: 1,
+            },
+          },
+          createdAt: '2023-02-10T12:34:56.000Z',
+          updatedAt: '2023-02-15T12:34:56.000Z',
+          isQrGenerated: true,
+          qrString: 'QR12345',
+          qrGeneratedAt: '2023-02-11T12:34:56.000Z',
+          isApproved: true,
+          status: 'Pending',
+          isCanceled: false,
+          cancellationReason: null,
+        },
+      ],
+    },
+  ],
+}
 // Component
-const App: React.FC = () => {
+export default function Page({ params }: { params: { id: string } }) {
+  const [company, setCompany] = useState<any>(null);
+  const [imgSrc, setImgSrc] = useState<string | undefined>(undefined);
   // return
+  useEffect(() => {
+    const fetchCompanyData = async () => {
+      const data = await getCompany({ id: params.id });
+      setCompany(data?.company);
+       console.log(company)
+    };
+   
+
+    fetchCompanyData();
+  }, [params.id]);
+
+  if (!company) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
-      <div className="mb-8 flex flex-col-reverse md:flex-row h-full max-w-full items-stretch p-4">
+      <div className="mb-8 flex flex-col-reverse md:flex-row h-full items-stretch p-4">
         {/* Content Section */}
-        <div className="flex flex-1 flex-col justify-between mt-8 md:mt-0 sm:text-left">
+        <div className="flex flex-1 flex-col justify-between mt-8 md:mt-0 sm:text-left w-full grow">
           <div className="text-left md:text-left sm:text-left">
             <h1 className="mb-4 text-4xl font-bold text-mgray-2 sm:text-left">
-              Company Name
+              {company.companyNameEn}
             </h1>
-            <p className="max-w-md text-base text-mgray-2 sm:text-left">
-              Short description for the company that will tell all about it.
-              Like we make it for you.
-            </p>
+            <div className="text-sm text-mgray-d3 mt-1 h-40 truncate text-pretty text-wrap mr-20" dangerouslySetInnerHTML={{ __html: company.description }}></div>
           </div>
           <div className="mt-auto">
             <div className="my-4 flex flex-col gap-2 text-mgray-2 text-left">
-              <div className="flex flex-row items-center gap-2 sm:justify-start">
+{/*               <div className="flex flex-row items-center gap-2 sm:justify-start">
                 <PhoneIcon />
                 <span>0 2215 3555</span>
               </div>
               <div className="flex flex-row items-center gap-2 sm:justify-start">
                 <MailIcon />
                 <span>pr@chula.ac.th</span>
-              </div>
+              </div> */}
             </div>
             <address className="text-m text-mgray-2 md:w-80 mb-2 text-left sm:text-left">
-              จุฬาลงกรณ์มหาวิทยาลัย, 254 ถนนพญาไท แขวงวังใหม่ 
-              เขตปทุมวัน กรุงเทพมหานคร 10330
+              {company.building} {company.floor} {company.room} {company.houseNo} {company.street} {company.district} {company.subDistrict} {company.province} {company.postalCode}
             </address>
             <div className="flex justify-start sm:justify-start">
               <a href="#" className="text-sm text-blue-600 sm:text-left">
-                Link for the company
+                {company.website}
               </a>
             </div>
           </div>
         </div>
 
-        {/* Image Section */}
-        <div className="h-48 w-40 md:h-64 md:w-56 rounded bg-mgray-3 sm:mt-8 sm:mb-0 sm:mx-auto md:mb-0 mx-auto"></div>
+        {
+          (company.logoUrl) ? <img
+            src={company.logoUrl}
+            alt={"Company Logo"}
+            className="md:h-64 md:w-56 rounded bg-mgray-3 sm:mt-8 sm:mb-0 sm:mx-auto md:mb-0 mx-auto"
+          /> :
+          <div className="h-48 w-40 md:h-64 md:w-56 rounded bg-mgray-3 sm:mt-8 sm:mb-0 sm:mx-auto md:mb-0 mx-auto"></div>
+        }
       </div>
 
       {/* Company Activities Section */}
       <div className="mb-8 mt-4 max-w-full">
-        <CompanyActivity
-          activities={sampleActivities}
-          year="2024"
-          semester="Semester 1"
-        />
-      </div>
-      <div className="mb-20 max-w-full">
-        <CompanyActivity
-          activities={sampleActivities}
-          year="2023"
-          semester="Semester 2"
-        />
+        <ActivityLog semesterData={exampleResponse} />
       </div>
     </>
   );
@@ -111,4 +161,4 @@ const MailIcon: React.FC = () => (
   </svg>
 );
 
-export default App;
+// export default App;
