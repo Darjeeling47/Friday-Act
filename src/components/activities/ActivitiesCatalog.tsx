@@ -46,18 +46,11 @@ export default function ActivitiesCatalog({
               <h2 className="font-normal text-header-2 text-mgray-2">{formatDate(groupDate.date)}</h2>
               <div className="justify-start gap-8 grid grid-cols-1 lg:grid-cols-2 w-full">
                 {
-                  (
-                    new Date(groupDate.date) >= new Date(nearestFriday.getTime() - (6 * 24 * 60 * 60 * 1000))) && (new Date(groupDate.date) <= nearestFriday) ?
-                    groupDate.activities.map((activity: ActivityItem) => (
-                      <div key={activity.id} className="col-span-1 w-full overflow-hidden">
-                        <ActivityItemApplied activity={activity} />
-                      </div>
-                    )) :
-                    groupDate.activities.map((activity: ActivityItem) => (
-                      <div key={activity.id} className="col-span-1 w-full overflow-hidden">
-                        <ActivitiesItem activity={activity} />
-                      </div>
-                    ))
+                  groupDate.activities.map((activity: ActivityItem) => (
+                    <div key={activity.id} className="col-span-1 w-full overflow-hidden">
+                      <ActivityItemApplied activity={activity} />
+                    </div>
+                  ))
                 }
               </div>
             </div>
