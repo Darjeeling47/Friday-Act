@@ -34,7 +34,6 @@ const token = cookieStore.get('access_token')?.value
 
   // Construct the API endpoint URL
   const url = `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities${query}`;
-  console.log(url)
   const response = await fetch(url, {
     method: 'GET',
     headers: {

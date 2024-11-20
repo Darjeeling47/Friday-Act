@@ -11,6 +11,10 @@ export interface Companies {
     }
   }
 }
+export interface Company {
+  success: boolean;
+  company: CompanyItem;
+}
 
 export interface CompanyItem {
   companyId: number;

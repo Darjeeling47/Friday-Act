@@ -91,17 +91,17 @@ export default function ActivityItemApplied({
   // return
   return (
     <Link
-      className='flex h-full w-full max-w-xl flex-row items-center justify-start gap-5 rounded-md p-5 transition-transform duration-300 hover:bg-mgray-3/10'
+      className='flex flex-row justify-start items-center gap-5 hover:bg-mgray-3/10 p-5 rounded-md w-full max-w-xl h-full transition-transform duration-300'
       href={`/activities/${activity.id}`}>
       <div className='grow-0'>
-        <div className='flex aspect-2/3 h-44 items-center justify-center rounded-md bg-white shadow-1 sm:h-56 md:h-64 lg:h-72'>
+        <div className='flex justify-center items-center bg-white shadow-1 rounded-md h-44 sm:h-56 md:h-64 lg:h-72 aspect-2/3'>
           {imgSrc ? (
             <Image
               src={imgSrc}
               alt={`Activity Image ${activity.name}`}
               width={240}
               height={320}
-              className='aspect-2/3 h-full w-full rounded-md object-cover'
+              className='rounded-md w-full h-full aspect-2/3 object-cover'
               quality={90}
               sizes='(max-width: 768px) 100vw, 240px'
             />
@@ -111,24 +111,24 @@ export default function ActivityItemApplied({
               alt='Activity Image'
               width={240}
               height={320}
-              className='aspect-2/3 w-3/4 rounded-md object-contain'
+              className='rounded-md w-3/4 aspect-2/3 object-contain'
             />
           )}
         </div>
       </div>
-      <div className='h-44 grow overflow-hidden sm:h-56 md:h-64 lg:h-72'>
-        <div className='items-between flex h-full w-full flex-col justify-between'>
-          <div className='flex w-full flex-col items-start justify-start gap-1 py-1 md:py-2 lg:py-3'>
-            <div className='flex w-full flex-col items-start justify-start gap-1'>
-              <h3 className='line-clamp-1 text-subtitle font-normal text-mgray-1'>
+      <div className='h-44 sm:h-56 md:h-64 lg:h-72 overflow-hidden grow'>
+        <div className='flex flex-col justify-between items-between w-full h-full'>
+          <div className='flex flex-col justify-start items-start gap-1 py-1 md:py-2 lg:py-3 w-full'>
+            <div className='flex flex-col justify-start items-start gap-1 w-full'>
+              <h3 className='line-clamp-1 font-normal text-mgray-1 text-subtitle'>
                 {nameActivity}
               </h3>
-              <p className='text-detail-1 line-clamp-1 font-light text-mgray-2'>
+              <p className='line-clamp-1 font-light text-detail-1 text-mgray-2'>
                 {nameCompany}
               </p>
             </div>
             <hr className='w-full' />
-            <div className='mt-1 flex h-9 w-full flex-row items-center justify-start gap-2 overflow-x-auto px-1 scrollbar-thin scrollbar-track-gray-100 scrollbar-thumb-gray-300 md:h-10 lg:h-12'>
+            <div className='flex flex-row justify-start items-center gap-2 mt-1 scrollbar-thumb-gray-300 px-1 w-full h-9 md:h-10 lg:h-12 overflow-x-auto scrollbar-thin scrollbar-track-gray-100'>
               {activity.tags
                 .sort()
                 .slice(0, 3)
@@ -136,17 +136,18 @@ export default function ActivityItemApplied({
                   <Tag key={tag.id} text={tag.name} color={tag.color} />
                 ))}
             </div>
-            <div className='line-clamp-1 w-full pt-1 text-body-2 font-light text-mgray-2 md:line-clamp-2'>
+            <div className='line-clamp-1 md:line-clamp-2 pt-1 w-full font-light text-body-2 text-mgray-2'>
               {description.length > 0
                 ? description
-                : 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
+                : null
+              }
             </div>
           </div>
-          <div className='flex w-full flex-col gap-1'>
+          <div className='flex flex-col gap-1 w-full'>
             {activity.isApplied ? (
               <>
                 <button
-                  className='shadow text-detail-2 md:text-detail-1 line-clamp-1 w-full rounded-md bg-mgray-2 px-4 py-2 text-center text-mgray-4 hover:bg-mgray-2/80'
+                  className='bg-mgray-2 hover:bg-mgray-2/80 shadow px-4 py-2 line-clamp-1 rounded-md w-full text-center text-detail-2 text-mgray-4 md:text-detail-1'
                   onClick={(e) => {
                     e.preventDefault()
                     router.push(`/activities/${activity.id}`)
@@ -154,11 +155,11 @@ export default function ActivityItemApplied({
                   Applied
                 </button>
                 {availableSeats > 0 ? (
-                  <p className='text-detail-2 w-full pr-2 text-right text-emerald-500'>
+                  <p className='text-right pr-2 w-full text-detail-2 text-emerald-500'>
                     {availableSeats} Seat{availableSeats !== 1 ? 's' : ''} left
                   </p>
                 ) : (
-                  <p className='text-detail-2 w-full pr-2 text-right text-rose-600'>
+                  <p className='text-right pr-2 w-full text-detail-2 text-rose-600'>
                     Full
                   </p>
                 )}
@@ -166,28 +167,28 @@ export default function ActivityItemApplied({
             ) : availableSeats > 0 ? (
               <>
                 <button
-                  className='shadow text-detail-2 md:text-detail-1 line-clamp-1 w-full rounded-md bg-vidva px-4 py-2 text-center text-mgray-4 hover:bg-vidva/80'
+                  className='bg-vidva hover:bg-vidva/80 shadow px-4 py-2 line-clamp-1 rounded-md w-full text-center text-detail-2 text-mgray-4 md:text-detail-1'
                   onClick={(e) => {
                     e.preventDefault()
                     router.push(`/activities/${activity.id}`)
                   }}>
                   Apply Now
                 </button>
-                <p className='text-detail-2 w-full pr-2 text-right text-emerald-500'>
+                <p className='text-right pr-2 w-full text-detail-2 text-emerald-500'>
                   {availableSeats} Seat{availableSeats !== 1 ? 's' : ''} left
                 </p>
               </>
             ) : (
               <>
                 <button
-                  className='shadow text-detail-2 md:text-detail-1 line-clamp-1 w-full cursor-not-allowed rounded-md bg-mgray-3 px-4 py-2 text-center text-mgray-5'
+                  className='bg-mgray-3 shadow px-4 py-2 line-clamp-1 rounded-md w-full text-center text-detail-2 text-mgray-5 md:text-detail-1 cursor-not-allowed'
                   onClick={(e) => {
                     e.preventDefault()
                     router.push(`/activities/${activity.id}`)
                   }}>
                   Out of Seat
                 </button>
-                <p className='text-detail-2 w-full pr-2 text-right text-rose-600'>
+                <p className='text-right pr-2 w-full text-detail-2 text-rose-600'>
                   Full
                 </p>
               </>

@@ -155,21 +155,21 @@ export default function EditActivity() {
 
   // Return
   return (
-    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:shadow-none md:mx-12 lg:mx-24 lg:py-8 xl:mx-48'>
-      <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-6 md:mt-12'>
-        <div className='flex items-center justify-center gap-x-4'>
+    <main className='bg-mgray-5 sm:bg-transparent shadow-2 sm:shadow-none md:mx-12 lg:mx-24 xl:mx-48 lg:py-8 rounded-3xl'>
+      <div className='flex flex-col gap-y-5 sm:mt-6 md:mt-12 pt-16 pb-16'>
+        <div className='flex justify-center items-center gap-x-4'>
           <Image
             src='/logo/Logo_Create.png'
             alt='Edit Activity'
             width={40}
             height={40}
           />
-          <h1 className='text-2xl font-semibold sm:text-[30px] md:text-[40px]'>
+          <h1 className='font-semibold text-2xl sm:text-[30px] md:text-[40px]'>
             Edit Activity
           </h1>
         </div>
         <form
-          className='flex flex-col gap-y-5 px-4 sm:mx-24 md:mx-12'
+          className='flex flex-col gap-y-5 sm:mx-24 md:mx-12 px-4'
           onSubmit={handleSubmitForm}>
           <div className='flex flex-col'>
             <label htmlFor='name' className='text-base text-mgray-2'>
@@ -179,7 +179,7 @@ export default function EditActivity() {
               type='text'
               id='name'
               name='name'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
@@ -196,7 +196,7 @@ export default function EditActivity() {
               onChange={handleUploadedFile}
             />
             <Button
-              className='flex gap-x-2 rounded-xl bg-vidva px-5 py-3 text-white'
+              className='flex gap-x-2 bg-vidva px-5 py-3 rounded-xl text-white'
               onClick={handleFileInput}>
               <p>Upload file</p>
               <Image
@@ -231,7 +231,7 @@ export default function EditActivity() {
             <textarea
               id='description'
               name='description'
-              className='min-h-32 resize-none rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl min-h-32 placeholder-mgray-3 resize-none'
               placeholder='Please Enter'
             />
           </div>
@@ -243,7 +243,7 @@ export default function EditActivity() {
               type='datetime-local'
               id='startTime'
               name='startTime'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
@@ -255,7 +255,7 @@ export default function EditActivity() {
               type='datetime-local'
               id='endTime'
               name='endTime'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
@@ -267,7 +267,7 @@ export default function EditActivity() {
               type='text'
               id='maxParticipants'
               name='maxParticipants'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
@@ -289,7 +289,7 @@ export default function EditActivity() {
               type='text'
               id='location'
               name='location'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
@@ -301,7 +301,7 @@ export default function EditActivity() {
               type='text'
               id='speaker'
               name='speaker'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
               placeholder='Please Enter'
             />
           </div>
