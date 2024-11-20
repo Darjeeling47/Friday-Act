@@ -2,23 +2,43 @@
 // import next
 import Image from 'next/image'
 // import react
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // import components
 import Button from '@/components/basic/Button'
 // import util
 import Cookies from 'js-cookie'
-
-// HTTP Constant
-const HTTP = 'http://143.198.87.246'
+// import api and interface
+import getCompanies from '@/libs/companies/getCompanies'
+import { CompanyItem } from '@/interface/companiesInterface'
+import getTags from '@/libs/tags/getTags'
+import { TagItem } from '@/interface/tagsInterface'
 
 export default function CreateActivity() {
   // Variables
   // Primary
   const token = Cookies.get('token')
   const [fileName, setFileName] = useState('')
+  const [companyValue, setCompanyValue] = useState()
+  const [selectedTagsList, setSelectedTagsList] = useState<number[]>([])
+  const [companyList, setCompanyList] = useState<CompanyItem[]>([])
+  const [tagList, setTagList] = useState<TagItem[]>([])
   // Secondary
   const fileInputRef = useRef<HTMLInputElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+
+  // Fetch list of companies
+  const fetchCompanyList = async () => {
+    const response = await getCompanies({})
+
+    if (response && response.success) {
+      const companies = response.company.items
+      setCompanyList(companies)
+    }
+  }
+
+  useEffect(() => {
+    fetchCompanyList()
+  }, [])
 
   // Handle for clicking the "upload file" button
   const handleFileInput = () => {
@@ -33,6 +53,24 @@ export default function CreateActivity() {
       const fileName = event.target.files[0].name
       setFileName(fileName)
     }
+  }
+
+  // Handle for selecting a company
+  const handleSelectCompany = (event: any) => {
+    setCompanyValue(event.target.value)
+  }
+
+  // Handle for selecting tags
+  const handleSelectTag = (event: any) => {
+    const currentTags = selectedTagsList
+    if ( currentTags.length === 0 || !currentTags.includes(event.target.value)) {
+      currentTags.push(event.target.value)
+      setSelectedTagsList(currentTags)
+    } else if (currentTags.includes(event.target.value)) {
+      const removedArray = currentTags.filter((member) => member !== event.target.value)
+      setSelectedTagsList(removedArray)
+    }
+    console.log(currentTags)
   }
 
   // Handle for clicking the "save" button
@@ -54,11 +92,15 @@ export default function CreateActivity() {
           formData.append(key, data[key])
         })
 
+        if (companyValue) {
+          formData.append('companyId', companyValue)
+        }
+
         if (fileInputRef.current && fileInputRef.current.files) {
           formData.append('poster', fileInputRef.current.files[0])
         }
 
-        const response = await fetch(`${HTTP}/api/v1/activities`, {
+        const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/activities`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -69,7 +111,7 @@ export default function CreateActivity() {
         if (response.ok) {
           console.log('Success')
         } else {
-          console.log('Creating activity failed with response: ' + response)
+          console.log('Creating activity failed with response: ' + response.statusText)
         }
       } catch (e) {
         console.log(e)
@@ -137,13 +179,16 @@ export default function CreateActivity() {
             <label htmlFor='companyId' className='text-base text-mgray-2'>
               Company{' '}
             </label>
-            <input
-              type='text'
+            <select
               id='companyId'
               name='companyId'
+              onChange={handleSelectCompany}
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
-              placeholder='Please Enter'
-            />
+            >
+              {companyList.map((company) => (
+                <option value={company.companyId}>{company.companyNameTh}</option>
+              ))}
+            </select>
           </div>
           <div className='flex flex-col'>
             <label htmlFor='description' className='text-base text-mgray-2'>
