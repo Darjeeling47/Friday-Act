@@ -45,7 +45,7 @@ export default function TableComponent({
   }
 
   return (
-    <div className='flex w-full overflow-x-auto'>
+    <div className='flex w-full flex-col overflow-x-auto'>
       <table className={`w-full table-fixed border-collapse ${tableStyle}`}>
         <thead>
           <tr>
@@ -58,7 +58,7 @@ export default function TableComponent({
                       ? '30px'
                       : `${spaceText}`,
                 }}
-                className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
+                className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
             ))}
@@ -100,11 +100,11 @@ export default function TableComponent({
                     </td>
                   )
                 }
-                if (header.key === 'start_date' || header.key === 'end_date') {
+                if (header.key === 'start_date' || header.key === 'end_date' || header.key === 'date') {
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
                       {formatDate_Utc_to_EN(rowData[header.key])}
                     </td>
                   )
@@ -113,39 +113,43 @@ export default function TableComponent({
                   // Handle nested objects
                   const keys = header.key.split('.')
                   let current = rowData
-                
+
                   for (const key of keys) {
-                    if (current === null || current === undefined || !current.hasOwnProperty(key)) {
-                      return undefined  // Return undefined if the key doesn't exist
+                    if (
+                      current === null ||
+                      current === undefined ||
+                      !current.hasOwnProperty(key)
+                    ) {
+                      return '\u00A0' // Return blank space if the key doesn't exist
                     }
                     current = current[key]
                   }
-                
+
                   if (current && typeof current === 'object') {
                     // If 'current' is an object, you can render a specific property or stringify it
                     return (
                       <td
                         key={`${index}-${subIndex}`}
-                        className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                        className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
                         {JSON.stringify(current)}
                       </td>
                     )
                   }
-                
+
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
+                      className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
                       {current}
                     </td>
                   )
                 }
-                
+
                 return (
                   <td
                     key={`${index}-${subIndex}`}
-                    className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
-                    {rowData[header.key]}
+                    className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
+                    {rowData[header.key] ? rowData[header.key] : '\u00A0'}
                   </td>
                 )
               })}
@@ -154,11 +158,11 @@ export default function TableComponent({
         </tbody>
       </table>
       {rowsPerPage && totalPages > 1 && (
-        <div className='flex justify-center space-x-2 mt-4'>
+        <div className='mt-4 flex justify-center space-x-2'>
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className='disabled:opacity-50 px-2 py-1 border rounded'>
+            className='rounded border px-2 py-1 disabled:opacity-50'>
             &lt;
           </button>
           {[...Array(totalPages)].map((_, pageIndex) => (
@@ -172,7 +176,7 @@ export default function TableComponent({
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className='disabled:opacity-50 px-2 py-1 border rounded'>
+            className='rounded border px-2 py-1 disabled:opacity-50'>
             &gt;
           </button>
         </div>

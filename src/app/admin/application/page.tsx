@@ -5,41 +5,11 @@ import SearchBar from "@/components/basic/SearchBar";
 import TableComponent from "@/components/table/TableComponent";
 import { useEffect, useState } from "react";
 import { formatDate_Utc_to_EN } from "@/utils/utils";
-import getApplications from "@/libs/application/getApplications";
+import getApplications from "@/libs/applications/getApplications";
 import { useRouter } from 'next/navigation';
+import { ApplicationItem } from "@/interface/applicationsInterface";
 
-interface Application {
-  id: number;
-  user: {
-    id: string;
-    thaiName: string;
-    studentId: string;
-  };
-  activity: {
-    id: number;
-    name: string;
-    company: {
-      id: number;
-      name: string;
-    };
-    semester: {
-      id: number;
-      year: number;
-      semester: number;
-    };
-  };
-  createdAt: string;
-  updatedAt: string;
-  isQrGenerated: boolean;
-  qrString: string | null;
-  qrGeneratedAt: string;
-  isApproved: boolean;
-  isCanceled: boolean;
-  cancellationReason: string | null;
-  status: string;
-}
-
-type FormattedApplication = Application & {
+type FormattedApplication = ApplicationItem & {
   id: number;
   username: string;
   sid: string;
@@ -61,13 +31,13 @@ export default function Application() {
       try {
         const data = await getApplications();
         const applications = data.applications;
-        const formattedData = applications.map((application: Application) => ({
+        const formattedData = applications.map((application: ApplicationItem) => ({
           ...application,
           id: application.id,
           username: application.user.thaiName,
           sid: application.user.id,
           activity: application.activity.name,
-          attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : application.isCanceled ? 'Canceled' : 'Absent',
+          attenddate: application.isApproved ? formatDate_Utc_to_EN(application.updatedAt) : application.isCanceled ? 'Canceled' : 'Pending',
           applydate: formatDate_Utc_to_EN(application.createdAt),
           status: application.status,
         }));
@@ -93,6 +63,8 @@ export default function Application() {
       item.username.toLowerCase().includes(lowercasedSearchValue) ||
       item.sid.toLowerCase().includes(lowercasedSearchValue) ||
       item.activity.toLowerCase().includes(lowercasedSearchValue) ||
+      item.attenddate.toLowerCase().includes(lowercasedSearchValue) ||
+      item.applydate.toLowerCase().includes(lowercasedSearchValue) ||
       item.status.toLowerCase().includes(lowercasedSearchValue)
     );
     setFilteredData(filtered);
@@ -114,15 +86,18 @@ export default function Application() {
     { key: "status", title: "Status" },
     { key: "edit", title: "" },
   ];
-
+  interface IdObject {
+    id: string; // or the appropriate type for your id
+  }
+  
   const router = useRouter();
-  const clickEdit = (id: number) => {
-    router.push(`/application/${id}`);
+  const clickEdit = (id: IdObject) => {
+    router.push(`/admin/application/${id.id}`);
   };
 
   return (
-    <main className='py-16 max-md:py-10 gap-[30px] flex flex-col max-md:items-center'>
-      <TableHeader headerTitle='Application' buttonTitle='Scan Attendance Qr' style='flex' headerStyle='text-4xl font-semibold' buttonStyle='' />
+    <main className='py-6 gap-[30px] flex flex-col max-md:items-center'>
+       <TableHeader disableButton={true} headerTitle='Application'  style='flex' headerStyle='text-4xl font-semibold' buttonStyle='' />
       <div className="flex justify-end max-md:justify-center">
         <SearchBar
           onChange={handleSearchChange}
@@ -134,6 +109,7 @@ export default function Application() {
         textStyle="max-md:text-xs"
         headerStyle="max-md:text-xs"
         spaceText="100px"
+        defaultRowsPerPage={20}
         onClickEdit={clickEdit}
       />
     </main>

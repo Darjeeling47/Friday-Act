@@ -1,17 +1,18 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
 export default function Callback() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const [didFetch, setDidFetch] = useState(false)
 
   useEffect(() => {
     const code = searchParams.get('code')
 
-    if (code) {
-      // Send the code to the server-side route for processing
+    if (code && !didFetch) {
+      setDidFetch(true)
       fetch('/api/auth/callback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,7 +30,7 @@ export default function Callback() {
           console.error('Error during login:', error)
         })
     }
-  }, [searchParams, router])
+  }, [searchParams, router, didFetch])
 
   return (
     <div className='flex flex-col items-center justify-center bg-white py-12'>
