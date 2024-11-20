@@ -1,26 +1,59 @@
 'use client'
 // import next
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 // import react
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // import components
 import Button from '@/components/basic/Button'
-import { useParams } from 'next/navigation'
 // import util
 import Cookies from 'js-cookie'
-
-// HTTP Constant
-const HTTP = 'http://143.198.87.246'
+// import api and interface
+import getCompanies from '@/libs/companies/getCompanies'
+import { CompanyItem } from '@/interface/companiesInterface'
+import getTags from '@/libs/tags/getTags'
+import { TagItem } from '@/interface/tagsInterface'
+import TagSelector from '@/components/basic/Selector'
 
 export default function EditActivity() {
   // Variables
   // Primary
-  const token = Cookies.get('token')
   const { id } = useParams()
+  const token = Cookies.get('token')
   const [fileName, setFileName] = useState('')
+  const [companyValue, setCompanyValue] = useState()
+  const [companyList, setCompanyList] = useState<CompanyItem[]>([])
+  const [selectedTagsList, setSelectedTagsList] = useState<number[]>([])
+  const [tagList, setTagList] = useState<TagItem[]>([])
   // Secondary
   const fileInputRef = useRef<HTMLInputElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+
+  // Fetch list of companies
+  const fetchCompanyList = async () => {
+    const response = await getCompanies({})
+
+    if (response && response.success) {
+      const companies = response.company.items
+      setCompanyList(companies)
+    }
+  }
+
+  // Fetch list of existing tags
+  const fetchTags = async () => {
+    const response = await getTags({})
+
+    if (response && response.success) {
+      const tags = response.tags
+      setTagList(tags)
+    }
+  }
+  useEffect(() => {
+    fetchCompanyList()
+    fetchTags()
+    console.log(companyList)
+    console.log(tagList)
+  }, [])
 
   // Handle for clicking the "upload file" button
   const handleFileInput = () => {
@@ -35,6 +68,11 @@ export default function EditActivity() {
       const fileName = event.target.files[0].name
       setFileName(fileName)
     }
+  }
+
+  // Handle for selecting a company
+  const handleSelectCompany = (event: any) => {
+    setCompanyValue(event.target.value)
   }
 
   // Handle for clicking the "save" button
@@ -53,25 +91,60 @@ export default function EditActivity() {
       try {
         const formData = new FormData()
         Object.keys(data).forEach((key) => {
+          // use startTime date as base
+          if (key === 'startTime') {
+            const date = new Date(data[key] as string)
+            const startDate = date.getUTCDate()
+            const startMonth = date.getUTCMonth()
+            const startYear = date.getUTCFullYear()
+            const startHour = date.getUTCHours()
+            const startMinute = date.getUTCMinutes()
+            const constructedDateString = `${startYear}-${startMonth}-${startDate}`
+            const constructedTimeString = `${startHour}:${startMinute}:00`
+            console.log(constructedDateString, constructedTimeString)
+            formData.append('date', constructedDateString)
+            formData.append('startTime', constructedTimeString)
+          }
+          if (key === 'endTime') {
+            const date = new Date(data[key] as string)
+            const endHour = date.getUTCHours()
+            const endMinute = date.getUTCMinutes()
+            const constructedTimeString = `${endHour}:${endMinute}:00`
+            console.log(constructedTimeString)
+            formData.append('endTime', constructedTimeString)
+          }
           formData.append(key, data[key])
         })
+
+        if (companyValue) {
+          formData.append('companyId', companyValue)
+        }
+
+        if (selectedTagsList) {
+          formData.append('tags', JSON.stringify(selectedTagsList))
+        }
 
         if (fileInputRef.current && fileInputRef.current.files) {
           formData.append('poster', fileInputRef.current.files[0])
         }
 
-        const response = await fetch(`${HTTP}/api/v1/activities/${id}`, {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        })
+        const response = await fetch(
+          `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities/${id}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
+        )
 
         if (response.ok) {
           console.log('Success')
         } else {
-          console.log('Editing activity failed with response: ' + response)
+          console.log(
+            'Editing activity failed with response: ' + response.statusText
+          )
         }
       } catch (e) {
         console.log(e)
@@ -87,7 +160,7 @@ export default function EditActivity() {
         <div className='flex justify-center items-center gap-x-4'>
           <Image
             src='/logo/Logo_Create.png'
-            alt='Create Activity'
+            alt='Edit Activity'
             width={40}
             height={40}
           />
@@ -139,13 +212,17 @@ export default function EditActivity() {
             <label htmlFor='companyId' className='text-base text-mgray-2'>
               Company{' '}
             </label>
-            <input
-              type='text'
+            <select
               id='companyId'
               name='companyId'
-              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
-              placeholder='Please Enter'
-            />
+              onChange={handleSelectCompany}
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'>
+              {companyList.map((company) => (
+                <option value={company.companyId}>
+                  {company.companyNameTh}
+                </option>
+              ))}
+            </select>
           </div>
           <div className='flex flex-col'>
             <label htmlFor='description' className='text-base text-mgray-2'>
@@ -163,7 +240,7 @@ export default function EditActivity() {
               Start Time
             </label>
             <input
-              type='text'
+              type='datetime-local'
               id='startTime'
               name='startTime'
               className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
@@ -175,7 +252,7 @@ export default function EditActivity() {
               End Time
             </label>
             <input
-              type='text'
+              type='datetime-local'
               id='endTime'
               name='endTime'
               className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
@@ -198,12 +275,10 @@ export default function EditActivity() {
             <label htmlFor='tags' className='text-base text-mgray-2'>
               Tags
             </label>
-            <input
-              type='text'
-              id='tags'
-              name='tags'
-              className='border-1 border-mgray-6 bg-transparent p-2 rounded-xl placeholder-mgray-3'
-              placeholder='Please Enter'
+            <TagSelector
+              options={tagList}
+              selections={selectedTagsList}
+              setOptions={setSelectedTagsList}
             />
           </div>
           <div className='flex flex-col'>
