@@ -1,11 +1,14 @@
 export interface Companies {
-  items: CompanyItem[]
-  meta: {
-    totalItem: number,
-    itemCount: number,
-    itemsPerPage: number,
-    totalPage: number,
-    currentPage: number
+  success: boolean;
+  company: {
+    items: CompanyItem[]
+    meta: {
+      totalItem: number,
+      itemCount: number,
+      itemsPerPage: number,
+      totalPage: number,
+      currentPage: number
+    }
   }
 }
 
