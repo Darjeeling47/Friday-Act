@@ -1,6 +1,7 @@
 'use client'
 // import next
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 // import react
 import { useEffect, useRef, useState } from 'react'
 // import components
@@ -26,6 +27,7 @@ export default function CreateActivity() {
   // Secondary
   const fileInputRef = useRef<HTMLInputElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const router = useRouter()
 
   // Fetch list of companies
   const fetchCompanyList = async () => {
@@ -153,7 +155,9 @@ export default function CreateActivity() {
         )
 
         if (response.ok) {
-          console.log('Success')
+          const responseData = await response.json()
+          const activityId = responseData.activity.id
+          router.push(`/activities/${activityId}`)
         } else {
           console.log(
             'Creating activity failed with response: ' + response.statusText
@@ -324,8 +328,7 @@ export default function CreateActivity() {
             onClick={handleSaveButtonClick}>
             Save
           </Button>
-        </form>
-      </div>
+        </form>      </div>
     </main>
   )
 }
