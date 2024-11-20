@@ -43,7 +43,7 @@ export default function TagSelector({
       ) : (
         <div className='flex flex-wrap gap-x-1'>
           {currentSelection.map((tag, index) => (
-            <div key={index} className={`p-1 bg-[#${tag.color}]`}>
+            <div key={index} className={`bg-[#${tag.color}]`}>
               {tag.name}
             </div>
           ))}
