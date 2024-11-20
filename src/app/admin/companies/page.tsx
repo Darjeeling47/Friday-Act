@@ -36,7 +36,6 @@ export default function CompanyPage() {
     setLoading(true)
     fetchData()
     setLoading(false)
-    console.log(companies)
   }, [search])
 
   return (

@@ -25,8 +25,6 @@ export default async function getCompanies({
     queryParams += `limit=${limit}&`
   }
   try {
-    const url =`${process.env.PUBLIC_BACKEND_URL}/api/v1/companies${queryParams}`
-    console.log(url)
     const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/companies${queryParams}`, {
       method: "GET",
       headers: {
