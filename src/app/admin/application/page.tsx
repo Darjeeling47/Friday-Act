@@ -63,6 +63,8 @@ export default function Application() {
       item.username.toLowerCase().includes(lowercasedSearchValue) ||
       item.sid.toLowerCase().includes(lowercasedSearchValue) ||
       item.activity.toLowerCase().includes(lowercasedSearchValue) ||
+      item.attenddate.toLowerCase().includes(lowercasedSearchValue) ||
+      item.applydate.toLowerCase().includes(lowercasedSearchValue) ||
       item.status.toLowerCase().includes(lowercasedSearchValue)
     );
     setFilteredData(filtered);
@@ -94,7 +96,7 @@ export default function Application() {
   };
 
   return (
-    <main className='py-16 max-md:py-10 gap-[30px] flex flex-col max-md:items-center'>
+    <main className='py-6 gap-[30px] flex flex-col max-md:items-center'>
        <TableHeader disableButton={true} headerTitle='Application'  style='flex' headerStyle='text-4xl font-semibold' buttonStyle='' />
       <div className="flex justify-end max-md:justify-center">
         <SearchBar
@@ -107,6 +109,7 @@ export default function Application() {
         textStyle="max-md:text-xs"
         headerStyle="max-md:text-xs"
         spaceText="100px"
+        defaultRowsPerPage={20}
         onClickEdit={clickEdit}
       />
     </main>

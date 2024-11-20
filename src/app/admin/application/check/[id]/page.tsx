@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
 import { formatDate_Utc_to_EN } from "@/utils/utils";
 import getApplication from "@/libs/applications/getApplication";
+import updateApplication from '@/libs/applications/updateApplication';
 import { useRouter } from 'next/navigation';
 import { ApplicationItem } from "@/interface/applicationsInterface";
 
@@ -61,16 +62,24 @@ export default function CheckID() {
   const handleRejectClick = () => {
     router.back();
   };
+  const handleApproveClick = async (id: number) => {
+    try {
+      await updateApplication(id);
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to update application:', error);
+    }
+  };
 
   if (!applications) return <div className='text-xl font-semibold'>No data available</div>;
   return (
-    <main className='flex flex-col gap-[30px] px-72 py-16 max-2xl:px-32 max-lg:px-20 max-lg:py-10 max-md:px-4 max-md:py-4'>
+    <main className='flex flex-col gap-[30px] px-72 py-6 max-2xl:px-32 max-lg:px-20 max-md:px-4 max-md:py-4'>
       <div className='text-center text-5xl font-semibold max-md:text-3xl'>
         <span className='text-vidva'>Attendance</span>{' '}
         <span className='text-mgray-1'>Scanned</span>
       </div>
       <div className='flex h-auto w-auto items-center justify-between'>
-        <div className='flex w-[560px] items-center gap-[30px] max-lg:gap-6'>
+        <div className='flex w-[560px] items-center gap-[30px] max-lg:gap-6 max-md:gap-3'>
           <img
               src={applications.activity.company.logoUrl}
               alt="Company Logo"
@@ -83,7 +92,7 @@ export default function CheckID() {
         <Button variant='outline' onClick={() => handleViewClickCompany(applications.activity.company.id)}>View</Button>
       </div>
       <div className='flex h-auto w-auto items-center justify-between'>
-        <div className='flex w-[560px] items-center gap-[30px] max-lg:gap-6'>
+        <div className='flex w-[560px] items-center gap-[30px] max-lg:gap-6 max-md:gap-3'>
           <div className='h-[108px] w-[108px] rounded-2xl bg-mgray-3 max-md:h-20 max-md:w-20'></div>
           <div className='flex h-full w-auto flex-col gap-2.5 max-md:gap-0.5'>
             <div className='text-3xl font-semibold max-md:text-xl'>
@@ -102,7 +111,8 @@ export default function CheckID() {
         applydate={formatDate_Utc_to_EN(applications.createdAt)}
         cancellationReason={applications.cancellationReason || ''}   
       />
-      <div className='flex w-full gap-5'>
+      {!applications.isCanceled && (
+        <div className='flex w-full gap-5'>
           {applications.isApproved ? (
             <Button variant='disabled' className='w-full flex-1 cursor-not-allowed'>
               Approved
@@ -110,7 +120,7 @@ export default function CheckID() {
           ) : (
             <Button
               className='w-full flex-1'
-              onClick={() => console.log('approved')}
+              onClick={() => handleApproveClick(applications.id)}
             >
               Approve
             </Button>
@@ -119,6 +129,7 @@ export default function CheckID() {
             Reject
           </Button>
         </div>
+      )}
     </main>
   )
 }

@@ -6,7 +6,7 @@ import Image from 'next/image'
 export default function Login() {
   const handleLogin = () => {
     const clientId = 'cedt-friday-activity'
-    const redirectUri = encodeURIComponent('http://localhost:3000/callback')
+    const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI
     const scope = encodeURIComponent(
       'profile student_contact_info student_academic_badge student_activity_badge'
     )
@@ -20,15 +20,15 @@ export default function Login() {
 
   // return
   return (
-    <div className='mx-auto flex w-80 flex-col items-center justify-center gap-6 md:w-96'>
+    <div className='flex flex-col justify-center items-center gap-6 mx-auto w-80 md:w-96'>
       <Image
         src='/logo/Logo_FA.png'
         alt='logo'
         width={1000}
         height={1000}
-        className='mr-4 h-14 w-fit'
+        className='mr-4 w-fit h-14'
       />
-      <h1 className='text-2xl font-semibold text-mgray-1 md:text-3xl'>
+      <h1 className='font-semibold text-2xl text-mgray-1 md:text-3xl'>
         Friday Activity System
       </h1>
       <Button onClick={handleLogin} className='w-full'>
