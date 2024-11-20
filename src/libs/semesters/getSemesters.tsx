@@ -2,23 +2,13 @@ import { Semesters } from '@/interface/semestersInterface'
 
 export default async function getSemesters({
   search,
-  limit,
-  page,
 }: {
   search?: string
-  limit?: number
-  page?: number
 }): Promise<Semesters | null> {
   try {
     let paramsString = '?search='
     if (search) {
-      paramsString += `search=${search}`
-    }
-    if (limit) {
-      paramsString += `&limit=${limit}`
-    }
-    if (page) {
-      paramsString += `&page=${page}`
+      paramsString += search
     }
     const backendUrl = process.env.PUBLIC_BACKEND_URL
 

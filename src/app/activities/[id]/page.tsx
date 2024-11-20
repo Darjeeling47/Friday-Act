@@ -1,10 +1,15 @@
 'use client';
 
-import Tag from "@/components/basic/Tag";
-import getActivity from "@/libs/activities/getActivity";
-import { getImageAsBase64 } from '@/utils/getImageAsBase64';
 import { useEffect, useState } from "react";
+
+import Tag from "@/components/basic/Tag";
 import Button from "@/components/basic/Button";
+
+import { getImageAsBase64 } from '@/utils/getImageAsBase64';
+import getActivity from "@/libs/activities/getActivity";
+import ApplyActivity from "@/libs/activities/applyActivity";
+import CancelActivity from "@/libs/activities/cancelActivity";
+
 
 // ฟังก์ชันสำหรับฟอร์แมตวันที่
 const formatDate = (dateString: string) => {
@@ -16,36 +21,65 @@ export default function Page({ params }: { params: { id: string } }) {
   const [imgSrc, setImgSrc] = useState<string | undefined>(undefined);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
+
+  const fetchActivityData = async () => {
+    const data = await getActivity({ id: params.id });
+    setActivityData(data);
+
+    if (data.activity.posterUrl) {
+      const imgBase64 = await getImageAsBase64(data.activity.posterUrl);
+      setImgSrc(imgBase64);
+    }
+  };
+
   useEffect(() => {
-    const fetchActivityData = async () => {
-      const data = await getActivity({ id: params.id });
-      setActivityData(data);
-
-      if (data.activity.posterUrl) {
-        const imgBase64 = await getImageAsBase64(data.activity.posterUrl);
-        setImgSrc(imgBase64);
-      }
-    };
-
     fetchActivityData();
-  }, [params.id]);
+    console.log(activityData)
+    console.log(activityData?.activity.application)
+  }, [params.id, isClicked]);
 
   if (!activityData) {
     return <div>Loading...</div>;
   }
 
-  const initialSeats = 0;
+  const handleApplyActivity = async () => {
+    setIsClicked(true);
+    console.log('Apply Activity');
+    await ApplyActivity(params.id)
+      .then((data) => {
+        // console.log(data);
+        setIsClicked(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    location.reload();
+  }
 
-  const handleClick = () => {
-    setIsClicked((prev) => !prev);
-    console.log(isClicked ? 'Cancelled Application' : 'Applied for Activity');
-  };
+  const handleCancelActivity = async () => {
+    setIsClicked(false);
+    await CancelActivity(params.id)
+      .then((data) => {
+        // console.log(data);
+        setIsClicked(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    location.reload();
+  }
+
+  // const handleClick = () => {
+  //   setIsClicked((prev) => !prev);
+  //   console.log(isClicked ? 'Cancelled Application' : 'Applied for Activity');
+  // };
 
   return (
     <main className="mx-auto px-2 sm:px-4 p-4 container">
-      <div className="flex flex-col md:flex-row items-start md:items-start gap-4">
+      <div className="flex md:flex-row flex-col items-start md:items-start gap-4">
         {/* Left Column */}
-        <div className="flex-[0.9] flex justify-center items-center">
+        <div className="flex flex-[0.9] justify-center items-center">
           <img
             src={imgSrc || "/Poster/Psychological.png"}
             alt={activityData.activity.name}
@@ -54,7 +88,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </div>
 
         {/* Right Column */}
-        <div className="flex-[1.12] flex flex-col justify-between p-2">
+        <div className="flex flex-col flex-[1.12] justify-between p-2">
           <div>
             <h2 className="mb-6 font-bold text-3xl text-mgray-1">
               {activityData.activity.name}
@@ -70,7 +104,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <span className="ml-2">{activityData.activity.name}</span>
               </div>
               <span className="text-green-500">
-                {`${initialSeats}/${activityData.activity.max_participants || '0'}  seats`}
+                {`${activityData.activity.currentParticipants}/${activityData.activity.maxParticipants || '0'}  seats`}
               </span>
             </div>
             <hr className="border-gray-300 my-4 border-t" />
@@ -142,22 +176,39 @@ export default function Page({ params }: { params: { id: string } }) {
               </div>
 
               <div>
-                <h3 className="mt-4 mb-8 font-normal text-m text-mgray-d3 sm:mb-12">
+                <h3 className="mt-4 mb-8 sm:mb-12 font-normal text-m text-mgray-d3">
                   {activityData.activity.description}
                 </h3>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 text-center md:mt-20 ">
-            <Button
-              onClick={handleClick}
-              className={`${
-                isClicked ? 'bg-gray-600 hover:bg-gray-500' : 'bg-vidva hover:bg-vidva/80'
-              } active:bg-gray-400 transition-transform duration-150 text-white font-bold rounded w-full py-2`}
-            >
-              {isClicked ? 'Cancel Application' : 'Apply Activity'}
-            </Button>
+          <div className="mt-4 md:mt-20 text-center">
+            {
+              activityData.activity.maxParticipants - activityData.activity.currentParticipants == 0 ?
+                <Button
+                  variant="disabled"
+                  className="w-full"
+                >Full
+                </Button>
+                :
+                activityData.activity.application ?
+                  <Button
+                    variant="secondary"
+                    className="w-full"
+                    onClick={handleCancelActivity}
+                  >
+                    Cancel Application
+                  </Button>
+                  :
+                  <Button
+                    variant="primary"
+                    className="w-full"
+                    onClick={handleApplyActivity}
+                  >
+                    Apply Activity
+                  </Button>
+            }
           </div>
         </div>
       </div>
