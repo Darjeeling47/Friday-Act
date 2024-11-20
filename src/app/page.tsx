@@ -1,6 +1,9 @@
+'use client'
+
 // import react
-import { Suspense } from 'react'
 import Image from 'next/image'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 // import components
 import Button from '@/components/basic/Button'
@@ -8,15 +11,23 @@ import ActivityCard from '@/components/activity/ActivityCard'
 import ActivityCardLoad from '@/components/activity/ActivityCardLoad'
 
 // import libs
-import getActivitiesAsync from '@/libs/activities/getActivitiesAsync'
 import getActivities from '@/libs/activities/getActivities'
 
 // import interface
 import { ActivityItem } from '@/interface/activitiesInterface'
 
-export default async function Home() {
-  const activityData: any | null = await getActivities({})
-  const activities: ActivityItem[] = activityData.activities
+export default function Home() {
+  const [activities, setActivities] = useState<ActivityItem[]>([])
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      const activityData: any | null = await getActivities({})
+      const activities: ActivityItem[] = activityData.activities
+      setActivities(activities)
+    }
+
+    fetchActivities()
+  }, [])
 
   return (
     <main className='flex flex-col gap-12 px-0 md:px-4'>
@@ -27,7 +38,7 @@ export default async function Home() {
             <h1 className='text-pretty text-center text-header-1 font-semibold text-mgray-1 lg:text-left'>
               Friday Activity System
             </h1>
-            <p className='text-base md:text-lg text-pretty text-center text-mgray-2 lg:text-left'>
+            <p className='text-pretty text-center text-base text-mgray-2 md:text-lg lg:text-left'>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard.
             </p>
@@ -58,7 +69,7 @@ export default async function Home() {
             height={500}
             className='h-fit w-full rounded'
           />
-          <p className='text-sm md:text-base text-mgray-1'>
+          <p className='text-sm text-mgray-1 md:text-base'>
             Experience Real-World Opportunities
           </p>
         </div>
@@ -70,7 +81,7 @@ export default async function Home() {
             height={500}
             className='h-fit w-full rounded'
           />
-          <p className='text-sm md:text-base text-mgray-1'>
+          <p className='text-sm text-mgray-1 md:text-base'>
             Connect with Top Companies
           </p>
         </div>
@@ -82,7 +93,7 @@ export default async function Home() {
             height={500}
             className='h-fit w-full rounded'
           />
-          <p className='text-sm md:text-base text-mgray-1'>
+          <p className='text-sm text-mgray-1 md:text-base'>
             Boost Your Career Prospects
           </p>
         </div>
@@ -92,7 +103,7 @@ export default async function Home() {
       <div className='flex flex-col gap-8'>
         <h2 className='text-header-2 font-medium'>Incoming Activities</h2>
 
-        <Suspense fallback={<ActivityCardLoad />}>
+        {activities.length > 0 ? (
           <div className='grid grid-cols-1 gap-8 xl:grid-cols-2'>
             {activities.slice(0, 4).map((activity) => (
               <div key={activity.id}>
@@ -100,7 +111,9 @@ export default async function Home() {
               </div>
             ))}
           </div>
-        </Suspense>
+        ) : (
+          <ActivityCardLoad />
+        )}
       </div>
     </main>
   )
