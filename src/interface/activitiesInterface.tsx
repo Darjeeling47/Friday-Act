@@ -54,7 +54,22 @@ export interface ActivityItem {
   isApplied?: boolean,
   semester: Semester
   company: CompanyItem | null,
-  tags: TagItem[]
+  tags: TagItem[],
+  application?:ActivityApplication
+}
+
+export interface ActivityApplication {
+  id: number;
+  activityId: number;
+  userId: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  isQrGenerated: boolean;
+  qrString: string | null;
+  qrGeneratedAt: string | null; // ISO date string or null
+  isApproved: boolean;
+  isCanceled: boolean;
+  cancellationReason: string | null;
 }
 
 export interface ActivityParticipants {
