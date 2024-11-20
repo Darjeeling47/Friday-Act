@@ -2,6 +2,39 @@
 import { formatDate_Utc_to_EN } from '@/utils/utils'
 import { useState } from 'react'
 
+const TableSkeleton = ({
+  headers,
+  rowCount = 5,
+}: {
+  headers: { key: string; title: string }[]
+  rowCount?: number
+}) => {
+  return (
+    <div className='w-full animate-pulse'>
+      <div className='w-full'>
+        <div className='flex w-full border-b'>
+          {headers.map((_, index) => (
+            <div key={index} className='flex-1 p-2 sm:p-3'>
+              <div className='h-4 w-3/4 rounded bg-gray-200'></div>
+            </div>
+          ))}
+        </div>
+        {[...Array(rowCount)].map((_, rowIndex) => (
+          <div key={rowIndex} className='flex w-full border-b'>
+            {headers.map((_, colIndex) => (
+              <div
+                key={`${rowIndex}-${colIndex}`}
+                className='flex-1 p-2 sm:p-3'>
+                <div className='h-4 w-full rounded bg-gray-100'></div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function TableComponent({
   headers,
   data,
@@ -13,6 +46,7 @@ export default function TableComponent({
   defaultRowsPerPage = null,
   onClickEdit,
   onClickDelete,
+  isLoading = false,
 }: {
   headers: { key: string; title: string }[]
   data: { [key: string]: any }[]
@@ -25,6 +59,7 @@ export default function TableComponent({
   defaultRowsPerPage?: number | null
   onClickEdit?: Function
   onClickDelete?: Function
+  isLoading?: boolean
 }) {
   const [logoEdit] = useState<string>('/logo/Logo_Edit.png')
   const [logoDelete] = useState<string>('/logo/Logo_Delete.png')
@@ -44,6 +79,10 @@ export default function TableComponent({
     if (currentPage > 1) setCurrentPage(currentPage - 1)
   }
 
+  if (isLoading) {
+    return <TableSkeleton headers={headers} rowCount={rowsPerPage || 5} />
+  }
+
   return (
     <div className='flex w-full flex-col overflow-x-auto'>
       <table className={`w-full table-fixed border-collapse ${tableStyle}`}>
@@ -58,7 +97,7 @@ export default function TableComponent({
                       ? '30px'
                       : `${spaceText}`,
                 }}
-                className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start font-semibold sm:p-2 ${headerStyle}`}>
+                className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm font-semibold sm:p-2 ${headerStyle}`}>
                 {header.title}
               </th>
             ))}
@@ -104,13 +143,12 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
                       {formatDate_Utc_to_EN(rowData[header.key])}
                     </td>
                   )
                 }
                 if (header.key.includes('.')) {
-                  // Handle nested objects
                   const keys = header.key.split('.')
                   let current = rowData
 
@@ -120,17 +158,16 @@ export default function TableComponent({
                       current === undefined ||
                       !current.hasOwnProperty(key)
                     ) {
-                      return undefined // Return undefined if the key doesn't exist
+                      return undefined
                     }
                     current = current[key]
                   }
 
                   if (current && typeof current === 'object') {
-                    // If 'current' is an object, you can render a specific property or stringify it
                     return (
                       <td
                         key={`${index}-${subIndex}`}
-                        className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
+                        className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
                         {JSON.stringify(current)}
                       </td>
                     )
@@ -139,7 +176,7 @@ export default function TableComponent({
                   return (
                     <td
                       key={`${index}-${subIndex}`}
-                      className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
+                      className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
                       {current}
                     </td>
                   )
@@ -148,7 +185,7 @@ export default function TableComponent({
                 return (
                   <td
                     key={`${index}-${subIndex}`}
-                    className={`md:text-md text-sm border border-l-0 border-r-0 p-1 text-start sm:p-2 ${textStyle}`}>
+                    className={`md:text-md border border-l-0 border-r-0 p-1 text-start text-sm sm:p-2 ${textStyle}`}>
                     {rowData[header.key]}
                   </td>
                 )
