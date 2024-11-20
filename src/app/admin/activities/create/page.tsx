@@ -20,8 +20,8 @@ export default function CreateActivity() {
   const token = Cookies.get('token')
   const [fileName, setFileName] = useState('')
   const [companyValue, setCompanyValue] = useState()
-  const [selectedTagsList, setSelectedTagsList] = useState<number[]>([])
   const [companyList, setCompanyList] = useState<CompanyItem[]>([])
+  const [selectedTagsList, setSelectedTagsList] = useState<number[]>([])
   const [tagList, setTagList] = useState<TagItem[]>([])
   // Secondary
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -76,11 +76,13 @@ export default function CreateActivity() {
   // Handle for selecting tags
   const handleSelectTag = (event: any) => {
     const currentTags = selectedTagsList
-    if ( currentTags.length === 0 || !currentTags.includes(event.target.value)) {
+    if (currentTags.length === 0 || !currentTags.includes(event.target.value)) {
       currentTags.push(event.target.value)
       setSelectedTagsList(currentTags)
     } else if (currentTags.includes(event.target.value)) {
-      const removedArray = currentTags.filter((member) => member !== event.target.value)
+      const removedArray = currentTags.filter(
+        (member) => member !== event.target.value
+      )
       setSelectedTagsList(removedArray)
     }
     console.log(currentTags)
@@ -121,7 +123,7 @@ export default function CreateActivity() {
             const endHour = date.getUTCHours()
             const endMinute = date.getUTCMinutes()
             const constructedTimeString = `${endHour}:${endMinute}:00`
-            console.log(constructedTimeString) 
+            console.log(constructedTimeString)
             formData.append('endTime', constructedTimeString)
           }
           formData.append(key, data[key])
@@ -131,22 +133,31 @@ export default function CreateActivity() {
           formData.append('companyId', companyValue)
         }
 
+        if (selectedTagsList) {
+          formData.append('tags', JSON.stringify(selectedTagsList))
+        }
+
         if (fileInputRef.current && fileInputRef.current.files) {
           formData.append('poster', fileInputRef.current.files[0])
         }
 
-        const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/activities`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        })
+        const response = await fetch(
+          `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
+        )
 
         if (response.ok) {
           console.log('Success')
         } else {
-          console.log('Creating activity failed with response: ' + response.statusText)
+          console.log(
+            'Creating activity failed with response: ' + response.statusText
+          )
         }
       } catch (e) {
         console.log(e)
@@ -157,7 +168,7 @@ export default function CreateActivity() {
 
   // Return
   return (
-    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent lg:py-8 sm:shadow-none md:mx-12 lg:mx-24 xl:mx-48'>
+    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:shadow-none md:mx-12 lg:mx-24 lg:py-8 xl:mx-48'>
       <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-6 md:mt-12'>
         <div className='flex items-center justify-center gap-x-4'>
           <Image
@@ -218,10 +229,11 @@ export default function CreateActivity() {
               id='companyId'
               name='companyId'
               onChange={handleSelectCompany}
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
-            >
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'>
               {companyList.map((company) => (
-                <option value={company.companyId}>{company.companyNameTh}</option>
+                <option value={company.companyId}>
+                  {company.companyNameTh}
+                </option>
               ))}
             </select>
           </div>
@@ -276,7 +288,11 @@ export default function CreateActivity() {
             <label htmlFor='tags' className='text-base text-mgray-2'>
               Tags
             </label>
-            <TagSelector options={tagList} selections={selectedTagsList} setOptions={setSelectedTagsList} /> 
+            <TagSelector
+              options={tagList}
+              selections={selectedTagsList}
+              setOptions={setSelectedTagsList}
+            />
           </div>
           <div className='flex flex-col'>
             <label htmlFor='location' className='text-base text-mgray-2'>
