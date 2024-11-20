@@ -6,7 +6,8 @@ import Image from 'next/image'
 export default function Login() {
   const handleLogin = () => {
     const clientId = 'cedt-friday-activity'
-    const redirectUri = encodeURIComponent('http://localhost:3000/callback')
+    const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI
+    console.log(redirectUri)
     const scope = encodeURIComponent(
       'profile student_contact_info student_academic_badge student_activity_badge'
     )

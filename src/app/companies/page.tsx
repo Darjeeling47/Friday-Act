@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CompanyCard from "@/components/activity/CompanyCard";
 import SearchBar from "@/components/basic/SearchBar";
 
 const CompaniesPage: React.FC = () => {
   const [searchValue, setSearchValue] = useState(""); // State เก็บค่าค้นหา
+  const [hydrated, setHydrated] = useState(false); // State ตรวจสอบว่าหน้าพร้อมสำหรับ CSR
+
+  useEffect(() => {
+    setHydrated(true); // เปิดการใช้งาน CSR หลังจากการ Hydration
+  }, []);
+
+  // หากยังไม่พร้อมสำหรับการ CSR จะคืนค่า `null`
+  if (!hydrated) return null;
 
   const companies = [
     { id: 1, name: "Company 1", description: "Short description about your company1", link: "/company/1" },
@@ -36,7 +44,7 @@ const CompaniesPage: React.FC = () => {
 
       {/* Company Cards */}
       <div className="gap-8 grid grid-cols-1 sm:grid-cols-2">
-        {filteredCompanies.length > 0 ? ( 
+        {filteredCompanies.length > 0 ? (
           filteredCompanies.map((company) => (
             <CompanyCard
               key={company.id}
