@@ -12,6 +12,7 @@ import getCompanies from '@/libs/companies/getCompanies'
 import { CompanyItem } from '@/interface/companiesInterface'
 import getTags from '@/libs/tags/getTags'
 import { TagItem } from '@/interface/tagsInterface'
+import TagSelector from '@/components/basic/Selector'
 
 export default function CreateActivity() {
   // Variables
@@ -275,13 +276,7 @@ export default function CreateActivity() {
             <label htmlFor='tags' className='text-base text-mgray-2'>
               Tags
             </label>
-            <input
-              type='text'
-              id='tags'
-              name='tags'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
-              placeholder='Please Enter'
-            />
+            <TagSelector options={tagList} selections={selectedTagsList} setOptions={setSelectedTagsList} /> 
           </div>
           <div className='flex flex-col'>
             <label htmlFor='location' className='text-base text-mgray-2'>

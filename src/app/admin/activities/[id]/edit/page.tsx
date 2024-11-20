@@ -13,8 +13,9 @@ import getCompanies from '@/libs/companies/getCompanies'
 import { CompanyItem } from '@/interface/companiesInterface'
 import getTags from '@/libs/tags/getTags'
 import { TagItem } from '@/interface/tagsInterface'
+import TagSelector from '@/components/basic/Selector'
 
-export default function CreateActivity() {
+export default function EditActivity() {
   // Variables
   // Primary
   const { id } = useParams()
@@ -74,21 +75,6 @@ export default function CreateActivity() {
     setCompanyValue(event.target.value)
   }
 
-  // Handle for selecting tags
-  const handleSelectTag = (event: any) => {
-    const currentTags = selectedTagsList
-    if (currentTags.length === 0 || !currentTags.includes(event.target.value)) {
-      currentTags.push(event.target.value)
-      setSelectedTagsList(currentTags)
-    } else if (currentTags.includes(event.target.value)) {
-      const removedArray = currentTags.filter(
-        (member) => member !== event.target.value
-      )
-      setSelectedTagsList(removedArray)
-    }
-    console.log(currentTags)
-  }
-
   // Handle for clicking the "save" button
   const handleSaveButtonClick = () => {
     if (buttonRef.current) {
@@ -124,7 +110,7 @@ export default function CreateActivity() {
             const endHour = date.getUTCHours()
             const endMinute = date.getUTCMinutes()
             const constructedTimeString = `${endHour}:${endMinute}:00`
-            console.log(constructedTimeString)
+            console.log(constructedTimeString) 
             formData.append('endTime', constructedTimeString)
           }
           formData.append(key, data[key])
@@ -138,23 +124,18 @@ export default function CreateActivity() {
           formData.append('poster', fileInputRef.current.files[0])
         }
 
-        const response = await fetch(
-          `${process.env.PUBLIC_BACKEND_URL}/api/v1/activities/${id}`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-          }
-        )
+        const response = await fetch(`${process.env.PUBLIC_BACKEND_URL}/api/v1/activities/${id}`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        })
 
         if (response.ok) {
           console.log('Success')
         } else {
-          console.log(
-            'Creating activity failed with response: ' + response.statusText
-          )
+          console.log('Editing activity failed with response: ' + response.statusText)
         }
       } catch (e) {
         console.log(e)
@@ -165,12 +146,12 @@ export default function CreateActivity() {
 
   // Return
   return (
-    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent sm:shadow-none md:mx-12 lg:mx-24 lg:py-8 xl:mx-48'>
+    <main className='rounded-3xl bg-mgray-5 shadow-2 sm:bg-transparent lg:py-8 sm:shadow-none md:mx-12 lg:mx-24 xl:mx-48'>
       <div className='flex flex-col gap-y-5 pb-16 pt-16 sm:mt-6 md:mt-12'>
         <div className='flex items-center justify-center gap-x-4'>
           <Image
             src='/logo/Logo_Create.png'
-            alt='Create Activity'
+            alt='Edit Activity'
             width={40}
             height={40}
           />
@@ -226,11 +207,10 @@ export default function CreateActivity() {
               id='companyId'
               name='companyId'
               onChange={handleSelectCompany}
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'>
+              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
+            >
               {companyList.map((company) => (
-                <option value={company.companyId}>
-                  {company.companyNameTh}
-                </option>
+                <option value={company.companyId}>{company.companyNameTh}</option>
               ))}
             </select>
           </div>
@@ -250,7 +230,7 @@ export default function CreateActivity() {
               Start Time
             </label>
             <input
-              type='text'
+              type='datetime-local'
               id='startTime'
               name='startTime'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
@@ -262,7 +242,7 @@ export default function CreateActivity() {
               End Time
             </label>
             <input
-              type='text'
+              type='datetime-local'
               id='endTime'
               name='endTime'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
@@ -285,13 +265,7 @@ export default function CreateActivity() {
             <label htmlFor='tags' className='text-base text-mgray-2'>
               Tags
             </label>
-            <input
-              type='text'
-              id='tags'
-              name='tags'
-              className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
-              placeholder='Please Enter'
-            />
+            <TagSelector options={tagList} selections={selectedTagsList} setOptions={setSelectedTagsList} /> 
           </div>
           <div className='flex flex-col'>
             <label htmlFor='location' className='text-base text-mgray-2'>
