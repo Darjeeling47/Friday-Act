@@ -36,8 +36,20 @@ export default function CreateActivity() {
     }
   }
 
+  // Fetch list of existing tags
+  const fetchTags = async () => {
+    const response = await getTags({})
+
+    if (response && response.success) {
+      const tags = response.tags
+      setTagList(tags)
+    }
+  }
   useEffect(() => {
     fetchCompanyList()
+    fetchTags()
+    console.log(companyList)
+    console.log(tagList)
   }, [])
 
   // Handle for clicking the "upload file" button
@@ -89,6 +101,28 @@ export default function CreateActivity() {
       try {
         const formData = new FormData()
         Object.keys(data).forEach((key) => {
+          // use startTime date as base
+          if (key === 'startTime') {
+            const date = new Date(data[key] as string)
+            const startDate = date.getUTCDate()
+            const startMonth = date.getUTCMonth()
+            const startYear = date.getUTCFullYear()
+            const startHour = date.getUTCHours()
+            const startMinute = date.getUTCMinutes()
+            const constructedDateString = `${startYear}-${startMonth}-${startDate}`
+            const constructedTimeString = `${startHour}:${startMinute}:00`
+            console.log(constructedDateString, constructedTimeString)
+            formData.append('date', constructedDateString)
+            formData.append('startTime', constructedTimeString)
+          }
+          if (key === 'endTime') {
+            const date = new Date(data[key] as string)
+            const endHour = date.getUTCHours()
+            const endMinute = date.getUTCMinutes()
+            const constructedTimeString = `${endHour}:${endMinute}:00`
+            console.log(constructedTimeString) 
+            formData.append('endTime', constructedTimeString)
+          }
           formData.append(key, data[key])
         })
 
@@ -206,7 +240,7 @@ export default function CreateActivity() {
               Start Time
             </label>
             <input
-              type='text'
+              type='datetime-local'
               id='startTime'
               name='startTime'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
@@ -218,7 +252,7 @@ export default function CreateActivity() {
               End Time
             </label>
             <input
-              type='text'
+              type='datetime-local'
               id='endTime'
               name='endTime'
               className='rounded-xl border-1 border-mgray-6 bg-transparent p-2 placeholder-mgray-3'
