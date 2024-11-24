@@ -2,6 +2,7 @@
 // import next
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
+import router from 'next/router'
 // import react
 import { useEffect, useRef, useState } from 'react'
 // import components
@@ -140,6 +141,7 @@ export default function EditActivity() {
         )
 
         if (response.ok) {
+          router.push(`/admin/activities/${id}`)
           console.log('Success')
         } else {
           console.log(

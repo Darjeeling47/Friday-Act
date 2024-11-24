@@ -58,7 +58,7 @@ export default async function ActivityDetail({
           {/* Left: Picture */}
           <div className='flex flex-[0.9] items-center justify-center'>
             <img
-              src='/Poster/Psychological.png'
+              src={`${activity.posterUrl}`}
               alt='Psychological Resilience for Success'
               className='w-full max-w-md rounded-xl'
             />
@@ -74,7 +74,7 @@ export default async function ActivityDetail({
               <h2 className='flex flex-col items-start justify-between lg:flex-row lg:items-center'>
                 <div className='flex items-center'>
                   <img
-                    src='/logo/JBank.png'
+                    src={`${activity.company.logoUrl}`}
                     alt='Logo'
                     className='h-8 w-8 rounded-lg'
                   />
