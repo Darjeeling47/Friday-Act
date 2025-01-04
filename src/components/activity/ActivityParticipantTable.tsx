@@ -19,7 +19,7 @@ export default function ActivityParticipantTable() {
   const id:string = Array.isArray(params.id) ? params.id[0] : params.id
   const fetchParticipants = async ({ id, search }: { id: string, search?: string }) => {
     try {
-      const response = await getActivityParticipantsClient(id)
+      const response = await getActivityParticipantsClient({id, search})
 
       if (response.ok) {
         const data = await response.participants
@@ -99,6 +99,10 @@ export default function ActivityParticipantTable() {
                 <p className='text-[12px]'>Admission Year</p>
                 <p className='text-[10px]'>{data.admissionYear}</p>
               </div>
+            </div>
+            <div>
+              <p className='text-[12px]'>Status</p>
+              <p className='text-[10px]'>{data.status}</p>
             </div>
             <Button
               className='rounded-xl bg-vidva px-3 py-1 text-center text-[10px] text-white'

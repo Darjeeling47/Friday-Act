@@ -49,9 +49,6 @@ export default function SemestersPage() {
     fetchSemesters()
   }, [search])
 
-  if (loading) return <div className='text-xl font-semibold'>Loading...</div>
-  if (error) return <div className='text-xl font-semibold'>Error: {error}</div>
-
   // Function for create semester
   const onClickCreate = () => {
     router.push(`semesters/create`)
@@ -93,6 +90,7 @@ export default function SemestersPage() {
               headers={headers}
               data={semesters || []}
               defaultRowsPerPage={5}
+              isLoading={loading}
               onClickEdit={onClickEdit}
               onClickDelete={onClickDelete}
               iconStyle='w-20'

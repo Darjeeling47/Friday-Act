@@ -162,3 +162,64 @@ const MailIcon: React.FC = () => (
 );
 
 // export default App;
+type User = {
+  id: number
+  thaiName: string
+  studentId: string
+}
+
+type Company = {
+  id: number
+  name: string
+}
+
+type Semester = {
+  id: number
+  year: number
+  semester: number
+}
+
+type Activity = {
+  id: number
+  name: string
+  company: Company
+  semester: Semester
+}
+
+type Application = {
+  id: number
+  user: User
+  activity: Activity
+  createdAt: string
+  updatedAt: string
+  isQrGenerated: boolean
+  qrString: string | null
+  qrGeneratedAt: string | null
+  isApproved: boolean
+  isCanceled: boolean
+  status: string
+  cancellationReason: string | null
+}
+
+type SemesterGroup = {
+  semester: {
+    year: number
+    semester: number
+  }
+  applications: Application[]
+}
+
+type Pagination = {
+  current: number
+  last: number
+  next: number | null
+  prev: number | null
+  limit: number
+}
+
+type SemesterGroupedResponse = {
+  success: true
+  count: number
+  pagination: Pagination
+  semesters: SemesterGroup[]
+}

@@ -74,9 +74,6 @@ export default function Application() {
     setSearchValue(value);
   };
 
-  if (loading) return <div className='text-xl font-semibold'>Loading...</div>;
-  if (error) return <div className='text-xl font-semibold'>Error: {error}</div>;
-
   const headers = [
     { key: "username", title: "User's Name" },
     { key: "sid", title: "Student ID" },
@@ -111,6 +108,7 @@ export default function Application() {
         spaceText="100px"
         defaultRowsPerPage={20}
         onClickEdit={clickEdit}
+        isLoading={loading}
       />
     </main>
   );
